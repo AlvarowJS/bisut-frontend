@@ -6,5 +6,11 @@ export default [
     title: "Home",
     icon: <Home size={20} />,
     navLink: "/home",
+  },
+  {
+    id: "Clientes",
+    title: "Clientes",
+    icon: <UserMinus size={20} />,
+    navLink: "/clientes",
   }
 ];

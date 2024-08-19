@@ -14,6 +14,8 @@ import PublicRoute from "@components/routes/PublicRoute";
 // ** Utils
 import { isObjEmpty } from "@utils";
 import Home from "../../views/home/Home";
+import bdAdmin from "../../api/bdAdmin";
+import Cliente from "../../views/clientes/Cliente";
 
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
@@ -70,32 +72,6 @@ const AuthGuard = ({ children }) => {
 
   }, [])
 
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   const rol = localStorage.getItem("rol");
-
-  //   console.log(myRol, "234234")
-
-  //   if (!token) {
-
-  //     navigate("/login");
-  //   } else {
-  //     // Aquí debe validar su token con su servidor para asegurarse de que es válido
-  //     // Si el token no es válido, llame a "navigate" para redirigir al usuario a la página de inicio de sesión
-  //     if (rol === "1") {
-  //     } else if (rol === "2") {
-  //       const restrictedRoutes = ["/tickets"];
-  //       if (restrictedRoutes.includes(window.location.pathname)) {
-  //         navigate("/error");
-  //       }
-  //     }
-  //     else {
-  //       navigate("/login")
-  //     }
-  //   }
-  // }, [navigate]);
-
   return <LayoutWrapper>{children}</LayoutWrapper>;
 };
 
@@ -111,6 +87,10 @@ const Routes = [
   {
     path: "/home",
     element: <AuthGuard><Home /></AuthGuard>,
+  },
+  {
+    path: "/clientes",
+    element: <AuthGuard><Cliente /></AuthGuard>,
   },
   {
     path: "/error",
