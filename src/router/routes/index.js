@@ -16,6 +16,7 @@ import { isObjEmpty } from "@utils";
 import Home from "../../views/home/Home";
 import bdAdmin from "../../api/bdAdmin";
 import Cliente from "../../views/clientes/Cliente";
+import Usuario from "../../views/usuarios/Usuario";
 
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
@@ -91,6 +92,10 @@ const Routes = [
   {
     path: "/clientes",
     element: <AuthGuard><Cliente /></AuthGuard>,
+  },
+  {
+    path: "/usuarios",
+    element: <AuthGuard><Usuario /></AuthGuard>,
   },
   {
     path: "/error",

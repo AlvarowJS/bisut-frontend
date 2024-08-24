@@ -1,4 +1,4 @@
-import { File, Tag, FileText, BarChart, UserCheck, Table, Edit, UserMinus, Home } from "react-feather";
+import { File, Tag, FileText, BarChart, UserCheck, Table, Edit, UserMinus, Home, User } from "react-feather";
 
 export default [
   {
@@ -12,6 +12,12 @@ export default [
     title: "Clientes",
     icon: <UserMinus size={20} />,
     navLink: "/clientes",
+  },
+  {
+    id: "Usuarios",
+    title: "Usuarios",
+    icon: <User size={20} />,
+    navLink: "/usuarios",
   }
 ];
 

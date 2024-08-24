@@ -1,43 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import TablaCliente from './TablaCliente'
-import FormCliente from './FormCliente'
-import bdAdmin from '../../api/bdAdmin'
-import ClientesDiasProximos from './ClientesDiasProximos'
+import React, { useEffect, useState } from "react";
 import { Button, Col, Input, Label, Row } from "reactstrap";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import TablaUsuario from "./TablaUsuario";
+import FormUsuario from "./FormUsuario";
+import bdAdmin from "../../api/bdAdmin";
 const MySwal = withReactContent(Swal);
-const URL = '/v1/clientes'
-const Cliente = () => {
+const URL = "/users";
 
-  const [search, setSearch] = useState();
-  const [data, setData] = useState()
-  const [filter, setFilter] = useState();
-  const [proxDays, setProxDays] = useState()
+const Usuario = () => {
   const token = localStorage.getItem("token");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
-  const [totalPages, setTotalPages] = useState(0);
+  const [data, setData] = useState();
+  const [search, setSearch] = useState();
+  const [filter, setFilter] = useState();
+  const [modal, setModal] = useState(false);
+  const [modalUbicacion, setModalUbicacion] = useState(false);
   const [actualizacion, setActualizacion] = useState(false);
   const { handleSubmit, register, reset, formState: { errors } } = useForm();
   const [refresh, setRefresh] = useState(false);
-  const [modal, setModal] = useState(false);
-
   const defaulValuesForm = {
-    nombre_completo: "",
-    rfc: "",
-    direccion: "",
-    colonia: "",
-    delegacion: "",
-    estado: "",
-    cp: "",
-    telefono: "",
-    limite_credito: "",
-    mail: "",
-    fecha_nac: ""
+    name: "",
+    email: "",
+    password: "",
+    status: "",
   };
-
   const getAuthHeaders = () => ({
     headers: {
       Authorization: "Bearer " + token,
@@ -54,31 +41,32 @@ const Cliente = () => {
   };
 
   useEffect(() => {
-    bdAdmin.get(URL, getAuthHeaders())
-      .then(
-        res => {
-          setData(res.data.data)
-          setProxDays(res.data.upcoming)
-        }
-      )
-  }, [refresh])
-
+    bdAdmin
+      .get(`${URL}`, getAuthHeaders())
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => { });
+  }, [refresh]);
 
   useEffect(() => {
     setFilter(
       data?.filter(
         (e) =>
-          e.nombre_completo.toLowerCase()
+          e.name.toLowerCase()
             .indexOf(search?.toLowerCase()) !== -1
       )
     );
   }, [search]);
+
   const handleFilter = (e) => {
     setSearch(e.target.value);
   };
 
+  // Falta agregar el seach
 
-  const crearCliente = (data) => {
+  // Crear Usuario
+  const crearUsuario = (data) => {
     bdAdmin
       .post(URL, data, getAuthHeaders())
       .then((res) => {
@@ -88,22 +76,32 @@ const Cliente = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Cliente creado",
+          title: "Usuario creado",
           showConfirmButton: false,
           timer: 1500,
         });
       })
       .catch((err) => {
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title: "Contacte con soporte",
-          showConfirmButton: false,
-        });
+        if (err.response.status == 422) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Email registrado, por favor ingrese uno diferente",
+            showConfirmButton: false,
+          });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Contacte con soporte",
+            showConfirmButton: false,
+          });
+        }
       });
-  }
+  };
 
-  const actualizarCliente = (id, data) => {
+  // Actualiza Consultorio (PUT)
+  const actualizarUsuario = (id, data) => {
     bdAdmin
       .put(`${URL}/${id}`, data, getAuthHeaders())
       .then((res) => {
@@ -113,7 +111,7 @@ const Cliente = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Cliente Actualizado",
+          title: "Usuario Actualizado",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -127,8 +125,7 @@ const Cliente = () => {
         });
       });
   };
-
-  const eliminarCliente = (id) => {
+  const eliminarUsuario = (id) => {
     return MySwal.fire({
       title: "¿Estás seguro de eliminar?",
       text: "¡No podrás revertir esto!",
@@ -149,7 +146,7 @@ const Cliente = () => {
             Swal.fire({
               position: "center",
               icon: "success",
-              title: "Cliente Eliminado",
+              title: "Consultorio Eliminado",
               showConfirmButton: false,
               timer: 1500,
             });
@@ -166,7 +163,8 @@ const Cliente = () => {
     });
   };
 
-  const actualizaClienteId = (id) => {
+  // Tomara los datos que tiene un registro
+  const actualizarUsuarioId = (id) => {
     toggleActualizacion.call();
     setActualizacion(true);
     bdAdmin
@@ -177,32 +175,17 @@ const Cliente = () => {
       .catch((err) => null);
   };
 
+  // Si es actualizacion llamara a actualizarPaciente pero si es false crear un Consultorio
   const submit = (data) => {
     if (actualizacion) {
-      actualizarCliente(data.id, data);
+      actualizarUsuario(data.id, data);
     } else {
-      crearCliente(data);
+      crearUsuario(data);
     }
   };
 
   return (
     <>
-      <h2>
-        Cumpleaños cercanos:
-      </h2>
-      {
-        proxDays?.map(proxDay => (
-          <>
-            <ClientesDiasProximos
-              proxDay={proxDay}
-            />
-          </>
-        ))
-      }
-
-      <h2>
-        Clientes:
-      </h2>
       <Row>
         <Col sm="6">
           <Label className="me-1" for="search-input">
@@ -220,20 +203,19 @@ const Cliente = () => {
         <Col sm="4"></Col>
 
         <Col sm="2" className="mt-2">
-          <Button color="primary" onClick={toggle}>
-
+          <Button onClick={toggle} color="primary">
             + Agregar
           </Button>
         </Col>
       </Row>
-      <TablaCliente
+      <TablaUsuario
         data={data}
-        search={search}
         filter={filter}
-        actualizaClienteId={actualizaClienteId}
-        eliminarCliente={eliminarCliente}
+        search={search}
+        actualizarUsuarioId={actualizarUsuarioId}
+        eliminarUsuario={eliminarUsuario}
       />
-      <FormCliente
+      <FormUsuario
         toggle={toggle}
         modal={modal}
         handleSubmit={handleSubmit}
@@ -244,7 +226,7 @@ const Cliente = () => {
         errors={errors}
       />
     </>
-  )
-}
+  );
+};
 
-export default Cliente
+export default Usuario;
