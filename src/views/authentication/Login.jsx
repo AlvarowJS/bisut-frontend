@@ -44,24 +44,22 @@ const Login = () => {
   const submit = async (data) => {
     try {
       const response = await bdAdmin.post('/login', data);  // Reemplaza '/tu-ruta-api' con la ruta real de tu API      
-      const res = response.data;      
-      localStorage.setItem('token', res?.api_token);
+      const res = response.data;
+      // 
       localStorage.setItem('rol', res?.rol);
-      localStorage.setItem('idu', res?.user);
-      localStorage.setItem('nombres', res?.nombres);
-      localStorage.setItem('apellidos', res?.apellidos);
-      localStorage.setItem('cargo', res?.cargo);
+      localStorage.setItem('accessToken', res?.accessToken);
+      localStorage.setItem('refreshToken', res?.refreshToken);
+      localStorage.setItem('userData', JSON.stringify(res?.userData));
+      // 
       setIsError(false)
       navigate('/home')
 
     }
     catch (err) {
-      localStorage.setItem('token', '');
       localStorage.setItem('rol', '');
-      localStorage.setItem('idu', '');
-      localStorage.setItem('nombres', '');
-      localStorage.setItem('apellidos', '');
-      localStorage.setItem('cargo', '');
+      localStorage.setItem('accessToken', '');
+      localStorage.setItem('refreshToken', '');
+      localStorage.setItem('userData', '');
       setIsError(true)
     }
   }

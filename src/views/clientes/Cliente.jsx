@@ -15,7 +15,7 @@ const Cliente = () => {
   const [data, setData] = useState()
   const [filter, setFilter] = useState();
   const [proxDays, setProxDays] = useState()
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("accessToken");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [totalPages, setTotalPages] = useState(0);

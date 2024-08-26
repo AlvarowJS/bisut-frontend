@@ -40,7 +40,7 @@ const AuthGuard = ({ children }) => {
   const [myRol, setMyRol] = useState()
   const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
     const objToken = { token: token }
 
     bdAdmin.post('/token-auth', objToken, {

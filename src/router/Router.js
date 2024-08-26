@@ -17,7 +17,7 @@ import Error from "../views/Error";
 // ** Utils
 
 import NotAuthorized from '../views/authentication/NotAuthorized';
-import { getUserData, getHomeRouteForLoggedInUser, getkey } from '../utility/Utils'
+import { getUserData, getHomeRouteForLoggedInUser } from '../utility/Utils'
 
 // ** Components
 const Login = lazy(() => import('../views/authentication/Login'))
@@ -36,16 +36,18 @@ const Router = () => {
 
   const allRoutes = getRoutes(layout);
 
+  
   const getHomeRoute = () => {
     // console.log(token, "hola")
     // return '/login'
-    const user = getkey()
-    if(user != null){
-      return '/home'
-    }
-    else{
-      return '/login'
-    }
+    // const user = getkey()
+    // if(user != null){
+    //   return '/home'
+    // }
+    // else{
+    //   return '/login'
+    // }
+    return '/home'
     // if (user != null) {
     //   console.log('if route ')
     //   return getHomeRouteForLoggedInUser("normal")

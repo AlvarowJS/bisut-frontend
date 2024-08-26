@@ -10,7 +10,7 @@ const MySwal = withReactContent(Swal);
 const URL = "/users";
 
 const Usuario = () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("accessToken");
   const [data, setData] = useState();
   const [search, setSearch] = useState();
   const [filter, setFilter] = useState();
