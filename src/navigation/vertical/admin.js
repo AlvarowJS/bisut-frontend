@@ -20,22 +20,52 @@ export default [
     navLink: "/usuarios",
   },
   {
-    id: "Productos",
-    title: "Productos",
-    icon: <Box size={20} />,
-    navLink: "/productos",
+    id: "Proveedor",
+    title: "Proveedor",
+    icon: <User size={20} />,
+    navLink: "/proveedor",
+  },
+  {
+    id: "Inventario",
+    title: "Inventario",
+    icon: <Box size={20} />,    
     children: [
       {
-        id: "ListaProductos",
-        title: "Lista de Productos",
+        id: "Productos",
+        title: "Productos",
         icon: <Tag size={20} />,
-        navLink: "/productos/lista",
+        navLink: "/inventario/producto",
+      },
+      
+      {
+        id: "Tiendas",
+        title: "Tiendas",
+        icon: <FileText size={20} />,
+        navLink: "/inventario/tiendas",
       },
       {
-        id: "NuevoProducto",
-        title: "Agregar Producto",
+        id: "Familias",
+        title: "Familias",
         icon: <FileText size={20} />,
-        navLink: "/productos/nuevo",
+        navLink: "/inventario/familias",
+      },
+      {
+        id: "Grupos",
+        title: "Grupos",
+        icon: <FileText size={20} />,
+        navLink: "/inventario/grupos",
+      },
+      {
+        id: "Marcas",
+        title: "Marcas",
+        icon: <FileText size={20} />,
+        navLink: "/inventario/marcas",
+      },
+      {
+        id: "Kardex",
+        title: "Kardex",
+        icon: <FileText size={20} />,
+        navLink: "/inventario/kardex",
       }
     ]
   }

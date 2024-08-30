@@ -17,6 +17,11 @@ import Home from "../../views/home/Home";
 import bdAdmin from "../../api/bdAdmin";
 import Cliente from "../../views/clientes/Cliente";
 import Usuario from "../../views/usuarios/Usuario";
+import Familia from "../../views/almacen/familias/Familia";
+import Grupo from "../../views/almacen/grupo/Grupo";
+import Marca from "../../views/almacen/marca/Marca";
+import Tienda from "../../views/almacen/tienda/Tienda";
+import Proveedor from "../../views/proveedor/Proveedor";
 
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
@@ -58,7 +63,7 @@ const AuthGuard = ({ children }) => {
           // Aquí debe validar su token con su servidor para asegurarse de que es válido
           // Si el token no es válido, llame a "navigate" para redirigir al usuario a la página de inicio de sesión
           if (rol == "1") {
-          } 
+          }
           else {
             const restrictedRoutes = ["/"];
             if (restrictedRoutes.includes(window.location.pathname)) {
@@ -97,6 +102,41 @@ const Routes = [
     path: "/usuarios",
     element: <AuthGuard><Usuario /></AuthGuard>,
   },
+  // Proveedor
+  {
+    path: "/proveedor",
+    element: <AuthGuard><Proveedor /></AuthGuard>,
+  },
+  // Productos
+  {
+    path: "/inventario/producto",
+    element: <AuthGuard><Usuario /></AuthGuard>,
+  },
+  {
+    path: "/inventario/grupo",
+    element: <AuthGuard><Usuario /></AuthGuard>,
+  },
+  {
+    path: "/inventario/familias",
+    element: <AuthGuard><Familia /></AuthGuard>,
+  },
+  {
+    path: "/inventario/grupos",
+    element: <AuthGuard><Grupo /></AuthGuard>,
+  },
+  {
+    path: "/inventario/marcas",
+    element: <AuthGuard><Marca /></AuthGuard>,
+  },
+  {
+    path: "/inventario/tiendas",
+    element: <AuthGuard><Tienda /></AuthGuard>,
+  },
+  {
+    path: "/inventario/producto",
+    element: <AuthGuard><Usuario /></AuthGuard>,
+  },
+
   {
     path: "/error",
     element: <Error />,

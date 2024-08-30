@@ -22,9 +22,6 @@ const VerticalLayout = (props) => {
   } else if (rol === "1") {
     filteredNavigation = navigation;
   }
-  // else if (rol === "8" || rol === "6" === rol == "5" || rol === "4" === rol === "3" || rol === "2") {
-  //   filteredNavigation = [navigation[0]]
-  // }
   else {
     filteredNavigation = [navigation[0], navigation[1]]
   }
