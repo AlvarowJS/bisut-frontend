@@ -25,7 +25,77 @@ const ProveedorTable = ({
             sortable: true,
             name: 'Telefono',
             minWidth: '25px',
-            selector: row => row?.telefono
+            selector: row => row?.telefono,
+            cell: row => {
+                return (
+                    <>
+                        {row?.telefono}
+                    </>
+                )
+            }
+        },
+        {
+            sortable: true,
+            name: 'Dirección',
+            minWidth: '25px',
+            selector: row => row?.direccion,
+            cell: row => {
+                return (
+                    <>
+                        {row?.direccion}
+                    </>
+                )
+            }
+        },
+        {
+            sortable: true,
+            name: 'CP',
+            minWidth: '25px',
+            selector: row => row?.telefono,
+            cell: row => {
+                return (
+                    <>
+                        {row?.telefono}
+                    </>
+                )
+            }
+        },
+        {
+            sortable: true,
+            name: 'Correo',
+            minWidth: '25px',
+            selector: row => row?.mail,
+            cell: row => {
+                return (
+                    <>
+                        {row?.mail}
+                    </>
+                )
+            }
+        },
+        {
+            sortable: true,
+            name: 'Estado',
+            minWidth: '50px',
+            selector: row => row?.estado,
+            cell: row => {
+                return (
+                    <>
+                        {
+                            row?.estado == true ?
+
+                                <Badge color='light-success'>
+                                    Activo
+                                </Badge>
+                                :
+                                <Badge color='light-warning'>
+                                    Inactivo
+                                </Badge>
+
+                        }
+                    </>
+                )
+            }
         },
         {
             name: 'Acciones',
