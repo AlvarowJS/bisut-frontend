@@ -22,6 +22,8 @@ import Grupo from "../../views/almacen/grupo/Grupo";
 import Marca from "../../views/almacen/marca/Marca";
 import Tienda from "../../views/almacen/tienda/Tienda";
 import Proveedor from "../../views/proveedor/Proveedor";
+import Producto from "../../views/almacen/productos/Producto";
+import Kardex from "../../views/almacen/kardex/Kardex";
 
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
@@ -110,7 +112,7 @@ const Routes = [
   // Productos
   {
     path: "/inventario/producto",
-    element: <AuthGuard><Usuario /></AuthGuard>,
+    element: <AuthGuard><Producto /></AuthGuard>,
   },
   {
     path: "/inventario/grupo",
@@ -136,7 +138,10 @@ const Routes = [
     path: "/inventario/producto",
     element: <AuthGuard><Usuario /></AuthGuard>,
   },
-
+  {
+    path: "/inventario/kardex",
+    element: <AuthGuard><Kardex /></AuthGuard>,
+  },
   {
     path: "/error",
     element: <Error />,
