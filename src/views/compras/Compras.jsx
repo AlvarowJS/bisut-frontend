@@ -21,21 +21,10 @@ const Compras = () => {
     const { handleSubmit, register, reset, formState: { errors } } = useForm();
     const [refresh, setRefresh] = useState(false);
     const defaulValuesForm = {
-        item: "",
-        descripcion: "",
-        precio1: "",
-        precio2: "",
-        precio3: "",
-        precioUnitario: "",
-        precioLista: "",
-        precioSuelto: "",
-        precioEspecial: "",
-        piezasPaquete: "",
-        foto: "",
-        familia_id: "",
-        grupo_id: "",
-        marca_id: "",
-        foto: ""
+        factura: "",
+        fecha: "",
+        total: "",
+        cliente_id: ""
     };
     const getAuthHeaders = () => ({
         headers: {
