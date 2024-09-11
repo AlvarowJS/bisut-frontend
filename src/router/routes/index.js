@@ -24,6 +24,7 @@ import Tienda from "../../views/almacen/tienda/Tienda";
 import Proveedor from "../../views/proveedor/Proveedor";
 import Producto from "../../views/almacen/productos/Producto";
 import Kardex from "../../views/almacen/kardex/Kardex";
+import Compras from "../../views/compras/Compras";
 
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
@@ -141,6 +142,11 @@ const Routes = [
   {
     path: "/inventario/kardex",
     element: <AuthGuard><Kardex /></AuthGuard>,
+  },
+  // Compras
+  {
+    path: "/compras",
+    element: <AuthGuard><Compras /></AuthGuard>,
   },
   {
     path: "/error",

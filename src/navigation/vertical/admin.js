@@ -1,4 +1,4 @@
-import { File, Tag, FileText, BarChart, UserCheck, Table, Edit, UserMinus, Home, User, Box } from "react-feather";
+import { File, Tag, FileText, BarChart, UserCheck, Table, Edit, UserMinus, Home, User, Box, ShoppingBag } from "react-feather";
 
 export default [
   {
@@ -68,6 +68,12 @@ export default [
         navLink: "/inventario/kardex",
       }
     ]
-  }
+  },
+  {
+    id: "Compras",
+    title: "Compras",
+    icon: <ShoppingBag size={20} />,
+    navLink: "/compras",
+  },
 ];
 

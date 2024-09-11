@@ -1,30 +1,42 @@
-import React from 'react'
-import ComprasTable from './ComprasTable'
 import React, { useEffect, useState } from "react";
 import { Button, Col, Input, Label, Row } from "reactstrap";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 const MySwal = withReactContent(Swal);
-import bdAdmin from "../../../api/bdAdmin";
-import CompraTable from "./CompraTable";
-import CompraForm from "./CompraForm";
-const URL = "v1/Compras";
+import bdAdmin from "../../api/bdAdmin";
+import ComprasTable from "./ComprasTable";
+import ComprasForm from "./ComprasForm";
+const URL = "v1/compras";
+const URLPROVEEDOR = "v1/proveedor";
+const URLPRODUCTO = "v1/productos";
+const URLALMACEN = "v1/almacen";
 
 const Compras = () => {
     const token = localStorage.getItem("accessToken");
+    const [dataAlmacen, setDataAlmacen] = useState();
+    const [dataProveedor, setDataProveedor] = useState()
+    const [dataProductos, setDataProductos] = useState()
     const [data, setData] = useState();
     const [search, setSearch] = useState();
     const [filter, setFilter] = useState();
     const [modal, setModal] = useState(false);
+    const [item, setItem] = useState()
     const [actualizacion, setActualizacion] = useState(false);
-    const { handleSubmit, register, reset, formState: { errors } } = useForm();
+    const { handleSubmit, control, setValue, register, reset, formState: { errors } } = useForm();
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "detalles"
+    })
+
     const [refresh, setRefresh] = useState(false);
     const defaulValuesForm = {
-        factura: "",
-        fecha: "",
-        total: "",
-        cliente_id: ""
+        factura: '',
+        fecha: '',
+        cliente_id: '',
+        almacen_id: '',
+        proveedor_id: '',
+        detalles: [{ item: '', cantidad: 0, precio_unitario: 0 }]
     };
     const getAuthHeaders = () => ({
         headers: {
@@ -40,6 +52,19 @@ const Compras = () => {
     const toggleActualizacion = () => {
         setModal(!modal);
     };
+
+    useEffect(() => {
+        bdAdmin.get(URLALMACEN, getAuthHeaders())
+            .then((res) => { setDataAlmacen(res.data); })
+            .catch((err) => { });
+        bdAdmin.get(URLPROVEEDOR, getAuthHeaders())
+            .then((res) => { setDataProveedor(res.data); })
+            .catch((err) => { });
+        bdAdmin.get(URLPRODUCTO, getAuthHeaders())
+            .then((res) => { setDataProductos(res.data); })
+            .catch((err) => { });
+    }, [])
+
     useEffect(() => {
         bdAdmin
             .get(`${URL}`, getAuthHeaders())
@@ -63,7 +88,7 @@ const Compras = () => {
     };
     const crearCompra = (data) => {
         bdAdmin
-            .post(URL, newData, getAuthHeaders())
+            .post(URL, data, getAuthHeaders())
             .then((res) => {
                 reset(defaulValuesForm);
                 toggle.call();
@@ -77,7 +102,6 @@ const Compras = () => {
                 });
             })
             .catch((err) => {
-
                 Swal.fire({
                     position: "center",
                     icon: "error",
@@ -90,7 +114,7 @@ const Compras = () => {
 
     const actualizarCompra = (id, data) => {
         bdAdmin
-            .post(`${URLFOTO}`, newData, getAuthHeaders())
+            .post(`${URL}`, newData, getAuthHeaders())
             .then((res) => {
                 reset(defaulValuesForm);
                 toggle.call();
@@ -163,7 +187,7 @@ const Compras = () => {
     };
 
     // Si es actualizacion llamara a actualizarPaciente pero si es false crear un Consultorio
-    const submit = (data) => {
+    const submit = (data) => {        
         if (actualizacion) {
             actualizarCompra(data.id, data);
         } else {
@@ -172,12 +196,57 @@ const Compras = () => {
     };
     return (
         <>
+            <h3>Compras</h3>
+            <Row className="mb-2">
+                <Col sm="6">
+                    <Label className="me-1" for="search-input">
+                        Buscar
+                    </Label>
+                    <Input
+                        className="dataTable-filter"
+                        type="text"
+                        bsSize="sm"
+                        id="search-input"
+                        placeholder="buscar por nombre y apellidos"
+                        onChange={handleFilter}
+                    />
+                </Col>
+                <Col sm="4"></Col>
+
+                <Col sm="2" className="mt-2">
+                    <Button color="primary" onClick={toggle}>
+
+                        + Agregar
+                    </Button>
+                </Col>
+            </Row>
             <ComprasTable
                 data={data}
                 filter={filter}
                 search={search}
                 actualizarCompraId={actualizarCompraId}
                 eliminarCompra={eliminarCompra}
+            />
+            <ComprasForm
+                toggle={toggle}
+                modal={modal}
+                handleSubmit={handleSubmit}
+                submit={submit}
+                register={register}
+                reset={reset}
+                getAuthHeaders={getAuthHeaders}
+                errors={errors}
+                fields={fields}
+                append={append}
+                remove={remove}
+                dataAlmacen={dataAlmacen}
+                dataProveedor={dataProveedor}
+                dataProductos={dataProductos}
+                item={item}
+                setItem={setItem}
+                setValue={setValue}
+                Controller={Controller}
+                control={control}
             />
         </>
     )
