@@ -154,7 +154,7 @@ const ProductoTable = ({
         return (
           <>
             <img src={
-              `https://bisut.tms2.nuvola7.com.mx/storage/productos/${row?.item}/${row?.foto}`
+              `http://127.0.0.1:8000/storage/productos/${row?.item}/${row?.foto}`
             }
             width={100} height={100}
             className='my-1'

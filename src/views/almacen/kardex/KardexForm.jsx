@@ -2,7 +2,7 @@ import React from 'react'
 
 const KardexForm = () => {
   return (
-    <div>KardexForm</div>
+    <div>ad</div>
   )
 }
 
