@@ -7,10 +7,12 @@ const MySwal = withReactContent(Swal);
 import bdAdmin from "../../api/bdAdmin";
 import ComprasTable from "./ComprasTable";
 import ComprasForm from "./ComprasForm";
+import ComprasExcel from "./ComprasExcel";
 const URL = "v1/compras";
 const URLPROVEEDOR = "v1/proveedor";
 const URLPRODUCTO = "v1/productos";
 const URLALMACEN = "v1/almacen";
+const URLEXCEL = "v1/importar-compra";
 
 const Compras = () => {
     const token = localStorage.getItem("accessToken");
@@ -21,15 +23,26 @@ const Compras = () => {
     const [search, setSearch] = useState();
     const [filter, setFilter] = useState();
     const [modal, setModal] = useState(false);
+    const [modalExcel, setModalExcel] = useState(false)
     const [item, setItem] = useState()
+    const [excelFile, setExcelFile] = useState()
     const [actualizacion, setActualizacion] = useState(false);
     const { handleSubmit, control, setValue, register, reset, formState: { errors } } = useForm();
+    const { handleSubmit: handleSubmitExcel, register: registerExcel, reset: resetExcel } = useForm();
+
     const { fields, append, remove } = useFieldArray({
         control,
         name: "detalles"
     })
 
     const [refresh, setRefresh] = useState(false);
+    const defaultValuesExcel = {
+        factura: '',
+        fecha: '',
+        cliente_id: '',
+        almacen_id: '',
+        proveedor_id: '',
+    }
     const defaulValuesForm = {
         factura: '',
         fecha: '',
@@ -38,20 +51,24 @@ const Compras = () => {
         proveedor_id: '',
         detalles: [{ item: '', cantidad: 0, precio_unitario: 0 }]
     };
+
     const getAuthHeaders = () => ({
         headers: {
             Authorization: "Bearer " + token,
         },
     });
+
     const toggle = () => {
         setActualizacion(false);
         reset(defaulValuesForm);
         setModal(!modal);
     };
-
     const toggleActualizacion = () => {
         setModal(!modal);
     };
+    const toggleExcel = () => {
+        setModalExcel(!modalExcel)
+    }
 
     useEffect(() => {
         bdAdmin.get(URLALMACEN, getAuthHeaders())
@@ -187,13 +204,47 @@ const Compras = () => {
     };
 
     // Si es actualizacion llamara a actualizarPaciente pero si es false crear un Consultorio
-    const submit = (data) => {        
+    const submit = (data) => {
         if (actualizacion) {
             actualizarCompra(data.id, data);
         } else {
             crearCompra(data);
         }
     };
+
+    const submitExcel = (data) => {
+        const newData = new FormData()
+        newData.append('factura', data.factura)
+        newData.append('fecha', data.fecha)
+        newData.append('proveedor', data.proveedor_id)
+        newData.append('almacen', data.almacen_id)
+        newData.append('archivo', excelFile)
+
+
+        bdAdmin.post(URLEXCEL, newData, getAuthHeaders())
+            .then((res) => {
+                resetExcel(defaultValuesExcel)
+                toggleExcel.call()
+                setRefresh(!refresh)
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Producto creado",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            })
+            .catch((err) => {
+                console.log(err)
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Contacte con soporte",
+                    showConfirmButton: false,
+                });
+            });
+
+    }
     return (
         <>
             <h3>Compras</h3>
@@ -211,11 +262,14 @@ const Compras = () => {
                         onChange={handleFilter}
                     />
                 </Col>
-                <Col sm="4"></Col>
-
+                <Col sm="2"></Col>
+                <Col sm="2" className="mt-2">
+                    <Button color="success" onClick={toggleExcel}>
+                        + Subir Excel
+                    </Button>
+                </Col>
                 <Col sm="2" className="mt-2">
                     <Button color="primary" onClick={toggle}>
-
                         + Agregar
                     </Button>
                 </Col>
@@ -226,6 +280,16 @@ const Compras = () => {
                 search={search}
                 actualizarCompraId={actualizarCompraId}
                 eliminarCompra={eliminarCompra}
+            />
+            <ComprasExcel
+                toggleExcel={toggleExcel}
+                modal={modalExcel}
+                handleSubmit={handleSubmitExcel}
+                submit={submitExcel}
+                register={registerExcel}
+                dataAlmacen={dataAlmacen}
+                dataProveedor={dataProveedor}
+                setExcelFile={setExcelFile}
             />
             <ComprasForm
                 toggle={toggle}
