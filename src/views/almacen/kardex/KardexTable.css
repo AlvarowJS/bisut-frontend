@@ -1,0 +1,27 @@
+/* KardexTable.css */
+.react-dataTable {
+    border-collapse: collapse; /* Esto asegura que las líneas entre columnas se vean */
+  }
+  
+  .react-dataTable thead th {
+    white-space: normal !important; /* Asegura que los encabezados se ajusten */
+    word-wrap: break-word; /* Rompe el texto en varias líneas si es necesario */
+    border-bottom: 2px solid #ddd; /* Añade líneas debajo de los encabezados */
+  }
+  
+  .react-dataTable tbody td {
+    white-space: normal; /* Permite que el contenido se ajuste sin truncarse */
+    word-wrap: break-word; /* Rompe el texto en varias líneas si es necesario */
+    border-bottom: 1px solid #ddd; /* Añade líneas debajo de cada fila */
+    border-right: 1px solid #ddd; /* Añade líneas entre las columnas */
+  }
+  
+  .react-dataTable tbody tr {
+    border-bottom: 1px solid #ddd; /* Añade una línea entre las filas */
+  }
+  
+  .react-dataTable thead th, .react-dataTable tbody td {
+    padding: 8px; /* Añade espaciado a las celdas */
+    text-align: left;
+  }
+  
