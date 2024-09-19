@@ -4,6 +4,7 @@ import { useForm, useFieldArray, Controller } from "react-hook-form";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 const MySwal = withReactContent(Swal);
+import { useNavigate } from 'react-router-dom'
 import bdAdmin from "../../api/bdAdmin";
 import ComprasTable from "./ComprasTable";
 import ComprasForm from "./ComprasForm";
@@ -16,6 +17,7 @@ const URLEXCEL = "v1/importar-compra";
 
 const Compras = () => {
     const token = localStorage.getItem("accessToken");
+    const navigate = useNavigate()
     const [dataAlmacen, setDataAlmacen] = useState();
     const [dataProveedor, setDataProveedor] = useState()
     const [dataProductos, setDataProductos] = useState()
@@ -94,7 +96,7 @@ const Compras = () => {
         setFilter(
             data?.filter(
                 (e) =>
-                    e?.item?.toLowerCase()
+                    e?.factura?.toLowerCase()
                         .indexOf(search?.toLowerCase()) !== -1
             )
         );
@@ -193,14 +195,16 @@ const Compras = () => {
 
     // Tomara los datos que tiene un registro
     const actualizarCompraId = (id) => {
-        toggleActualizacion.call();
-        setActualizacion(true);
-        bdAdmin
-            .get(`${URL}/${id}`, getAuthHeaders())
-            .then((res) => {
-                reset(res.data);
-            })
-            .catch((err) => null);
+        navigate(`/compras/${id}`)
+
+        // toggleActualizacion.call();
+        // setActualizacion(true);
+        // bdAdmin
+        //     .get(`${URL}/${id}`, getAuthHeaders())
+        //     .then((res) => {
+        //         reset(res.data);
+        //     })
+        //     .catch((err) => null);
     };
 
     // Si es actualizacion llamara a actualizarPaciente pero si es false crear un Consultorio

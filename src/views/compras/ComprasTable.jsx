@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card } from "reactstrap";
 import DataTable from "react-data-table-component";
-import { Edit, Trash } from 'react-feather';
+import { Edit, Eye, Trash } from 'react-feather';
 const ComprasTable = ({
   data, filter, search, actualizarCompraId, eliminarCompra
 }) => {
@@ -27,6 +27,24 @@ const ComprasTable = ({
       selector: (row) => row?.fecha,
     },
     {
+      sortable: true,
+      name: "Proveedor",
+      minWidth: "25px",
+      selector: (row) => row?.proveedor?.nombre,
+    },
+    {
+      sortable: true,
+      name: "Proveedor",
+      minWidth: "25px",
+      selector: (row) => row?.proveedor?.nombre,
+    },
+    {
+      sortable: true,
+      name: "Tienda",
+      minWidth: "25px",
+      selector: (row) => row?.almacen?.nombre,
+    },
+    {
       name: 'Acciones',
       sortable: true,
       allowOverflow: true,
@@ -39,7 +57,7 @@ const ComprasTable = ({
                   <button className='btn btn-warning'
                       onClick={() => actualizarCompraId(row?.id)}
                   >
-                      <Edit />
+                      <Eye />
                   </button>
                   <button className='btn' style={{ backgroundColor: '#DC3545', color: 'white' }}
                       onClick={() => eliminarCompra(row?.id)}

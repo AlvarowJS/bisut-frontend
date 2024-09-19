@@ -144,7 +144,7 @@ const Kardex = () => {
                         </Button>
                 </Col>
             </Row>
-            <Row className="mb-2">
+            {/* <Row className="mb-2">
                 <Col sm="6">
                     <Label className="me-1" for="search-input">
                         Buscar
@@ -163,7 +163,7 @@ const Kardex = () => {
                 <Col sm="2" className="mt-2">
 
                 </Col>
-            </Row>
+            </Row> */}
             <KardexTable
                 data={data}
             // filter={filter}
