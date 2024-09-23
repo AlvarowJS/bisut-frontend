@@ -23,6 +23,7 @@ const Cliente = () => {
   const { handleSubmit, register, reset, formState: { errors } } = useForm();
   const [refresh, setRefresh] = useState(false);
   const [modal, setModal] = useState(false);
+  const [show, setShow] = useState(true)
 
   const defaulValuesForm = {
     nombre_completo: "",
@@ -185,25 +186,45 @@ const Cliente = () => {
     }
   };
 
+  const mostrarCumples = () => {
+    setShow(!show)
+  }
+
   return (
     <>
       <h2>
         Cumpleaños cercanos:
       </h2>
+      
+      
+      <button
+        className='btn btn-success my-1'
+        onClick={mostrarCumples}
+      >
+        {
+          show ? 'Ocultar Cumpleaños' : 'Mostras Cumpleaños'
+        }
+        
+      </button>
+
       {
-        proxDays?.map(proxDay => (
-          <>
-            <ClientesDiasProximos
-              proxDay={proxDay}
-            />
-          </>
-        ))
+        show ? (
+          proxDays?.map(proxDay => (
+            <>
+              <ClientesDiasProximos
+                proxDay={proxDay}
+              />
+            </>
+          ))
+        ) : (
+          null
+        )
       }
 
       <h2>
         Clientes:
       </h2>
-      <Row>
+      <Row className='mb-1'>
         <Col sm="6">
           <Label className="me-1" for="search-input">
             Buscar

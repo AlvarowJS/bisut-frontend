@@ -49,6 +49,8 @@ const AuthGuard = ({ children }) => {
   const [myRol, setMyRol] = useState()
   const navigate = useNavigate();
   useEffect(() => {
+
+    console.log("holaaa? se activo")
     const token = localStorage.getItem("accessToken");
     const objToken = { token: token }
 
@@ -78,7 +80,12 @@ const AuthGuard = ({ children }) => {
 
 
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err.response.status)
+        if(err.response.status == 401){
+          navigate("/login");
+        }
+      })
 
   }, [])
 

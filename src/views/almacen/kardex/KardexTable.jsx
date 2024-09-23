@@ -35,35 +35,56 @@ const KardexTable = ({ data }) => {
     },
     {
       sortable: true,
-      name: 'Cantidad Entrada',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Cantidad Entrada
+        </div>
+      ),
       minWidth: '100px',
       maxWidth: '150px',
       selector: row => row?.cantidadEntrada
     },
     {
       sortable: true,
-      name: 'Valor Unitario Entrada',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Valor Unitario Entrada
+        </div>
+      ),
       minWidth: '100px',
       maxWidth: '150px',
       selector: row => row?.vuEntrada
     },
     {
       sortable: true,
-      name: 'Valor Total de entrada',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Valor Total de Entrada
+        </div>
+      ),
       minWidth: '100px',
       maxWidth: '150px',
       selector: row => row?.vtEntrada
     },
     {
       sortable: true,
-      name: 'Cantidad de Salida',
+      // name: 'Cantidad de Salida',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Cantidad de Salida
+        </div>
+      ),
       minWidth: '100px',
       maxWidth: '150px',
       selector: row => row?.cantidadSalida
     },
     {
-      sortable: true,
-      name: 'Valor Unitario de Salida',
+      sortable: true,      
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Valor Unitario de Salida
+        </div>
+      ),
       minWidth: '100px',
       maxWidth: '150px',
       wrap: true,
@@ -71,14 +92,23 @@ const KardexTable = ({ data }) => {
     },
     {
       sortable: true,
-      name: 'Valor total de salida',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Valor total de salida
+        </div>
+      ),
       minWidth: '100px',
       maxWidth: '150px',
       selector: row => row?.vtSalida
     },
     {
       sortable: true,
-      name: 'Cantidad de saldo',
+      // name: 'Cantidad de saldo',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Cantidad de Saldo
+        </div>
+      ),
       minWidth: '100px',
       maxWidth: '150px',
       wrap: true,
@@ -87,14 +117,22 @@ const KardexTable = ({ data }) => {
     },
     {
       sortable: true,
-      name: 'Valor Unitario Saldo',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Valor Unitario Saldo
+        </div>
+      ),
       minWidth: '100px',
       maxWidth: '150px',
       selector: row => row?.vuSaldo
     },
     {
       sortable: true,
-      name: 'Valor Total Saldo',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Valor Total Saldo
+        </div>
+      ),
       minWidth: '100px',
       maxWidth: '150px',
       selector: row => row?.vtSaldo

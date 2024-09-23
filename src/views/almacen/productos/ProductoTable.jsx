@@ -18,7 +18,8 @@ const ProductoTable = ({
     {
       sortable: true,
       name: 'Item',
-      minWidth: '25px',
+      minWidth: '120px',
+      maxWidth: '140px',
       selector: row => row?.item,
       cell: row => {
         return (
@@ -30,8 +31,14 @@ const ProductoTable = ({
     },
     {
       sortable: true,
-      name: 'Descripción',
-      minWidth: '50px',
+      // name: 'Descripción',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Descripción
+        </div>
+      ),
+      minWidth: '140px',
+      maxWidth: '140px',
       selector: row => row?.descripcion,
       cell: row => {
         return (
@@ -43,7 +50,11 @@ const ProductoTable = ({
     },
     {
       sortable: true,
-      name: 'Precio 1',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Precio 1
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.precio1,
       cell: row => {
@@ -56,7 +67,11 @@ const ProductoTable = ({
     },
     {
       sortable: true,
-      name: 'Precio 2',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Precio 2
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.precio2,
       cell: row => {
@@ -69,7 +84,11 @@ const ProductoTable = ({
     },
     {
       sortable: true,
-      name: 'Precio 3',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Precio 3
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.precio3,
       cell: row => {
@@ -82,7 +101,11 @@ const ProductoTable = ({
     },
     {
       sortable: true,
-      name: 'Precio Unitario',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Precio Unitario
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.precioUnitario,
       cell: row => {
@@ -94,8 +117,12 @@ const ProductoTable = ({
       }
     },
     {
-      sortable: true,
-      name: 'Precio Lista',
+      sortable: true,      
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Precio Lista
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.precioLista,
       cell: row => {
@@ -108,7 +135,11 @@ const ProductoTable = ({
     },
     {
       sortable: true,
-      name: 'Precio Suelto',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Precio Suelto
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.precioSuelto,
       cell: row => {
@@ -120,8 +151,12 @@ const ProductoTable = ({
       }
     },
     {
-      sortable: true,
-      name: 'Precio Especial',
+      sortable: true,      
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Precio Especial
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.precioEspecial,
       cell: row => {
@@ -134,7 +169,11 @@ const ProductoTable = ({
     },
     {
       sortable: true,
-      name: 'Piezas x Paquete',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Piezas x Paquete
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.piezasPaquete,
       cell: row => {
@@ -148,7 +187,8 @@ const ProductoTable = ({
     {
       sortable: true,
       name: 'Foto',
-      minWidth: '25px',
+      minWidth: '120px',
+      maxWidth: '120px',
       selector: row => row?.foto,
       cell: row => {
         return (
@@ -156,9 +196,9 @@ const ProductoTable = ({
             <img src={
               `https://bisut.tms2.nuvola7.com.mx/storage/productos/${row?.item}/${row?.foto}`
             }
-            width={100} height={100}
-            className='my-1'
-            alt="" />
+              width={100} height={100}
+              className='my-1'
+              alt="" />
             {/* {row?.foto} */}
           </>
         )
@@ -166,7 +206,11 @@ const ProductoTable = ({
     },
     {
       sortable: true,
-      name: 'Familia',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Familia
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.familia?.nombre,
       cell: row => {
@@ -178,8 +222,12 @@ const ProductoTable = ({
       }
     },
     {
-      sortable: true,
-      name: 'Grupo',
+      sortable: true,      
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Grupo
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.grupo?.nombre,
       cell: row => {
@@ -192,7 +240,11 @@ const ProductoTable = ({
     },
     {
       sortable: true,
-      name: 'marca',
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Marca
+        </div>
+      ),
       minWidth: '25px',
       selector: row => row?.marca?.nombre,
       cell: row => {
@@ -204,11 +256,14 @@ const ProductoTable = ({
       }
     },
     {
-      name: 'Acciones',
-      sortable: true,
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          Acciones
+        </div>
+      ),
       allowOverflow: true,
-      minWidth: '200px',
-      maxWidth: '400px',
+      minWidth: '100px',
+      maxWidth: '200px',
       cell: row => {
         return (
           <div className='d-flex gap-1 my-1'>

@@ -47,7 +47,14 @@ const Router = () => {
     // else{
     //   return '/login'
     // }
-    return '/home'
+    const token = localStorage.getItem("accessToken")
+    if(token){
+      return '/home'
+    }else{
+      return '/login'
+    }
+
+
     // if (user != null) {
     //   console.log('if route ')
     //   return getHomeRouteForLoggedInUser("normal")
