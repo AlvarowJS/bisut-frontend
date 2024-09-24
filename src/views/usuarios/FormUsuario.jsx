@@ -2,7 +2,8 @@ import React from 'react'
 import { Modal, ModalBody, ModalHeader } from 'reactstrap'
 
 const FormUsuario = ({
-  modal, toggle, handleSubmit, register, submit, toggleActualizacion, errors
+  modal, toggle, handleSubmit, register, submit, toggleActualizacion, errors,
+  dataTiendas, dataRoles
 }) => {
   return (
     <Modal isOpen={modal} toggle={toggle || toggleActualizacion} size='lg'>
@@ -38,9 +39,26 @@ const FormUsuario = ({
             <label htmlFor="">
               ROL
             </label>
-            <select className="form-select" id="role_id" {...register("role_id")}>
-              <option value="1">Adminitrador</option>
-              <option value="2">Usuario</option>      
+            <select className="form-select" id="role_id" {...register("role_id")}>              
+              {
+                dataRoles?.map(role => (
+                  <option key={role?.id} value={role?.id}>{role?.name}</option>
+                ))
+              }
+            </select>
+
+
+          </div>
+          <div className='form-group my-2'>
+            <label htmlFor="">
+              Tienda
+            </label>
+            <select className="form-select" id="almacen_id" {...register("almacen_id")}>              
+              {
+                dataTiendas?.map(almacen => (
+                  <option key={almacen?.id} value={almacen?.id}>{almacen?.nombre}</option>
+                ))
+              }
             </select>
           </div>
           <div className='form-group my-2'>

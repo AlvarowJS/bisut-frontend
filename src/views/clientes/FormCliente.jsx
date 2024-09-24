@@ -104,15 +104,31 @@ const FormCliente = ({
               </div>
             </Col>
           </Row>
-          <div className='form-group my-2'>
-            <label htmlFor="limite_credito">Límite de Crédito</label>
-            <input
-              className="form-control"
-              type="number"
-              placeholder='Ingrese límite de crédito'
-              {...register('limite_credito')}
-            />
-          </div>
+          <Row>
+            <Col>
+              <div className='form-group my-2'>
+                <label htmlFor="limite_credito">Límite de Crédito</label>
+                <input
+                  className="form-control"
+                  type="number"
+                  placeholder='Ingrese límite de crédito'
+                  {...register('limite_credito')}
+                />
+              </div>
+            </Col>
+            <Col>
+              <div className='form-group my-2'>
+                <label htmlFor="dias_credito">Días de Crédito</label>
+                <input
+                  className="form-control"
+                  type="number"
+                  placeholder='Ingrese Diás de crédito'
+                  {...register('dias_credito')}
+                />
+              </div>
+            </Col>
+          </Row>
+
           <Row className='mb-2'>
             <Col>
               <div className='form-group'>
@@ -132,6 +148,39 @@ const FormCliente = ({
                   className="form-control"
                   type="date"
                   {...register('fecha_nac')}
+                />
+              </div>
+            </Col>
+          </Row>
+          <Row className="mb-1">
+            <h4>Datos del contacto</h4>
+            <Col>
+              <div className='form-group'>
+                <label htmlFor="contacto_nombre">Nombre</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  {...register('contacto_nombre')}
+                />
+              </div>
+            </Col>
+            <Col>
+              <div className='form-group'>
+                <label htmlFor="contacto_telefono">Telefono</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  {...register('contacto_telefono')}
+                />
+              </div>
+            </Col>
+            <Col>
+              <div className='form-group'>
+                <label htmlFor="contacto_email">Email</label>
+                <input
+                  className="form-control"
+                  type="email"
+                  {...register('contacto_email')}
                 />
               </div>
             </Col>

@@ -18,7 +18,15 @@ const TablaUsuario = ({
             sortable: true,
             name: 'Nombre completo',
             minWidth: '25px',
-            selector: row => row?.name
+            selector: row => row?.name,
+            cell: row => {
+                return (
+                  <>
+                    {row?.name}
+                  </>
+                )
+              }
+            
         },
         {
             sortable: true,
@@ -30,13 +38,27 @@ const TablaUsuario = ({
             sortable: true,
             name: 'Rol',
             minWidth: '50px',
-            selector: row => row?.role_id == 1 ? 'Adminitrador' : 'Usuario'
+            selector: row => row?.role_id,
+            cell: row => {
+                return (
+                  <>
+                    {row?.role?.name}
+                  </>
+                )
+              }
         },
         {
             sortable: true,
             name: 'Email',
             minWidth: '50px',
-            selector: row => row?.email
+            selector: row => row?.email,
+            cell: row => {
+                return (
+                  <>
+                    {row?.email}
+                  </>
+                )
+              }
         },
         {
             sortable: true,

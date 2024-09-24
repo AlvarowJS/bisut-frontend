@@ -43,6 +43,24 @@ const TablaCliente = ({
         },
         {
             sortable: true,
+            name: "Límite Credito",
+            minWidth: "25px",
+            selector: (row) => row?.limite_credito,
+            cell: (row) => {
+                return <>{row?.limite_credito}</>;
+            },
+        },
+        {
+            sortable: true,
+            name: "Días Credito",
+            minWidth: "25px",
+            selector: (row) => row?.dias_credito,
+            cell: (row) => {
+                return <>{row?.dias_credito}</>;
+            },
+        },
+        {
+            sortable: true,
             name: "Estado",
             minWidth: "25px",
             selector: (row) => row?.estado,

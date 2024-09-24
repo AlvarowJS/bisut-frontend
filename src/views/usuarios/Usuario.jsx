@@ -8,10 +8,14 @@ import FormUsuario from "./FormUsuario";
 import bdAdmin from "../../api/bdAdmin";
 const MySwal = withReactContent(Swal);
 const URL = "/users";
+const URLROL = "/roles";
+const URLALMACEN = "v1/almacen"
 
 const Usuario = () => {
   const token = localStorage.getItem("accessToken");
   const [data, setData] = useState();
+  const [dataTiendas, setDataTiendas] = useState()
+  const [dataRoles, setDataRoles] = useState()
   const [search, setSearch] = useState();
   const [filter, setFilter] = useState();
   const [modal, setModal] = useState(false);
@@ -41,8 +45,17 @@ const Usuario = () => {
   };
 
   useEffect(() => {
+    bdAdmin.get(URLALMACEN, getAuthHeaders())
+      .then((res) => setDataTiendas(res.data))
+      .catch((err) => { });
+    bdAdmin.get(URLROL, getAuthHeaders())
+      .then((res) => setDataRoles(res.data))
+      .catch((err) => { });
+  }, []);
+
+  useEffect(() => {
     bdAdmin
-      .get(`${URL}`, getAuthHeaders())
+      .get(URL, getAuthHeaders())
       .then((res) => {
         setData(res.data);
       })
@@ -217,6 +230,8 @@ const Usuario = () => {
       />
       <FormUsuario
         toggle={toggle}
+        dataTiendas={dataTiendas}
+        dataRoles={dataRoles}
         modal={modal}
         handleSubmit={handleSubmit}
         submit={submit}
