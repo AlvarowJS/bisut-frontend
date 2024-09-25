@@ -1,9 +1,11 @@
 import React from 'react'
 import { Col, Modal, ModalBody, ModalHeader, Row } from 'reactstrap'
 const FormCliente = ({
-  modal, toggle, handleSubmit, register, submit, toggleActualizacion, errors
+  modal, toggle, handleSubmit, register, submit, toggleActualizacion, errors, dataTipos
 }) => {
+  console.log(dataTipos)
   return (
+
     <Modal isOpen={modal} toggle={toggle || toggleActualizacion} size='lg'>
       <ModalHeader>
         Registrar Cliente
@@ -149,6 +151,18 @@ const FormCliente = ({
                   type="date"
                   {...register('fecha_nac')}
                 />
+              </div>
+            </Col>
+            <Col>
+              <div className='form-group'>
+                <label htmlFor="fecha_nac">Tipo de Cliente</label>
+                <select className='form-select' id='tipo_cliente' {...register("tipo_cliente")}>
+                  {
+                    dataTipos?.map(tipo => (
+                      <option key={tipo?.id} value={tipo?.id}>{tipo?.nombre}</option>
+                    ))
+                  }
+                </select>
               </div>
             </Col>
           </Row>

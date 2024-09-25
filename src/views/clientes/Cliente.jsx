@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 const MySwal = withReactContent(Swal);
 const URL = '/v1/clientes'
+const URLTIPOS = '/v1/clientes-tipos'
 const Cliente = () => {
 
   const [search, setSearch] = useState();
@@ -16,6 +17,7 @@ const Cliente = () => {
   const [filter, setFilter] = useState();
   const [proxDays, setProxDays] = useState()
   const token = localStorage.getItem("accessToken");
+  const [dataTipos, setDataTipos] = useState()
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
@@ -36,7 +38,12 @@ const Cliente = () => {
     telefono: "",
     limite_credito: "",
     mail: "",
-    fecha_nac: ""
+    fecha_nac: "",
+    tipo_cliente: "",
+    dias_credito: "",
+    contacto_nombre: "",
+    contacto_telefono: "",
+    contacto_email: "",
   };
 
   const getAuthHeaders = () => ({
@@ -64,6 +71,12 @@ const Cliente = () => {
       )
   }, [refresh])
 
+  useEffect(() => {
+    bdAdmin.get(URLTIPOS, getAuthHeaders())
+      .then(res => setDataTipos(res.data))
+      .catch(err => {})
+  }, [])
+  
 
   useEffect(() => {
     setFilter(
@@ -253,6 +266,7 @@ const Cliente = () => {
         filter={filter}
         actualizaClienteId={actualizaClienteId}
         eliminarCliente={eliminarCliente}
+        
       />
       <FormCliente
         toggle={toggle}
@@ -263,6 +277,7 @@ const Cliente = () => {
         reset={reset}
         getAuthHeaders={getAuthHeaders}
         errors={errors}
+        dataTipos={dataTipos}
       />
     </>
   )
