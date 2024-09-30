@@ -23,9 +23,21 @@ const TiendaTabla = ({
         },
         {
             sortable: true,
-            name: 'Descripción',
+            name: 'Dirección',
             minWidth: '25px',
-            selector: row => row?.descripcion
+            selector: row => row?.direccion
+        },
+        {
+            sortable: true,
+            name: 'Teléfono',
+            minWidth: '25px',
+            selector: row => row?.telefono
+        },
+        {
+            sortable: true,
+            name: 'Tipo',
+            minWidth: '25px',
+            selector: row => row?.tipo == 1 ? 'Tienda' : 'Bodega'
         },
         {
             name: 'Acciones',

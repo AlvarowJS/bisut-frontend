@@ -21,13 +21,31 @@ const TiendaForm = ({
                         />
                     </div>
                     <div className='form-group my-2'>
-                        <label htmlFor="descripcion">Ingrese una Descripción</label>
-                        <textarea
+                        <label htmlFor="direccion">Ingrese la Dirección</label>
+                        <input
                             className="form-control"
-                            placeholder='Ingrese una descripción'
-                            {...register('descripcion')}
+                            type="text"
+                            placeholder='Ingrese la dirección'
+                            {...register('direccion')}
                             required
                         />
+                    </div>
+                    <div className='form-group my-2'>
+                        <label htmlFor="telefono">Ingrese el Teléfono</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            placeholder='Ingrese el telefono'
+                            {...register('telefono')}
+                            required
+                        />
+                    </div>
+                    <div className='form-group my-2'>
+                        <label htmlFor="tipo">Ingrese el tipo</label>
+                        <select className="form-select" id="tipo" {...register("tipo")}>
+                            <option value="1">Tienda</option>
+                            <option value="0">Bodega</option>
+                        </select>
                     </div>
 
                     <button className='btn btn-primary mb-2'>Enviar</button>

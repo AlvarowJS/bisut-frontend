@@ -38,10 +38,10 @@ export default [
       },
       
       {
-        id: "Tiendas",
-        title: "Tiendas",
+        id: "Ubicaciones",
+        title: "Ubicaciones",
         icon: <FileText size={20} />,
-        navLink: "/inventario/tiendas",
+        navLink: "/inventario/ubicacion",
       },
       {
         id: "Familias",

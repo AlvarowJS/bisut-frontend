@@ -69,12 +69,12 @@ const ProductoForm = ({
                 />
               </Col>
               <Col md={3} className='form-group'>
-                <label htmlFor="precio1">Ingrese Precio Unitario</label>
+                <label htmlFor="precio4">Ingrese Precio 4</label>
                 <input
                   className="form-control"
                   type="number"
-                  placeholder='Ingrese precio unitario'
-                  {...register('precioUnitario')}
+                  placeholder='Ingrese precio 4'
+                  {...register('precio4')}
                   required
                 />
               </Col>
@@ -82,7 +82,7 @@ const ProductoForm = ({
 
             <Row className='my-2'>
 
-              <Col md={3} className='form-group'>
+              {/* <Col md={3} className='form-group'>
                 <label htmlFor="precioLista">Ingrese Precio Lista</label>
                 <input
                   className="form-control"
@@ -91,7 +91,7 @@ const ProductoForm = ({
                   {...register('precioLista')}
                   required
                 />
-              </Col>
+              </Col> */}
               <Col md={3} className='form-group'>
                 <label htmlFor="precioSuelto">Ingrese Precio Suelto</label>
                 <input
@@ -102,7 +102,7 @@ const ProductoForm = ({
                   required
                 />
               </Col>
-              <Col md={3} className='form-group'>
+              {/* <Col md={3} className='form-group'>
                 <label htmlFor="precioEspecial">Ingrese Precio Especial</label>
                 <input
                   className="form-control"
@@ -111,7 +111,7 @@ const ProductoForm = ({
                   {...register('precioEspecial')}
                   required
                 />
-              </Col>
+              </Col> */}
               <Col md={3} className='form-group'>
                 <label htmlFor="piezasPaquete"> Piezas x Paquete</label>
                 <input

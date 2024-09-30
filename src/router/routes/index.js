@@ -140,7 +140,7 @@ const Routes = [
     element: <AuthGuard><Marca /></AuthGuard>,
   },
   {
-    path: "/inventario/tiendas",
+    path: "/inventario/ubicacion",
     element: <AuthGuard><Tienda /></AuthGuard>,
   },
   {
