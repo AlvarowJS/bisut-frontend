@@ -77,11 +77,11 @@ const CompraDetalle = () => {
                             Total
                         </p>
                     </Col>
-                    <Col>
+                    {/* <Col>
                         <p style={{ fontWeight: "bold" }}>
                             Cajas
                         </p>
-                    </Col>
+                    </Col> */}
                 </Row>
                 <hr />
                 {

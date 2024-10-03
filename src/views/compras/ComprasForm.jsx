@@ -43,18 +43,7 @@ const ComprasForm = ({
               {...register('fecha')}
               required
             />
-          </div>
-
-          <div className='form-group my-2'>
-            <label htmlFor="cliente_id">Cliente</label>
-            <input
-              className="form-control"
-              type="number"
-              placeholder='Ingrese ID del cliente'
-              {...register('cliente_id')}
-              required
-            />
-          </div>
+          </div>       
 
           <div className='form-group my-2'>
             <label htmlFor="almacen_id">Almacén</label>

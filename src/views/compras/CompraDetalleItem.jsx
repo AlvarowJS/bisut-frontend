@@ -24,9 +24,9 @@ const CompraDetalleItem = ({
             <Col>
                 {detalle?.total}
             </Col>
-            <Col>
+            {/* <Col>
                 {detalle?.cajas}
-            </Col>
+            </Col> */}
             
         </Row>
         <hr />
