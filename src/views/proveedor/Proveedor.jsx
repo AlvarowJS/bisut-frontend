@@ -147,12 +147,24 @@ const Proveedor = () => {
                         });
                     })
                     .catch((err) => {
-                        Swal.fire({
-                            position: "center",
-                            icon: "error",
-                            title: "Contacte con soporte",
-                            showConfirmButton: false,
-                        });
+                        const status = err.response.status
+                        if (status == 400) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "error",
+                                title: "No se puede Eliminar",
+                                text: "El proveedor ya tiene compras registradas",
+                                showConfirmButton: false,
+                            });
+                        } else {
+                            Swal.fire({
+                                position: "center",
+                                icon: "error",
+                                title: "Contacte con soporte",
+                                showConfirmButton: false,
+                            });
+                        }
+
                     });
             }
         });
