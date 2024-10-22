@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Select from 'react-select'
 import * as XLSX from 'xlsx';
 import './style.css';
 import { Col, Row } from 'reactstrap';
@@ -11,6 +12,8 @@ const SubirCompra = () => {
     const [editedData, setEditedData] = useState([]);
     const [dataAlmacen, setDataAlmacen] = useState();
     const [dataProveedor, setDataProveedor] = useState();
+    const [almacen, setAlmacen] = useState()
+    const [proveedor, setProveedor] = useState()
     const token = localStorage.getItem("accessToken");
     const getAuthHeaders = () => ({
         headers: {
@@ -25,9 +28,15 @@ const SubirCompra = () => {
             .then((res) => { setDataProveedor(res.data); })
             .catch((err) => { });
     }, [])
-    const handleNameChange = (event) => {
+
+    const handleAlmacenChange = (event) => {
         const newValue = event.target.value
-        setNombre(newValue)
+        setAlmacen(newValue)
+    }
+
+    const handleProveedorChange = (event) => {
+        const newValue = event.target.value
+        setProveedor(newValue)
     }
 
     const almacenOptions = dataAlmacen?.map(option => ({
@@ -108,14 +117,7 @@ const SubirCompra = () => {
                         <label>
                             Ingrese Factura
                         </label>
-                          <Select
-                            id="oficina"                            
-                            value={oficina}
-                            onChange={handleChange}
-                            options={options}
-                            isSearchable={true}
-                            placeholder="No especifica"
-                        />
+                        <input type="text" className='form-control' />
                     </div>
                 </Col>
                 <Col>
@@ -133,7 +135,15 @@ const SubirCompra = () => {
                         <label>
                             Almacen
                         </label>
-                        <input type="text" className='form-control' />
+                        <Select
+                            id="almacen"
+                            value={almacen}
+                            onChange={handleAlmacenChange}
+                            options={almacenOptions}
+                            isSearchable={true}
+                            placeholder="No especifica"
+                        />
+
                     </div>
                 </Col>
                 <Col>
@@ -141,7 +151,14 @@ const SubirCompra = () => {
                         <label>
                             Proveedor
                         </label>
-                        <input type="text" className='form-control' />
+                        <Select
+                            id="proveedor"
+                            value={proveedor}
+                            onChange={handleProveedorChange}
+                            options={proveedorOptions}
+                            isSearchable={true}                            
+                            placeholder="No especifica"
+                        />
                     </div>
                 </Col>
             </Row>
