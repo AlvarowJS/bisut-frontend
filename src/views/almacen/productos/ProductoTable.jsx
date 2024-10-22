@@ -117,7 +117,7 @@ const ProductoTable = ({
       }
     },
     {
-      sortable: true,      
+      sortable: true,
       name: (
         <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
           Precio Lista
@@ -151,7 +151,7 @@ const ProductoTable = ({
       }
     },
     {
-      sortable: true,      
+      sortable: true,
       name: (
         <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
           Precio Especial
@@ -222,7 +222,7 @@ const ProductoTable = ({
       }
     },
     {
-      sortable: true,      
+      sortable: true,
       name: (
         <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
           Grupo

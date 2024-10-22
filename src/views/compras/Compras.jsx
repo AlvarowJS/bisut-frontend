@@ -40,20 +40,18 @@ const Compras = () => {
     const [refresh, setRefresh] = useState(false);
     const defaultValuesExcel = {
         factura: '',
-        fecha: '',
-        cliente_id: '',
+        fecha: '',        
         almacen_id: '',
         proveedor_id: '',
     }
     const defaulValuesForm = {
         factura: '',
-        fecha: '',
-        cliente_id: '',
+        fecha: '',        
         almacen_id: '',
         proveedor_id: '',
         detalles: [{ item: '', cantidad: 0, precio_unitario: 0 }]
     };
-
+    
     const getAuthHeaders = () => ({
         headers: {
             Authorization: "Bearer " + token,
@@ -70,6 +68,9 @@ const Compras = () => {
     };
     const toggleExcel = () => {
         setModalExcel(!modalExcel)
+    }
+    const redirreccionExcel = () => {        
+        navigate(`/compras/import`)
     }
 
     useEffect(() => {
@@ -270,6 +271,11 @@ const Compras = () => {
                 <Col sm="2" className="mt-2">
                     <Button color="success" onClick={toggleExcel}>
                         + Subir Excel
+                    </Button>
+                </Col>
+                <Col sm="2" className="mt-2">
+                    <Button color="success" onClick={() => redirreccionExcel()}>
+                        + Importar Factura
                     </Button>
                 </Col>
                 <Col sm="2" className="mt-2">
