@@ -25,6 +25,10 @@ const SubirCompra = () => {
             .then((res) => { setDataProveedor(res.data); })
             .catch((err) => { });
     }, [])
+    const handleNameChange = (event) => {
+        const newValue = event.target.value
+        setNombre(newValue)
+    }
 
     const almacenOptions = dataAlmacen?.map(option => ({
         value: option?.id,
@@ -104,7 +108,14 @@ const SubirCompra = () => {
                         <label>
                             Ingrese Factura
                         </label>
-                        <input type='text' className='form-control' />
+                          <Select
+                            id="oficina"                            
+                            value={oficina}
+                            onChange={handleChange}
+                            options={options}
+                            isSearchable={true}
+                            placeholder="No especifica"
+                        />
                     </div>
                 </Col>
                 <Col>

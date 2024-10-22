@@ -11,8 +11,8 @@ import ComprasForm from "./ComprasForm";
 import ComprasExcel from "./ComprasExcel";
 const URL = "v1/compras";
 const URLPROVEEDOR = "v1/proveedor";
-const URLPRODUCTO = "v1/productos";
 const URLALMACEN = "v1/almacen";
+const URLPRODUCTO = "v1/productos";
 const URLEXCEL = "v1/importar-compra";
 
 const Compras = () => {
