@@ -67,7 +67,7 @@ const SubirCompra = () => {
         'item', 'descripcion', 'cajas', 'cantidadxCaja', 'cantidad',
         'precio_unitario', 'familia_id', 'grupo_id', 'marca_id', 'unidad',
         'precioLista', 'precio1', 'precio2', 'precio3', 'precioSuelto',
-        'precioPaquete', 'tono', 'fiscal'
+        'piezasPaquete', 'tono', 'fiscal'
     ];
 
     const handleFileUpload = (event) => {
@@ -106,6 +106,12 @@ const SubirCompra = () => {
         setEditedData(updatedData);
     };
 
+
+    const handleDeleteRow = (rowIndex) => {
+        const updatedData = editedData.filter((_, index) => index !== rowIndex);
+        setEditedData(updatedData);
+    };
+
     const handleSubmit = async () => {
         try {
             if (!factura || !fecha || !almacen?.value || !proveedor?.value || editedData.length === 0) {
@@ -120,9 +126,24 @@ const SubirCompra = () => {
                 });
                 return {
                     item: obj.item,
+                    descripcion: obj.descripcion,
+                    cajas: obj.cajas,
+                    cantidadxCaja: obj.cantidadxCaja,
                     cantidad: obj.cantidad,
-                    precio_unitario: obj.precio_unitario
-                }; // Solo los campos necesarios para 'detalles'
+                    precio_unitario: obj.precio_unitario,
+                    familia_id: obj.familia_id,
+                    grupo_id: obj.grupo_id,
+                    marca_id: obj.marca_id,
+                    unidad: obj.unidad,
+                    precioLista: obj.precioLista,
+                    precio1: obj.precio1,
+                    precio2: obj.precio2,
+                    precio3: obj.precio3,
+                    precioSuelto: obj.precioSuelto,
+                    piezasPaquete: obj.piezasPaquete,
+                    tono: obj.tono,
+                    fiscal: obj.fiscal
+                };
             });
 
             // Construir el objeto final con los datos de factura, fecha, almacen y proveedor
@@ -134,6 +155,7 @@ const SubirCompra = () => {
                 detalles: detalles
             };
 
+            console.log(payload)
             bdAdmin
                 .post(URL, payload, getAuthHeaders())
                 .then((res) => {
@@ -162,7 +184,7 @@ const SubirCompra = () => {
 
     const handleClear = () => {
         setFactura('');
-        setFecha('');  
+        setFecha('');
         setAlmacen(null);
         setProveedor(null);
         setExcelData([]);
@@ -285,9 +307,43 @@ const SubirCompra = () => {
                                             />
                                         </td>
                                     ))}
+                                    <td>
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={() => handleDeleteRow(rowIndex)}
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
+                        {/* <tbody>
+                            {editedData.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                    {row.map((cell, colIndex) => (
+                                        <>
+                                            <td key={colIndex}>
+                                                <input
+                                                    type="text"
+                                                    value={cell || ''}
+                                                    onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
+                                                    style={{ border: '0px solid black' }}
+                                                />
+                                            </td>
+                                            <td className="text-center">
+                                                <button
+                                                    className="btn btn-danger"
+                                                    onClick={() => handleDeleteRow(rowIndex)}
+                                                >
+                                                    Eliminar
+                                                </button>
+                                            </td>
+                                        </>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody> */}
                     </table>
                 </div>
             )}
