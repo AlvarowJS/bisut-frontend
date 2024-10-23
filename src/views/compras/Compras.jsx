@@ -250,6 +250,15 @@ const Compras = () => {
             });
 
     }
+    const downloadExcel = () => {
+        const fileUrl = "/plantilla_excel.xlsx"; // Ruta del archivo en la carpeta public
+        const link = document.createElement("a");
+        link.href = fileUrl;
+        link.download = "plantilla_excel.xlsx"; // Nombre del archivo al descargar
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
     return (
         <>
             <h3>Compras</h3>
@@ -269,8 +278,11 @@ const Compras = () => {
                 </Col>
                 <Col sm="2"></Col>
                 <Col sm="2" className="mt-2">
-                    <Button color="success" onClick={toggleExcel}>
+                    {/* <Button color="success" onClick={toggleExcel}>
                         + Subir Excel
+                    </Button> */}
+                    <Button onClick={downloadExcel}>
+                        Descargar Plantilla
                     </Button>
                 </Col>
                 <Col sm="2" className="mt-2">
