@@ -27,6 +27,7 @@ import Kardex from "../../views/almacen/kardex/Kardex";
 import Compras from "../../views/compras/Compras";
 import CompraDetalle from "../../views/compras/CompraDetalle";
 import SubirCompra from "../../views/compras/SubirCompra";
+import GenerarFactura from "../../views/ventas/GenerarFactura/GenerarFactura";
 
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
@@ -164,6 +165,11 @@ const Routes = [
   {
     path: "/compras/import",
     element: <AuthGuard><SubirCompra /></AuthGuard>,
+  },
+  //Ventas
+  {
+    path: "/ventas/generar-factura",
+    element: <AuthGuard><GenerarFactura /></AuthGuard>,
   },
   {
     path: "/error",

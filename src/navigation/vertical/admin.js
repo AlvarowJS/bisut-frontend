@@ -1,4 +1,4 @@
-import { File, Tag, FileText, BarChart, UserCheck, Table, Edit, UserMinus, Home, User, Box, ShoppingBag } from "react-feather";
+import { File, Tag, FileText, BarChart, UserCheck, Table, Edit, UserMinus, Home, User, Box, ShoppingBag, ShoppingCart } from "react-feather";
 
 export default [
   {
@@ -12,6 +12,19 @@ export default [
     title: "Clientes",
     icon: <UserMinus size={20} />,
     navLink: "/clientes",
+  },
+  {
+    id: "Ventas",
+    title: "Ventas",
+    icon: <ShoppingCart size={20} />,
+    children: [
+      {
+        id: "Generar Factura",
+        title: "Generar Factura",
+        icon: <Tag size={20} />,
+        navLink: "/ventas/generar-factura",
+      },
+    ]
   },
   {
     id: "Usuarios",
