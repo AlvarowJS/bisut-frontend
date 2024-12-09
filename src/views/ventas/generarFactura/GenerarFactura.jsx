@@ -3,6 +3,8 @@ import { Col, Row, Button, Table } from 'reactstrap';
 import Select from 'react-select';
 import { getAuthHeaders } from '../../../utility/auth/auth';
 import bdAdmin from '../../../api/bdAdmin';
+import Extras from '../../../components/ventas/generarFactura/Extras';
+import Atendido from '../../../components/ventas/generarFactura/Atendido';
 
 const URLCLIENTES = '/v1/clientes';
 const URLALMACEN = 'v1/almacen';
@@ -209,7 +211,14 @@ const GenerarFactura = () => {
           ))}
         </tbody>
       </Table>
+      
+      <Extras
+    
+      />
 
+      <Atendido
+      
+      />
       <Row className="mt-3">
         <Col sm="8">
         </Col>

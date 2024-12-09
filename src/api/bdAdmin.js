@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const bdAdmin = axios.create({
-     baseURL: 'https://bisut.tms2.nuvola7.com.mx/api'
+     baseURL: 'http://127.0.0.1:8000/api'
 })
 
 export default bdAdmin
