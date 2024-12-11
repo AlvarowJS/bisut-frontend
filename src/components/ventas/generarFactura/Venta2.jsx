@@ -1,21 +1,24 @@
 import React from 'react'
 import { Col, Row } from 'reactstrap'
+import Select from 'react-select';
 
-const Extras = () => {
+const Venta2 = ({
+    userOptions, handleUserChange, user
+}) => {
     return (
-        <Row>
-            <Col sm="2" className="d-flex">
+        <Row className="border border-secondary rounded p-1">
+            <Col className="d-flex">
 
                 <label htmlFor="">%Desc. </label>
                 <input type="text" className="form-control form-control-sm" />
 
             </Col>
-            <Col sm="2" className="d-flex">
+            <Col className="d-flex">
                 <label htmlFor="">Puntos </label>
                 <input type="text" className="form-control form-control-sm" />
 
             </Col>
-            <Col sm="2">
+            <Col>
                 <input type="checkbox" className="form-check-input" />
                 Regalo
             </Col>
@@ -47,8 +50,17 @@ const Extras = () => {
                 <input type="checkbox" className="form-check-input" />
                 Venta Credito
             </Col>
+            <label>Atendido</label>
+            <Select
+                id="user"
+                value={user}
+                onChange={handleUserChange}
+                options={userOptions}
+                isSearchable={true}
+                placeholder="No especifica"
+            />
         </Row>
     )
 }
 
-export default Extras
+export default Venta2

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Col, Row } from 'reactstrap'
 
-const Atendido = () => {
+const Venta1 = () => {
     return (
-        <Row className="mt-1">
+        <Row className="border border-secondary rounded mt-2 p-1">
             <Col sm="3" className="d-flex">
 
                 <label htmlFor="">Efectivo </label>
@@ -30,4 +30,4 @@ const Atendido = () => {
     )
 }
 
-export default Atendido
+export default Venta1
