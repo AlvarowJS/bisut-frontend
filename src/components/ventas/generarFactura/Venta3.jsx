@@ -2,6 +2,9 @@ import React from 'react'
 import { Col, Row } from 'reactstrap'
 
 const Venta3 = () => {
+    //     S01 Sin Efectos Fiscales
+    // G01 Adquisición de mercancías
+    // G03 Gastos en general
     return (
         <Row className="border border-secondary rounded p-1">
             <Col>
@@ -30,7 +33,7 @@ const Venta3 = () => {
                     </div>
                 </div>
                 <div>
-                    Uso CFDI
+                    <input type="checkbox" name="" id="" /> Uso CFDI
                 </div>
                 <div>
                     <input type="checkbox" name="" id="" /> Enviar Mail
