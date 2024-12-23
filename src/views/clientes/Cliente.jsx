@@ -40,6 +40,7 @@ const Cliente = () => {
     mail: "",
     fecha_nac: "",
     tipo_cliente: "",
+    tipo_venta: "",
     dias_credito: "",
     contacto_nombre: "",
     contacto_telefono: "",
@@ -186,6 +187,7 @@ const Cliente = () => {
     bdAdmin
       .get(`${URL}/${id}`, getAuthHeaders())
       .then((res) => {
+        console.log(res.data, "Ad")
         reset(res.data);
       })
       .catch((err) => null);

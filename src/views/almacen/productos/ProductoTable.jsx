@@ -51,7 +51,32 @@ const ProductoTable = ({
     {
       sortable: true,
       name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+        <div style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'downright',
+          transform: 'rotate(180deg)',
+        }}>
+          Stock
+        </div>
+      ),
+      minWidth: '25px',
+      selector: row => row?.stock,
+      cell: row => {
+        return (
+          <>
+            {row?.stock}
+          </>
+        )
+      }
+    },
+    {
+      sortable: true,
+      name: (
+        <div style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'downright',
+          transform: 'rotate(180deg)',
+        }}>
           Precio 1
         </div>
       ),
@@ -68,7 +93,11 @@ const ProductoTable = ({
     {
       sortable: true,
       name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+        <div style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'downright',
+          transform: 'rotate(180deg)',
+        }}>
           Precio 2
         </div>
       ),
@@ -85,7 +114,11 @@ const ProductoTable = ({
     {
       sortable: true,
       name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+        <div style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'downright',
+          transform: 'rotate(180deg)',
+        }}>
           Precio 3
         </div>
       ),
@@ -102,16 +135,20 @@ const ProductoTable = ({
     {
       sortable: true,
       name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
-          Precio Unitario
+        <div style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'downright',
+          transform: 'rotate(180deg)',
+        }}>
+          Precio 4
         </div>
       ),
       minWidth: '25px',
-      selector: row => row?.precioUnitario,
+      selector: row => row?.precio4,
       cell: row => {
         return (
           <>
-            {row?.precioUnitario}
+            {row?.precio4}
           </>
         )
       }
@@ -119,58 +156,11 @@ const ProductoTable = ({
     {
       sortable: true,
       name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
-          Precio Lista
-        </div>
-      ),
-      minWidth: '25px',
-      selector: row => row?.precioLista,
-      cell: row => {
-        return (
-          <>
-            {row?.precioLista}
-          </>
-        )
-      }
-    },
-    {
-      sortable: true,
-      name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
-          Precio Suelto
-        </div>
-      ),
-      minWidth: '25px',
-      selector: row => row?.precioSuelto,
-      cell: row => {
-        return (
-          <>
-            {row?.precioSuelto}
-          </>
-        )
-      }
-    },
-    {
-      sortable: true,
-      name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
-          Precio Especial
-        </div>
-      ),
-      minWidth: '25px',
-      selector: row => row?.precioEspecial,
-      cell: row => {
-        return (
-          <>
-            {row?.precioEspecial}
-          </>
-        )
-      }
-    },
-    {
-      sortable: true,
-      name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+        <div style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'downright',
+          transform: 'rotate(180deg)',
+        }}>
           Piezas x Paquete
         </div>
       ),
@@ -193,13 +183,17 @@ const ProductoTable = ({
       cell: row => {
         return (
           <>
-            <img src={
-              `http://127.0.0.1:8000/storage/productos/${row?.item}/${row?.foto}`
+            {
+              row?.foto ? (
+                <img src={
+                  `http://127.0.0.1:8000/storage/productos/${row?.item}/${row?.foto}`
+                }
+                  width={100} height={100}
+                  className='my-1'
+                  alt="" />
+              ) : ""
             }
-              width={100} height={100}
-              className='my-1'
-              alt="" />
-            {/* {row?.foto} */}
+
           </>
         )
       }
@@ -207,7 +201,11 @@ const ProductoTable = ({
     {
       sortable: true,
       name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+        <div style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'downright',
+          transform: 'rotate(180deg)',
+        }}>
           Familia
         </div>
       ),
@@ -224,7 +222,11 @@ const ProductoTable = ({
     {
       sortable: true,
       name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+        <div style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'downright',
+          transform: 'rotate(180deg)',
+        }}>
           Grupo
         </div>
       ),
@@ -241,7 +243,11 @@ const ProductoTable = ({
     {
       sortable: true,
       name: (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+        <div style={{
+          writingMode: 'vertical-rl',
+          textOrientation: 'downright',
+          transform: 'rotate(180deg)',
+        }}>
           Marca
         </div>
       ),
@@ -268,12 +274,12 @@ const ProductoTable = ({
         return (
           <div className='d-flex gap-1 my-1'>
 
-            <button className='btn btn-warning'
+            <button className='btn btn-warning btn-sm'
               onClick={() => actualizarProductoId(row?.id)}
             >
               <Edit />
             </button>
-            <button className='btn' style={{ backgroundColor: '#DC3545', color: 'white' }}
+            <button className='btn btn-sm' style={{ backgroundColor: '#DC3545', color: 'white' }}
               onClick={() => eliminarProducto(row?.id)}
             >
               <Trash />

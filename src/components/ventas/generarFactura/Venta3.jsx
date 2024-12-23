@@ -2,11 +2,11 @@ import React from 'react'
 import { Col, Row } from 'reactstrap'
 
 const Venta3 = () => {
-    //     S01 Sin Efectos Fiscales
+    // S01 Sin Efectos Fiscales
     // G01 Adquisición de mercancías
     // G03 Gastos en general
     return (
-        <Row className="border border-secondary rounded p-1">
+        <Row className="border border-top-0 rounded p-1">
             <Col>
                 <div>
                     <div className="form-check">

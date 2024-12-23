@@ -49,6 +49,20 @@ const TablaUsuario = ({
         },
         {
             sortable: true,
+            name: 'Almacen',
+            minWidth: '50px',            
+            cell: row => {
+                return (
+                  <>
+                    {
+                        row?.almacen?.nombre ?? 'todos'                
+                    }
+                  </>
+                )
+              }
+        },
+        {
+            sortable: true,
             name: 'Email',
             minWidth: '50px',
             selector: row => row?.email,

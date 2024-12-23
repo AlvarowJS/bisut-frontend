@@ -3,6 +3,7 @@ import { Button, Col, Input, Label, Row } from "reactstrap";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Select from 'react-select';
 const MySwal = withReactContent(Swal);
 import bdAdmin from "../../../api/bdAdmin";
 import ProductoTable from "./ProductoTable";
@@ -12,6 +13,7 @@ const URLFOTO = "v1/producto-foto";
 const URLFAMILIA = "v1/familias";
 const URLGRUPO = "v1/grupos";
 const URLMARCA = "v1/marcas";
+const URLALMACEN = 'v1/almacen';
 
 const Producto = () => {
   const token = localStorage.getItem("accessToken");
@@ -26,8 +28,11 @@ const Producto = () => {
   const [dataFamilia, setDataFamilia] = useState()
   const [dataGrupo, setDataGrupo] = useState()
   const [dataMarca, setDataMarca] = useState()
+  const [dataAlmacen, setDataAlmacen] = useState()
+  const [almacen, setAlmacen] = useState('');
   // Fotos
   const [foto, setFoto] = useState()
+  
 
   const defaulValuesForm = {
     item: "",
@@ -62,6 +67,11 @@ const Producto = () => {
   };
 
   useEffect(() => {
+    bdAdmin.get(URLALMACEN, getAuthHeaders())
+      .then(res => {
+        setDataAlmacen(res.data)
+      })
+      .catch(err => { })
     bdAdmin.get(URLFAMILIA, getAuthHeaders())
       .then(res => {
         setDataFamilia(res.data)
@@ -78,15 +88,17 @@ const Producto = () => {
       })
       .catch(err => { })
   }, [])
-
+  
+  
   useEffect(() => {
+    console.log("se activo")
     bdAdmin
-      .get(`${URL}`, getAuthHeaders())
+      .get(`${URL}?tiendaId=${almacen.value}`, getAuthHeaders())
       .then((res) => {
         setData(res.data);
       })
       .catch((err) => { });
-  }, [refresh]);
+  }, [almacen, refresh]);
 
   useEffect(() => {
     setFilter(
@@ -101,6 +113,15 @@ const Producto = () => {
   const handleFilter = (e) => {
     setSearch(e.target.value);
   };
+
+  const almacenOptions = dataAlmacen?.map(option => ({
+    value: option?.id,
+    label: option?.nombre
+  }));
+  const handleAlmacenChange = (selected) => {
+    setAlmacen(selected);
+  };
+
   const crearProducto = (data) => {
 
     const newData = new FormData()
@@ -109,6 +130,7 @@ const Producto = () => {
     newData.append('precio1', data.precio1)
     newData.append('precio2', data.precio2)
     newData.append('precio3', data.precio3)
+    newData.append('precio4', data.precio4)
     newData.append('precioUnitario', data.precioUnitario)
     newData.append('precioLista', data.precioLista)
     newData.append('precioSuelto', data.precioSuelto)
@@ -153,6 +175,7 @@ const Producto = () => {
     newData.append('precio1', data.precio1)
     newData.append('precio2', data.precio2)
     newData.append('precio3', data.precio3)
+    newData.append('precio4', data.precio4)
     newData.append('precioUnitario', data.precioUnitario)
     newData.append('precioLista', data.precioLista)
     newData.append('precioSuelto', data.precioSuelto)
@@ -260,7 +283,18 @@ const Producto = () => {
             onChange={handleFilter}
           />
         </Col>
-        <Col sm="4"></Col>
+        <Col>
+          <label htmlFor="">Seleccionar Tienda</label>
+          <Select
+            id="almacen"
+            value={almacen}
+            onChange={handleAlmacenChange}
+            options={almacenOptions}
+            isSearchable={true}
+            placeholder="No especifica"
+          />
+        </Col>
+        <Col sm="2"></Col>
 
         <Col sm="2" className="mt-2">
           <Button onClick={toggle} color="primary">

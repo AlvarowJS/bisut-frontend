@@ -42,40 +42,40 @@ const ProductoForm = ({
                 <label htmlFor="precio1">Ingrese Precio 1</label>
                 <input
                   className="form-control"
-                  type="number"
+                  type="text"
                   placeholder='Ingrese precio 1'
                   {...register('precio1')}
-                  required
+                  
                 />
               </Col>
               <Col md={3} className='form-group'>
                 <label htmlFor="precio2">Ingrese Precio 2</label>
                 <input
                   className="form-control"
-                  type="number"
+                  type="text"
                   placeholder='Ingrese precio 2'
                   {...register('precio2')}
-                  required
+                  
                 />
               </Col>
               <Col md={3} className='form-group'>
                 <label htmlFor="precio3">Ingrese Precio 3</label>
                 <input
                   className="form-control"
-                  type="number"
+                  type="text"
                   placeholder='Ingrese precio 3'
                   {...register('precio3')}
-                  required
+                  
                 />
               </Col>
               <Col md={3} className='form-group'>
                 <label htmlFor="precio4">Ingrese Precio 4</label>
                 <input
                   className="form-control"
-                  type="number"
+                  type="text"
                   placeholder='Ingrese precio 4'
                   {...register('precio4')}
-                  required
+                  
                 />
               </Col>
             </Row>
@@ -86,7 +86,7 @@ const ProductoForm = ({
                 <label htmlFor="precioLista">Ingrese Precio Lista</label>
                 <input
                   className="form-control"
-                  type="number"
+                  type="text"
                   placeholder='Ingrese precio lista'
                   {...register('precioLista')}
                   required
@@ -96,7 +96,7 @@ const ProductoForm = ({
                 <label htmlFor="precioSuelto">Ingrese Precio Suelto</label>
                 <input
                   className="form-control"
-                  type="number"
+                  type="text"
                   placeholder='Ingrese precio suelto'
                   {...register('precioSuelto')}
                   required
@@ -106,7 +106,7 @@ const ProductoForm = ({
                 <label htmlFor="precioEspecial">Ingrese Precio Especial</label>
                 <input
                   className="form-control"
-                  type="number"
+                  type="text"
                   placeholder='Ingrese precio especial'
                   {...register('precioEspecial')}
                   required
@@ -116,7 +116,7 @@ const ProductoForm = ({
                 <label htmlFor="piezasPaquete"> Piezas x Paquete</label>
                 <input
                   className="form-control"
-                  type="number"
+                  type="text"
                   placeholder='Ingrese cuantas piezas x paquete'
                   {...register('piezasPaquete')}
                   required

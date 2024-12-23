@@ -6,7 +6,7 @@ const Venta2 = ({
     userOptions, handleUserChange, user
 }) => {
     return (
-        <Row className="border border-secondary rounded p-1">
+        <Row className="border rounded p-1">
             <Col className="d-flex">
 
                 <label htmlFor="">%Desc. </label>
@@ -50,7 +50,7 @@ const Venta2 = ({
                 <input type="checkbox" className="form-check-input" />
                 Venta Credito
             </Col>
-            <label>Atendido</label>
+            <label>Atendido por: </label>
             <Select
                 id="user"
                 value={user}

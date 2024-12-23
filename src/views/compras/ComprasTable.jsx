@@ -51,35 +51,37 @@ const ComprasTable = ({
       minWidth: '200px',
       maxWidth: '400px',
       cell: row => {
-          return (
-              <div className='d-flex gap-1 my-1'>
+        return (
+          <div className='d-flex gap-1 my-1'>
 
-                  <button className='btn btn-warning'
-                      onClick={() => actualizarCompraId(row?.id)}
-                  >
-                      <Eye />
-                  </button>
-                  <button className='btn' style={{ backgroundColor: '#DC3545', color: 'white' }}
-                      onClick={() => eliminarCompra(row?.id)}
-                  >
-                      <Trash />
-                  </button>
-              </div>
-          )
+            <button className='btn btn-warning'
+              onClick={() => actualizarCompraId(row?.id)}
+            >
+              <Eye />
+            </button>
+            <button className='btn' style={{ backgroundColor: '#DC3545', color: 'white' }}
+              onClick={() => eliminarCompra(row?.id)}
+            >
+              <Trash />
+            </button>
+          </div>
+        )
       }
-  }
+    }
   ]
   return (
     <>
-           <Card>
-                <DataTable
-                    noHeader
-                    pagination
-                    className="react-datatable"
-                    columns={columns}
-                    data={search ? filter : data}
-                />
-            </Card>
+      <Card>
+        <div className='invoice-list-dataTable react-dataTable'>
+          <DataTable
+            noHeader
+            pagination
+            className="react-dataTable"
+            columns={columns}
+            data={search ? filter : data}
+          />
+        </div>
+      </Card>
     </>
   )
 }

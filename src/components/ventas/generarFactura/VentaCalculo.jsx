@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Row } from 'reactstrap'
 
 const VentaCalculo = ({
-    subtotal, totalDescuentos, setFlete, total, flete
+    importeTotal, flete
 }) => {
 
     // ejemplo:
@@ -22,9 +22,11 @@ const VentaCalculo = ({
     return (
         <Row className="border border-secondary rounded mt-2 mx-1 p-1">
             <Col>
-                <div>Importe {subtotal?.toFixed(2)}</div>
-                <div>Descuento {totalDescuentos?.toFixed(2)}</div>
-                <div>SubTotal {totalDescuentos?.toFixed(2)}</div>
+                <div>
+                    Importe: {importeTotal?.toFixed(2)}
+                </div>
+                <div>Descuento </div>
+                <div>SubTotal </div>
                 <Row className='d-flex'>
                     <Col>
                         <label htmlFor="">% I.V.A.</label>
@@ -33,17 +35,18 @@ const VentaCalculo = ({
                         <input type="text" className='form-control form-control-sm' />
                     </Col>
                     <Col>
-                        {totalDescuentos?.toFixed(2)}
+                        
                     </Col>
                 </Row>
                 <div>Flete:
                     <input
                         type='number'
                         value={flete}
+                        className='form-control form-control-sm'
                         onChange={(e) => setFlete(e.target.value)}
                     />
                 </div>
-                <div>Total: {total?.toFixed(2)}</div>
+                <div>Total: {importeTotal?.toFixed(2)}</div>
             </Col>
         </Row>
     )

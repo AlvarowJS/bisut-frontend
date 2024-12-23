@@ -52,7 +52,6 @@ const AuthGuard = ({ children }) => {
   const navigate = useNavigate();
   useEffect(() => {
 
-    console.log("holaaa? se activo")
     const token = localStorage.getItem("accessToken");
     const objToken = { token: token }
 

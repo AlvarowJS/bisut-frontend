@@ -129,6 +129,16 @@ const FormCliente = ({
                 />
               </div>
             </Col>
+            <Col>
+              <div className='form-group my-2'>
+                <label htmlFor="tipo_venta">Tipo de Venta</label>
+                <select className='form-select' id='tipo_venta' {...register("tipo_venta")}>                  
+                      <option value="1">Precio 1</option>
+                      <option value="2">Precio 2</option>
+                      <option value="3">Precio 3</option>
+                </select>
+              </div>
+            </Col>
           </Row>
 
           <Row className='mb-2'>
@@ -156,7 +166,7 @@ const FormCliente = ({
             <Col>
               <div className='form-group'>
                 <label htmlFor="fecha_nac">Tipo de Cliente</label>
-                <select className='form-select' id='tipo_cliente' {...register("tipo_cliente")}>
+                <select className='form-select' id='tipo_cliente_id' {...register("tipo_cliente_id")}>
                   {
                     dataTipos?.map(tipo => (
                       <option key={tipo?.id} value={tipo?.id}>{tipo?.nombre}</option>
