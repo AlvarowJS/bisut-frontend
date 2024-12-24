@@ -34,9 +34,9 @@ const ComprasTable = ({
     },
     {
       sortable: true,
-      name: "Proveedor",
+      name: "Total",
       minWidth: "25px",
-      selector: (row) => row?.proveedor?.nombre,
+      selector: (row) => '$ '+row?.total,
     },
     {
       sortable: true,

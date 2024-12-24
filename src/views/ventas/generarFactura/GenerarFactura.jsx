@@ -7,6 +7,7 @@ import Venta1 from '../../../components/ventas/generarFactura/Venta1';
 import Venta2 from '../../../components/ventas/generarFactura/Venta2';
 import Venta3 from '../../../components/ventas/generarFactura/Venta3';
 import VentaCalculo from '../../../components/ventas/generarFactura/VentaCalculo';
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 
 const URLCLIENTES = '/v1/clientes';
 const URLALMACEN = 'v1/almacen';
@@ -30,6 +31,29 @@ const GenerarFactura = () => {
     tarjeta: "",
     deposito: ""
   });
+  const [medioPago, setMedioPago] = useState({
+    medio_pago: "",
+    medio_pago_monto: ""
+  })
+  const [flete, setFlete] = useState(0)
+  const [descuento, setDescuento] = useState(0)
+  const [SubTotal, setSubTotal] = useState(0)
+  const [iva, setIva] = useState(16)
+  // Forms:
+  const { handleSubmit, control, setValue, register, reset, formState: { errors } } = useForm();
+  const defaultValues = {
+    factura: '',
+    descuento: '',
+    puntos: '',
+    regalo: '',
+    remision: '',
+    venta_credito: '',
+    fecha: '',
+    almacen_id: '',
+    cliente_id: '',
+    user_id: '',
+    detalles: [{ item: '', cantidad: 0, precio_unitario: 0 }]
+  };
 
   useEffect(() => {
     bdAdmin.get(URLCLIENTES, getAuthHeaders())
@@ -143,147 +167,180 @@ const GenerarFactura = () => {
 
   useEffect(() => {
     setImporteTotal(rows?.reduce((sum, valImp) => sum + valImp.importe, 0))
+    setDescuento(rows?.reduce((sum, valDesc) => Number(sum) + Number(valDesc.descuento), 0))
   }, [rows])
-
 
   const handleRowChange = (index, field, value) => {
     const updatedRows = [...rows];
-    updatedRows[index][field] = value;
+    updatedRows[index][field] = value;    
     setRows(updatedRows);
   };
+  const submit = (data) => {
 
+    data.medio_pago = medioPago.medio_pago
+    data.medio_pago_monto = medioPago.medio_pago_monto
+    data.cliente_id = cliente.value
+    data.almacen_id = almacen.value
+    data.item_id = item.value
+    data.detalles = rows
+    data.importe_total = importeTotal
+    data.flete = flete    
+  }
 
   return (
     <div style={{ fontSize: 12 }}>
-      <Row>
-        <Col>
-          <label htmlFor="">Seleccionar cliente</label>
-          <Select
-            id="cliente"
-            value={cliente}
-            onChange={handleClientChange}
-            options={clienteOptions}
-            isSearchable={true}
-            placeholder="No especifica"
-          />
-        </Col>
-        <Col>
-          <label htmlFor="">Seleccionar Tienda</label>
-          <Select
-            id="almacen"
-            value={almacen}
-            onChange={handleAlmacenChange}
-            options={almacenOptions}
-            isSearchable={true}
-            placeholder="No especifica"
-          />
-        </Col>
-        <Col>
-          <label>Item</label>
-          <Select
-            id="item"
-            value={item}
-            onChange={handleItemChange}
-            options={productoOptions}
-            isSearchable={true}
-            placeholder="No especifica"
-          />
-        </Col>
-        <Col>
-          <Button className="mt-2" onClick={handleAddRow} >Agregar Item</Button>
-        </Col>
-        <Col>
-          <div className='form-group'>
-            <label>Fecha</label>
-            <input
-              type='date'
-              className='form-control'
-              value={fecha}
-              onChange={handleFechaChange}
-              required
+      <form onSubmit={handleSubmit(submit)}>
+        <Row>
+          <Col>
+            <label htmlFor="">Seleccionar cliente</label>
+            <Select
+              id="cliente"
+              value={cliente}
+              onChange={handleClientChange}
+              options={clienteOptions}
+              isSearchable={true}
+              placeholder="No especifica"
             />
-          </div>
-        </Col>
-      </Row>
+          </Col>
+          <Col>
+            <label htmlFor="">Seleccionar Tienda</label>
+            <Select
+              id="almacen"
+              value={almacen}
+              onChange={handleAlmacenChange}
+              options={almacenOptions}
+              isSearchable={true}
+              placeholder="No especifica"
+            />
+          </Col>
+          <Col>
+            <label>Item</label>
+            <Select
+              id="item"
+              value={item}
+              onChange={handleItemChange}
+              options={productoOptions}
+              isSearchable={true}
+              placeholder="No especifica"
+            />
+          </Col>
+          <Col>
+            <Button className="mt-2" onClick={handleAddRow} >Agregar Item</Button>
+          </Col>
+          <Col>
+            <div className='form-group'>
+              <label>Fecha</label>
+              <input
+                type='date'
+                className='form-control'
+                value={fecha}
+                onChange={handleFechaChange}
+                required
+              />
+            </div>
+          </Col>
+        </Row>
 
-      {/* Tabla para mostrar los ítems */}
-      <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ddd', borderRadius: '5px' }}>
+        {/* Tabla para mostrar los ítems */}
+        <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ddd', borderRadius: '5px' }}>
 
-        <Table striped className="mt-2">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Descripción</th>
-              <th>Precio Venta</th>
-              <th>Cantidad</th>
-              <th>Importe</th>
-              <th>Precio Suelto</th>
-              <th>Descuento</th>
-              <th>Total Item</th>
-              <th>Stock</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, index) => (
-              <tr key={index}>
-                <td>
-                  {row.item}
-                </td>
-                <td>
-                  {row.descripcion}
-                </td>
-                <td>
-                  {row.precioVenta}
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    value={row.cantidad}
-                    className='form-control'
-                    onChange={(e) => handleRowChange(index, 'cantidad', e.target.value)}
-                  />
-                </td>
-                <td>{row.importe}</td>
-                <td>{row.precioSuelto}</td>
-                <td>{row.descuento}</td>
-                <td>{row.totalItem}</td>
-                <td>{row.stock}</td>
-                <td>
-                  <Button color="danger" onClick={() => {
-                    setRows(rows.filter((_, i) => i !== index));
-                  }}>
-                    Eliminar
-                  </Button>
-                </td>
+          <Table striped className="mt-2">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Descripción</th>
+                <th>Precio Venta</th>
+                <th>Cantidad</th>
+                <th>Importe</th>
+                <th>Precio Suelto</th>
+                <th>Descuento</th>
+                <th>Total Item</th>
+                <th>Stock</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
-      <Row>
-        <Col sm="8">
-          <Venta1
-            setMetodoPago={setMetodoPago}
-            metodoPago={metodoPago}
-          />
+            </thead>
+            <tbody>
+              {rows.map((row, index) => (
+                <tr key={index}>
+                  <td>
+                    {row.item}
+                  </td>
+                  <td>
+                    {row.descripcion}
+                  </td>
+                  <td>
+                    {row.precioVenta}
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      value={row.cantidad}
+                      className='form-control'
+                      onChange={(e) => handleRowChange(index, 'cantidad', e.target.value)}
+                    />
+                  </td>
+                  <td>{row.importe}</td>
+                  <td>{row.precioSuelto}</td>
+                  <td>
+                    <input
+                      type="number"
+                      value={row.descuento}
+                      className='form-control'
+                      onChange={(e) => handleRowChange(index, 'descuento', e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    {
+                      row.precioVenta * row.cantidad - row.descuento                      
+                    }
+                  </td>
+                  <td>{row.stock}</td>
+                  <td>
+                    <Button color="danger" onClick={() => {
+                      setRows(rows.filter((_, i) => i !== index));
+                    }}>
+                      Eliminar
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+        <Row>
+          <Col sm="8">
+            <Venta1
+              setMetodoPago={setMetodoPago}
+              metodoPago={metodoPago}
+              setMedioPago={setMedioPago}
+              register={register}
+            />
 
-          <Venta2
-            userOptions={userOptions}
-            handleUserChange={handleUserChange}
-            user={user}
-          />
-          <Venta3
+            <Venta2
+              userOptions={userOptions}
+              handleUserChange={handleUserChange}
+              register={register}
+              user={user}
+            />
+            <Venta3
+              register={register}
+            />
 
-          />
-
-        </Col>
-        <Col sm="4">
-          <VentaCalculo
-            importeTotal={importeTotal}
-          />
-        </Col>
-      </Row>
+          </Col>
+          <Col sm="4">
+            <VentaCalculo
+              importeTotal={importeTotal}
+              flete={flete}
+              setFlete={setFlete}
+              setDescuento={setDescuento}
+              setIva={setIva}
+              iva={iva}
+              descuento={descuento}
+            />
+            <button className='btn btn-success m-2' type='submit'>Generar</button>
+          </Col>
+        </Row>
+      </form>
     </div>
   );
 };

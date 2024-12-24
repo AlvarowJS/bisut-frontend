@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Row } from 'reactstrap'
 
 const Venta1 = ({
-    setMetodoPago, metodoPago
+    setMetodoPago, metodoPago, register,setMedioPago
 }) => {
     const handleInputChange = (name, value) => {
         // Limpia todos los inputs excepto el que se está editando
@@ -11,6 +11,13 @@ const Venta1 = ({
             tarjeta: name === "tarjeta" ? value : "",
             deposito: name === "deposito" ? value : ""
         });
+        setMedioPago({
+            medio_pago: name,
+            medio_pago_monto: value
+        })
+        console.log(name, value, "sad")
+        
+        
     };
 
     return (
@@ -20,7 +27,7 @@ const Venta1 = ({
                 <input
                     type="text"
                     className="form-control form-control-sm"
-                    value={metodoPago.efectivo}
+                    value={metodoPago.efectivo}                    
                     onChange={(e) => handleInputChange("efectivo", e.target.value)}
                 />
             </Col>
