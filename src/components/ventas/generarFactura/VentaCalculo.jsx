@@ -23,13 +23,13 @@ const VentaCalculo = ({
     return (
         <Row className="border rounded mt-2 mx-1 p-1">
             <Col>
-                <Row>
+                <Row className="d-flex flex-nowrap">
                     <Col sm="4"><label htmlFor="">Importe: </label></Col>
                     <Col sm="2" className="my-2"></Col>
                     <Col sm="1">$</Col>
                     <Col sm="5">{importeTotal?.toFixed(2)}</Col>
                 </Row>
-                <Row>
+                <Row className="d-flex flex-nowrap">
                     <Col sm="4"><label htmlFor="">Descuento: </label></Col>
                     <Col sm="2" className="my-2"></Col>
                     <Col sm="1">$</Col>
@@ -37,7 +37,7 @@ const VentaCalculo = ({
                         {descuento}
                     </Col>
                 </Row>
-                <Row>
+                <Row className="d-flex flex-nowrap">
                     <Col sm="4"><label htmlFor="">SubTotal: </label></Col>
                     <Col sm="2" className="my-2"></Col>
                     <Col sm="1">$</Col>
@@ -45,7 +45,7 @@ const VentaCalculo = ({
                         {importeTotal?.toFixed(2) - descuento}
                     </Col>
                 </Row>
-                <Row>
+                <Row className="d-flex flex-nowrap">
                     <Col sm="4"><label htmlFor="">% I.V.A.</label></Col>
                     <Col sm="2" className="my-2"></Col>
                     <Col sm="1">%</Col>
@@ -59,7 +59,7 @@ const VentaCalculo = ({
                     </Col>
 
                 </Row>
-                <Row>
+                <Row className="d-flex flex-nowrap">
                     <Col sm="4">
                         Flete:
                     </Col>
@@ -74,7 +74,7 @@ const VentaCalculo = ({
                         />
                     </Col>
                 </Row>
-                <Row>
+                <Row className="d-flex flex-nowrap">
                     <Col sm="4"><label htmlFor="">Total: </label></Col>
                     <Col sm="2" className="my-2"></Col>
                     <Col sm="1">$</Col>

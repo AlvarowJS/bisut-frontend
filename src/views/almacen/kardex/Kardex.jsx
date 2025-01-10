@@ -61,7 +61,7 @@ const Kardex = () => {
         setFechaFin(event.target.value)
     }
     useEffect(() => {
-        bdAdmin.get(URLPRODUCTO, getAuthHeaders())
+        bdAdmin.get(`${URLPRODUCTO}?tiendaId=${tienda?.value}`, getAuthHeaders())
             .then(res => setProductos(res.data))
             .catch(err => console.log(err))
 

@@ -172,19 +172,25 @@ const GenerarFactura = () => {
 
   const handleRowChange = (index, field, value) => {
     const updatedRows = [...rows];
-    updatedRows[index][field] = value;    
+    updatedRows[index][field] = value;
     setRows(updatedRows);
   };
   const submit = (data) => {
-
+    const subtotalVal = Number(importeTotal?.toFixed(2) - descuento)
+    const fleteVal = Number(flete)
     data.medio_pago = medioPago.medio_pago
     data.medio_pago_monto = medioPago.medio_pago_monto
     data.cliente_id = cliente.value
-    data.almacen_id = almacen.value
-    data.item_id = item.value
+    data.almacen_id = almacen.value    
     data.detalles = rows
-    data.importe_total = importeTotal
-    data.flete = flete    
+    data.importe = importeTotal
+    data.descuento = descuento
+    data.subtotal = subtotalVal
+    data.iva = iva
+    data.flete = fleteVal
+    data.total = Number(((iva / 100 * subtotalVal) + subtotalVal + (fleteVal)).toFixed(2))
+
+    console.log(data, "As")
   }
 
   return (
@@ -291,7 +297,7 @@ const GenerarFactura = () => {
                   </td>
                   <td>
                     {
-                      row.precioVenta * row.cantidad - row.descuento                      
+                      row.precioVenta * row.cantidad - row.descuento
                     }
                   </td>
                   <td>{row.stock}</td>
@@ -308,7 +314,7 @@ const GenerarFactura = () => {
           </Table>
         </div>
         <Row>
-          <Col sm="8">
+          <Col sm="7">
             <Venta1
               setMetodoPago={setMetodoPago}
               metodoPago={metodoPago}
@@ -327,7 +333,7 @@ const GenerarFactura = () => {
             />
 
           </Col>
-          <Col sm="4">
+          <Col sm="5">
             <VentaCalculo
               importeTotal={importeTotal}
               flete={flete}
