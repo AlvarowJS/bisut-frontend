@@ -8,10 +8,14 @@ import Venta2 from '../../../components/ventas/generarFactura/Venta2';
 import Venta3 from '../../../components/ventas/generarFactura/Venta3';
 import VentaCalculo from '../../../components/ventas/generarFactura/VentaCalculo';
 import { useForm, useFieldArray, Controller } from "react-hook-form";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+const MySwal = withReactContent(Swal);
 
 const URLCLIENTES = '/v1/clientes';
 const URLALMACEN = 'v1/almacen';
 const URLPRODUCTO = 'v1/productos';
+const URLVENTA = 'v1/ventas';
 const URLUSERS = 'users';
 
 const GenerarFactura = () => {
@@ -52,7 +56,7 @@ const GenerarFactura = () => {
     almacen_id: '',
     cliente_id: '',
     user_id: '',
-    detalles: [{ item: '', cantidad: 0, precio_unitario: 0 }]
+    detalles: [{ item: '', cantidad_venta: 0, precio_unitario: 0 }]
   };
 
   useEffect(() => {
@@ -135,15 +139,15 @@ const GenerarFactura = () => {
     const repeatItem = rows.find(row => row.item === item.value)
     const selectedItem = dataProductos.find(product => product.item === item.value);
     const selectCliente = dataClientes.find(client => client.id === cliente.value).tipo_venta;
-    const precioVenta = mostrarPrecioVenta(selectedItem, selectCliente)
+    const precio_venta = mostrarPrecioVenta(selectedItem, selectCliente)
     let updatedRows
     if (repeatItem) {
       updatedRows = rows.map(row => {
         if (row.item === item.value) {
           return {
             ...row,
-            cantidad: row.cantidad + 1,
-            importe: (row.cantidad + 1) * row.precioVenta,
+            cantidad_venta: row.cantidad_venta + 1,
+            importe: (row.cantidad_venta + 1) * row.precio_venta,
           };
         }
         return row;
@@ -153,13 +157,13 @@ const GenerarFactura = () => {
       const newItem = {
         item: selectedItem.item,
         descripcion: selectedItem.descripcion,
-        precioVenta: precioVenta,
-        cantidad: 1,
+        precio_venta: precio_venta,
+        cantidad_venta: 1,
         stock: selectedItem.stock,
-        importe: precioVenta,
-        precioSuelto: selectedItem.precioSuelto,
+        importe: precio_venta,
+        precio_suelto: selectedItem.precioSuelto,
         descuento: 0,
-        totalItem: 0,
+        total_item: 0,
       };
       setRows([...rows, newItem]);
     }
@@ -175,21 +179,37 @@ const GenerarFactura = () => {
     updatedRows[index][field] = value;
     setRows(updatedRows);
   };
+  const crearVenta = (data) => {
+    bdAdmin.post(URLVENTA, data, getAuthHeaders())
+      .then(res => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Venta creado",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((err) => { });
+  }
   const submit = (data) => {
-    const subtotalVal = Number(importeTotal?.toFixed(2) - descuento)
+    const descuentoVal = Number(descuento)
+    const subtotalVal = Number(importeTotal?.toFixed(2) - descuentoVal)
     const fleteVal = Number(flete)
     data.medio_pago = medioPago.medio_pago
     data.medio_pago_monto = medioPago.medio_pago_monto
     data.cliente_id = cliente.value
-    data.almacen_id = almacen.value    
+    data.almacen_id = almacen.value
     data.detalles = rows
     data.importe = importeTotal
-    data.descuento = descuento
+    data.descuento = descuentoVal
     data.subtotal = subtotalVal
     data.iva = iva
     data.flete = fleteVal
     data.total = Number(((iva / 100 * subtotalVal) + subtotalVal + (fleteVal)).toFixed(2))
-
+    data.fecha = fecha
+    data.hora = new Date().toLocaleTimeString();
+    crearVenta(data);
     console.log(data, "As")
   }
 
@@ -275,18 +295,18 @@ const GenerarFactura = () => {
                     {row.descripcion}
                   </td>
                   <td>
-                    {row.precioVenta}
+                    {row.precio_venta}
                   </td>
                   <td>
                     <input
                       type="number"
-                      value={row.cantidad}
+                      value={row.cantidad_venta}
                       className='form-control'
-                      onChange={(e) => handleRowChange(index, 'cantidad', e.target.value)}
+                      onChange={(e) => handleRowChange(index, 'cantidad_venta', e.target.value)}
                     />
                   </td>
                   <td>{row.importe}</td>
-                  <td>{row.precioSuelto}</td>
+                  <td>{row.precio_suelto}</td>
                   <td>
                     <input
                       type="number"
@@ -297,7 +317,7 @@ const GenerarFactura = () => {
                   </td>
                   <td>
                     {
-                      row.precioVenta * row.cantidad - row.descuento
+                      row.precio_venta * row.cantidad_venta - row.descuento
                     }
                   </td>
                   <td>{row.stock}</td>

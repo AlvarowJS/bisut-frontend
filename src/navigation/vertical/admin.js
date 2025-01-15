@@ -24,6 +24,12 @@ export default [
         icon: <Tag size={20} />,
         navLink: "/ventas/generar-factura",
       },
+      {
+        id: "Ventas",
+        title: "Ventas",
+        icon: <Tag size={20} />,
+        navLink: "/ventas/venta-lista",
+      },
     ]
   },
   {
