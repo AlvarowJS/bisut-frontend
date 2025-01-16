@@ -3,21 +3,20 @@ import { Col, Row } from 'reactstrap'
 import Select from 'react-select';
 
 const Venta2 = ({
-    userOptions, handleUserChange, user, register
+    userOptions, handleUserChange, user, register, errors
 }) => {
     return (
         <Row className="border rounded p-1">
 
-            <Col className="d-flex" sm="2">
-                <label htmlFor="">Puntos </label>
-                <input type="text" className="form-control form-control-sm" aria-label="Small" {...register('puntos')} />
-
+            <Col className="d-flex" sm="3">
+                <label htmlFor="puntos">Puntos </label>
+                <input type="text" className="form-control" {...register('puntos')} />
             </Col>
             <Col sm="2">
                 <input type="checkbox" className="form-check-input" {...register('regalo')} />
                 Regalo
             </Col>
-            <Col className="d-flex gap-2" sm="8">
+            <Col className="d-flex gap-2" sm="7">
                 <div className="form-check">
                     <input
                         className="form-check-input"
@@ -25,7 +24,9 @@ const Venta2 = ({
                         name="tipofactura"
                         id="remision"
                         value="1"
-                        {...register('tipo_factura')}
+                        {...register('tipo_factura', {
+                            required: 'Debes elegir una opción',
+                        })}
                     />
                     <label className="form-check-label" htmlFor="remision">
                         Remisión

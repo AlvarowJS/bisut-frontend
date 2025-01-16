@@ -64,11 +64,14 @@ const Kardex = () => {
         bdAdmin.get(`${URLPRODUCTO}?tiendaId=${tienda?.value}`, getAuthHeaders())
             .then(res => setProductos(res.data))
             .catch(err => console.log(err))
+    }, [tienda])
 
+    useEffect(() => {
         bdAdmin.get(URLTIENDA, getAuthHeaders())
             .then(res => setTiendas(res.data))
             .catch(err => console.log(err))
     }, [])
+
 
     const optionsProducto = productos?.map((option) => ({
         value: option?.id,
@@ -124,24 +127,24 @@ const Kardex = () => {
                     <Label>
                         Fecha Inicio
                     </Label>
-                    <Input 
+                    <Input
                         type='date'
                         onChange={handleChangeFechaInicio}
                     />
                 </Col>
                 <Col sm="2">
-                <Label>
+                    <Label>
                         Fecha Inicio
                     </Label>
-                    <Input 
+                    <Input
                         type='date'
                         onChange={handleChangeFechaFin}
                     />
                 </Col>
                 <Col sm="2">
-                    <Button style={{marginTop: 22}} color="warning" onClick={buscarKardex}>
+                    <Button style={{ marginTop: 22 }} color="warning" onClick={buscarKardex}>
                         Filtrar
-                        </Button>
+                    </Button>
                 </Col>
             </Row>
             {/* <Row className="mb-2">

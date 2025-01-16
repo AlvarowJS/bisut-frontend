@@ -10,6 +10,7 @@ import VentaCalculo from '../../../components/ventas/generarFactura/VentaCalculo
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { DateUtils } from '../../../utility/DateUtils';
 const MySwal = withReactContent(Swal);
 
 const URLCLIENTES = '/v1/clientes';
@@ -22,7 +23,7 @@ const GenerarFactura = () => {
   const [cliente, setCliente] = useState('');
   const [almacen, setAlmacen] = useState('');
   const [item, setItem] = useState('');
-  const [fecha, setFecha] = useState('');
+  const [fecha, setFecha] = useState(DateUtils());
   const [user, setUser] = useState('');
   const [dataClientes, setDataClientes] = useState();
   const [dataAlmacen, setDataAlmacen] = useState();
@@ -209,6 +210,7 @@ const GenerarFactura = () => {
     data.total = Number(((iva / 100 * subtotalVal) + subtotalVal + (fleteVal)).toFixed(2))
     data.fecha = fecha
     data.hora = new Date().toLocaleTimeString();
+    console.log(data.hora, " ?")
     crearVenta(data);
     console.log(data, "As")
   }
@@ -347,6 +349,7 @@ const GenerarFactura = () => {
               handleUserChange={handleUserChange}
               register={register}
               user={user}
+              errors={errors}
             />
             <Venta3
               register={register}
