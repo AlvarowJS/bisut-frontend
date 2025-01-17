@@ -19,6 +19,7 @@ const Compras = () => {
     const token = localStorage.getItem("accessToken");
     const navigate = useNavigate()
     const [dataAlmacen, setDataAlmacen] = useState();
+    const [almacen, setAlmacen] = useState('');
     const [dataProveedor, setDataProveedor] = useState()
     const [dataProductos, setDataProductos] = useState()
     const [data, setData] = useState();
@@ -31,27 +32,60 @@ const Compras = () => {
     const [actualizacion, setActualizacion] = useState(false);
     const { handleSubmit, control, setValue, register, reset, formState: { errors } } = useForm();
     const { handleSubmit: handleSubmitExcel, register: registerExcel, reset: resetExcel } = useForm();
-
+    const [rows, setRows] = useState([]);
     const { fields, append, remove } = useFieldArray({
         control,
         name: "detalles"
     })
 
+    const handleRowChange = (index, field, value) => {
+        const updatedRows = [...rows];
+        updatedRows[index][field] = value;
+        setRows(updatedRows);
+    };
+    const handleAddRow = () => {
+        const repeatItem = rows.find(row => row.item === item.value)
+        const selectedItem = dataProductos.find(product => product.item === item.value);                
+        let updatedRows
+        if (repeatItem) {
+            console.log("entra")
+            updatedRows = rows?.map(row => {
+                if (row.item === item.value) {
+                    return {
+                        ...row,
+                        cantidad: row.cantidad + 1,
+                        importe: (row.cantidad + 1) * row.precio_unitario,
+                    };
+                }
+                return row;
+            });
+            setRows(updatedRows);
+        } else {
+            const newItem = {
+                item: selectedItem.item,
+                descripcion: selectedItem.descripcion,
+                cantidad: 1,
+                importe: selectedItem.precio_unitario,
+                precio_unitario: selectedItem.precio_unitario
+            };
+            setRows([...rows, newItem]);
+        }
+    };
     const [refresh, setRefresh] = useState(false);
     const defaultValuesExcel = {
         factura: '',
-        fecha: '',        
+        fecha: '',
         almacen_id: '',
         proveedor_id: '',
     }
     const defaulValuesForm = {
         factura: '',
-        fecha: '',        
+        fecha: '',
         almacen_id: '',
         proveedor_id: '',
         detalles: [{ item: '', cantidad: 0, precio_unitario: 0 }]
     };
-    
+
     const getAuthHeaders = () => ({
         headers: {
             Authorization: "Bearer " + token,
@@ -69,7 +103,7 @@ const Compras = () => {
     const toggleExcel = () => {
         setModalExcel(!modalExcel)
     }
-    const redirreccionExcel = () => {        
+    const redirreccionExcel = () => {
         navigate(`/compras/import`)
     }
 
@@ -80,10 +114,34 @@ const Compras = () => {
         bdAdmin.get(URLPROVEEDOR, getAuthHeaders())
             .then((res) => { setDataProveedor(res.data); })
             .catch((err) => { });
-        bdAdmin.get(URLPRODUCTO, getAuthHeaders())
-            .then((res) => { setDataProductos(res.data); })
-            .catch((err) => { });
     }, [])
+
+    const almacenOptions = dataAlmacen?.map(option => ({
+        value: option?.id,
+        label: option?.nombre
+    }));
+    const productoOptions = dataProductos?.map(option => ({
+        value: option?.item,
+        label: option?.item + ' ' + option?.descripcion
+    }));
+
+    const handleAlmacenChange = (selected) => {
+        setAlmacen(selected);
+    };
+
+    const handleItemChange = (selected) => {
+        setItem(selected);
+      };
+
+    useEffect(() => {
+        bdAdmin.get(`${URLPRODUCTO}?tiendaId=${almacen.value}`, getAuthHeaders())
+            .then((res) => {
+                setDataProductos(res.data);
+                console.log(dataProductos)
+            })
+            .catch((err) => { });
+    }, [almacen])
+
 
     useEffect(() => {
         bdAdmin
@@ -327,12 +385,19 @@ const Compras = () => {
                 remove={remove}
                 dataAlmacen={dataAlmacen}
                 dataProveedor={dataProveedor}
+                almacenOptions={almacenOptions}
+                almacen={almacen}
+                handleAlmacenChange={handleAlmacenChange}
                 dataProductos={dataProductos}
                 item={item}
-                setItem={setItem}
-                setValue={setValue}
+                setItem={setItem}                
                 Controller={Controller}
                 control={control}
+                rows={rows}
+                handleAddRow={handleAddRow}
+                handleRowChange={handleRowChange}
+                productoOptions={productoOptions}
+                handleItemChange={handleItemChange}                
             />
         </>
     )

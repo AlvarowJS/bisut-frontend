@@ -1,132 +1,147 @@
 import React from 'react'
-import { Modal, ModalBody, ModalHeader } from 'reactstrap'
+import { Button, Col, Modal, ModalBody, ModalHeader, Row, Table } from 'reactstrap'
 import Select from 'react-select'
 const ComprasForm = ({
   modal, toggle, handleSubmit, register, submit, toggleActualizacion,
-  errors, fields, append, remove, dataProveedor, dataAlmacen, item, setItem,
-  dataProductos, setValue, Controller, control
+  errors, fields, dataProveedor, handleRowChange, handleAddRow, rows,
+  dataProductos, handleAlmacenChange, almacenOptions, almacen, productoOptions,
+  handleItemChange, item
+
 }) => {
 
-  const handleChange = (selected) => {
-    if (selected) {
-      setValue(`detalles[${index}].item`, selected.value);
-    }
-  };
 
-  const options = dataProductos?.map(option => ({
-    value: option?.item,
-    label: option?.item + ' ' + option?.descripcion
-  }));
+
+
+
+
   return (
-    <Modal isOpen={modal} toggle={toggle || toggleActualizacion} size='lg'>
+    <Modal isOpen={modal} toggle={toggle || toggleActualizacion} size='xl'>
       <ModalHeader>
         Registrar Compra
       </ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(submit)}>
-          <div className='form-group my-2'>
-            <label htmlFor="factura">Factura</label>
-            <input
-              className="form-control"
-              type="text"
-              placeholder='Ingrese número de factura'
-              {...register('factura')}
-              required
-            />
-          </div>
-
-          <div className='form-group my-2'>
-            <label htmlFor="fecha">Fecha</label>
-            <input
-              className="form-control"
-              type="date"
-              {...register('fecha')}
-              required
-            />
-          </div>       
-
-          <div className='form-group my-2'>
-            <label htmlFor="almacen_id">Almacén</label>
-            <select className="form-select" id="almacen_id" {...register("almacen_id")}>
-              {
-                dataAlmacen?.map(almacen => (
-                  <option key={almacen?.id} value={almacen?.id}>{almacen?.nombre}</option>
-                ))
-              }
-            </select>
-          </div>
-
-          <div className='form-group my-2'>
-            <label htmlFor="proveedor_id">Proveedor</label>
-            <select className="form-select" id="proveedor_id" {...register("proveedor_id")}>
-              {
-                dataProveedor?.map(proveedor => (
-                  <option key={proveedor?.id} value={proveedor?.id}>{proveedor?.nombre}</option>
-                ))
-              }
-            </select>
-          </div>
-
+          <Row>
+            <Col>
+              <div className='form-group my-2'>
+                <label htmlFor="factura">Factura</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  placeholder='Ingrese número de factura'
+                  {...register('factura')}
+                  required
+                />
+              </div>
+            </Col>
+            <Col>
+              <div className='form-group my-2'>
+                <label htmlFor="fecha">Fecha</label>
+                <input
+                  className="form-control"
+                  type="date"
+                  {...register('fecha')}
+                  required
+                />
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <div className='form-group my-2'>
+                <label htmlFor="almacen_id">Almacén</label>
+                <Select
+                  id="almacen"
+                  value={almacen}
+                  onChange={handleAlmacenChange}
+                  options={almacenOptions}
+                  isSearchable={true}
+                  placeholder="No especifica"
+                />
+              </div>
+            </Col>
+            <Col>
+              <div className='form-group my-2'>
+                <label htmlFor="proveedor_id">Proveedor</label>
+                <select className="form-select" id="proveedor_id" {...register("proveedor_id")}>
+                  {
+                    dataProveedor?.map(proveedor => (
+                      <option key={proveedor?.id} value={proveedor?.id}>{proveedor?.nombre}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            </Col>
+          </Row>
           <h4>Detalles de la Compra</h4>
+          <label>Item</label>
+          <Row className="mb-2">
+            <Col>
+              <Select
+                id="item"
+                value={item}
+                onChange={handleItemChange}
+                options={productoOptions}
+                isSearchable={true}
+                placeholder="No especifica"
+              />
+            </Col>
+            <Col>
+              <Button onClick={handleAddRow} >Agregar Item</Button>
+            </Col>
+          </Row>
+          <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ddd', borderRadius: '5px' }}>
 
-          {fields.map((field, index) => (
-            <div key={field.id} className='d-flex gap-2'>
-              <div className='form-group'>
-                <label htmlFor={`detalles[${index}].item`}>Item</label>
-                {/* Use Controller for Select */}
-                <Controller
-                  control={control}
-                  name={`detalles[${index}].item`} // Register the item field
-                  render={({ field: { onChange, value } }) => (
-                    <Select
-                      options={options}
-                      value={options.find(c => c.value === value)} // set the selected value
-                      onChange={(selectedOption) => onChange(selectedOption.value)} // update the value
-                      isSearchable={true}
-                      placeholder="Seleccione un producto"
-                    />
-                  )}
-                />
-              </div>
-
-              <div className='form-group'>
-                <label htmlFor={`detalles[${index}].cantidad`}>Cantidad</label>
-                <input
-                  className="form-control"
-                  type="number"
-                  placeholder='Ingrese la cantidad'
-                  {...register(`detalles[${index}].cantidad`)}
-                  required
-                />
-              </div>
-
-              <div className='form-group'>
-                <label htmlFor={`detalles[${index}].precio_unitario`}>Precio Unitario</label>
-                <input
-                  className="form-control"
-                  type="number"
-                  step="0.01"
-                  placeholder='Ingrese el precio unitario'
-                  {...register(`detalles[${index}].precio_unitario`)}
-                  required
-                />
-              </div>
-              <div className='form-group'>
-                <button
-                  type="button"
-                  className="btn btn-danger mt-2"
-                  onClick={() => remove(index)}
-                >
-                  Eliminar
-                </button>
-              </div>
-            </div>
-          ))}
+            <Table striped className="mt-2">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Descripción</th>
+                  <th>Cantidad</th>
+                  <th>Precio Unitario</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows?.map((row, index) => (
+                  <tr key={index}>
+                    <td>
+                      {row.item}
+                    </td>
+                    <td>
+                      {row.descripcion}
+                    </td>                  
+                    <td>
+                      <input
+                        type="number"
+                        value={row.cantidad}
+                        className='form-control'
+                        onChange={(e) => handleRowChange(index, 'cantidad', e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        value={row.descuento}
+                        className='form-control'
+                        onChange={(e) => handleRowChange(index, 'precio_unitario', e.target.value)}
+                      />
+                    </td>       
+                    <td>
+                      <Button color="danger" onClick={() => {
+                        setRows(rows.filter((_, i) => i !== index));
+                      }}>
+                        Eliminar
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
 
           <div className='my-2 d-flex gap-2'>
-            <button type="button" className="btn btn-success" onClick={() => append({ item: '', cantidad: 0, precio_unitario: 0 })}>
-              Agregar Detalle
-            </button>
+
 
             <button className='btn btn-primary'>Enviar</button>
           </div>
