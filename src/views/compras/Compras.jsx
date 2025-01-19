@@ -46,6 +46,8 @@ const Compras = () => {
     const handleAddRow = () => {
         const repeatItem = rows.find(row => row.item === item.value)
         const selectedItem = dataProductos.find(product => product.item === item.value);                
+
+        console.log(selectedItem, "s")
         let updatedRows
         if (repeatItem) {
             console.log("entra")
@@ -139,7 +141,9 @@ const Compras = () => {
                 setDataProductos(res.data);
                 console.log(dataProductos)
             })
-            .catch((err) => { });
+            .catch((err) => { 
+                setDataProductos([])
+            });
     }, [almacen])
 
 
@@ -268,11 +272,13 @@ const Compras = () => {
 
     // Si es actualizacion llamara a actualizarPaciente pero si es false crear un Consultorio
     const submit = (data) => {
-        if (actualizacion) {
-            actualizarCompra(data.id, data);
-        } else {
-            crearCompra(data);
-        }
+        data.detalles = rows
+        console.log(data, "wa")
+        // if (actualizacion) {
+        //     actualizarCompra(data.id, data);
+        // } else {
+        //     crearCompra(data);
+        // }
     };
 
     const submitExcel = (data) => {
