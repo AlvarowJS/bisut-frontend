@@ -9,6 +9,7 @@ import bdAdmin from "../../../api/bdAdmin";
 import ProductoTable from "./ProductoTable";
 import ProductoForm from "./ProductoForm";
 const URL = "v1/productos";
+const URLALL = "v1/all-productos";
 const URLFOTO = "v1/producto-foto";
 const URLFAMILIA = "v1/familias";
 const URLGRUPO = "v1/grupos";
@@ -32,7 +33,7 @@ const Producto = () => {
   const [almacen, setAlmacen] = useState('');
   // Fotos
   const [foto, setFoto] = useState()
-  
+  const [allProduct, setAllProduct] = useState(false)
 
   const defaulValuesForm = {
     item: "",
@@ -65,7 +66,9 @@ const Producto = () => {
   const toggleActualizacion = () => {
     setModal(!modal);
   };
-
+  const allProducts = () => {
+    setAllProduct(true)
+  }
   useEffect(() => {
     bdAdmin.get(URLALMACEN, getAuthHeaders())
       .then(res => {
@@ -88,17 +91,37 @@ const Producto = () => {
       })
       .catch(err => { })
   }, [])
-  
-  
+
+
   useEffect(() => {
-    console.log("se activo")
-    bdAdmin
-      .get(`${URL}?tiendaId=${almacen.value}`, getAuthHeaders())
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => { });
-  }, [almacen, refresh]);
+
+    console.log(allProduct)
+    let busqueda
+    busqueda = allProduct ? "" : almacen?.value
+
+    if (busqueda) {
+      bdAdmin
+        .get(`${URL}?tiendaId=${busqueda}`, getAuthHeaders())
+        .then((res) => {
+          setData(res?.data)
+
+        })
+        .catch((err) => {
+          setData([])
+        });
+    } else {
+      bdAdmin
+        .get(URLALL, getAuthHeaders())
+        .then((res) => {
+          setData(res?.data)
+
+        })
+        .catch((err) => {
+          setData([])
+        });
+    }
+
+  }, [almacen, refresh, allProduct]);
 
   useEffect(() => {
     setFilter(
@@ -120,6 +143,7 @@ const Producto = () => {
   }));
   const handleAlmacenChange = (selected) => {
     setAlmacen(selected);
+    setAllProduct(false)
   };
 
   const crearProducto = (data) => {
@@ -294,7 +318,11 @@ const Producto = () => {
             placeholder="No especifica"
           />
         </Col>
-        <Col sm="2"></Col>
+        <Col sm="2" className="mt-2">
+          <Button onClick={allProducts} color="primary">
+            Todos los productos
+          </Button>
+        </Col>
 
         <Col sm="2" className="mt-2">
           <Button onClick={toggle} color="primary">

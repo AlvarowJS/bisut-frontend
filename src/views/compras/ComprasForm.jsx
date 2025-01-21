@@ -5,14 +5,9 @@ const ComprasForm = ({
   modal, toggle, handleSubmit, register, submit, toggleActualizacion,
   errors, fields, dataProveedor, handleRowChange, handleAddRow, rows,
   dataProductos, handleAlmacenChange, almacenOptions, almacen, productoOptions,
-  handleItemChange, item
+  handleItemChange, item, importeTotal, fecha, handleFechaChange
 
 }) => {
-
-
-
-
-
 
   return (
     <Modal isOpen={modal} toggle={toggle || toggleActualizacion} size='xl'>
@@ -38,9 +33,10 @@ const ComprasForm = ({
               <div className='form-group my-2'>
                 <label htmlFor="fecha">Fecha</label>
                 <input
-                  className="form-control"
-                  type="date"
-                  {...register('fecha')}
+                  type='date'
+                  className='form-control'
+                  value={fecha}
+                  onChange={handleFechaChange}
                   required
                 />
               </div>
@@ -76,7 +72,7 @@ const ComprasForm = ({
           <h4>Detalles de la Compra</h4>
           <label>Item</label>
           <Row className="mb-2">
-            <Col>
+            <Col sm="8">
               <Select
                 id="item"
                 value={item}
@@ -86,8 +82,11 @@ const ComprasForm = ({
                 placeholder="No especifica"
               />
             </Col>
-            <Col>
+            <Col sm="2">
               <Button onClick={handleAddRow} >Agregar Item</Button>
+            </Col>
+            <Col sm="2">
+              Importe Total: {importeTotal}
             </Col>
           </Row>
           <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ddd', borderRadius: '5px' }}>
@@ -99,6 +98,7 @@ const ComprasForm = ({
                   <th>Descripción</th>
                   <th>Cantidad</th>
                   <th>Precio Unitario</th>
+                  <th>Importe</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -110,7 +110,7 @@ const ComprasForm = ({
                     </td>
                     <td>
                       {row.descripcion}
-                    </td>                  
+                    </td>
                     <td>
                       <input
                         type="number"
@@ -122,11 +122,16 @@ const ComprasForm = ({
                     <td>
                       <input
                         type="number"
-                        value={row.descuento}
+                        value={row.precio_unitario}
                         className='form-control'
                         onChange={(e) => handleRowChange(index, 'precio_unitario', e.target.value)}
                       />
-                    </td>       
+                    </td>
+                    <td>
+                      {
+                        row?.precio_unitario * row?.cantidad
+                      }
+                    </td>
                     <td>
                       <Button color="danger" onClick={() => {
                         setRows(rows.filter((_, i) => i !== index));

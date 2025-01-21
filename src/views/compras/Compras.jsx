@@ -9,6 +9,7 @@ import bdAdmin from "../../api/bdAdmin";
 import ComprasTable from "./ComprasTable";
 import ComprasForm from "./ComprasForm";
 import ComprasExcel from "./ComprasExcel";
+import { DateUtils } from "../../utility/DateUtils";
 const URL = "v1/compras";
 const URLPROVEEDOR = "v1/proveedor";
 const URLALMACEN = "v1/almacen";
@@ -22,6 +23,7 @@ const Compras = () => {
     const [almacen, setAlmacen] = useState('');
     const [dataProveedor, setDataProveedor] = useState()
     const [dataProductos, setDataProductos] = useState()
+    const [fecha, setFecha] = useState(DateUtils());
     const [data, setData] = useState();
     const [search, setSearch] = useState();
     const [filter, setFilter] = useState();
@@ -33,6 +35,7 @@ const Compras = () => {
     const { handleSubmit, control, setValue, register, reset, formState: { errors } } = useForm();
     const { handleSubmit: handleSubmitExcel, register: registerExcel, reset: resetExcel } = useForm();
     const [rows, setRows] = useState([]);
+    const [importeTotal, setImporteTotal] = useState(0);
     const { fields, append, remove } = useFieldArray({
         control,
         name: "detalles"
@@ -45,32 +48,37 @@ const Compras = () => {
     };
     const handleAddRow = () => {
         const repeatItem = rows.find(row => row.item === item.value)
-        const selectedItem = dataProductos.find(product => product.item === item.value);                
-        let updatedRows
+        const selectedItem = dataProductos.find(product => product.item === item.value);
+        let updateNewRows
+
         if (repeatItem) {
-            console.log("entra")
-            updatedRows = rows?.map(row => {
+            updateNewRows = rows?.map(row => {
                 if (row.item === item.value) {
                     return {
                         ...row,
-                        cantidad: row.cantidad + 1,
-                        importe: (row.cantidad + 1) * row.precio_unitario,
+                        cantidad: Number(row?.cantidad) + 1,
+                        importe: (row?.cantidad + 1) * row?.precio_unitario,
                     };
                 }
                 return row;
             });
-            setRows(updatedRows);
+            setRows(updateNewRows);
         } else {
             const newItem = {
                 item: selectedItem.item,
                 descripcion: selectedItem.descripcion,
                 cantidad: 1,
-                importe: selectedItem.precio_unitario,
-                precio_unitario: selectedItem.precio_unitario
+                importe: 0,
+                precio_unitario: 0
             };
             setRows([...rows, newItem]);
         }
     };
+
+    useEffect(() => {
+        setImporteTotal(rows?.reduce((sum, valImp) => sum + valImp.importe, 0))
+    }, [rows])
+
     const [refresh, setRefresh] = useState(false);
     const defaultValuesExcel = {
         factura: '',
@@ -131,7 +139,11 @@ const Compras = () => {
 
     const handleItemChange = (selected) => {
         setItem(selected);
-      };
+    };
+
+    const handleFechaChange = (event) => {
+        setFecha(event.target.value);
+    };
 
     useEffect(() => {
         bdAdmin.get(`${URLPRODUCTO}?tiendaId=${almacen.value}`, getAuthHeaders())
@@ -268,6 +280,9 @@ const Compras = () => {
 
     // Si es actualizacion llamara a actualizarPaciente pero si es false crear un Consultorio
     const submit = (data) => {
+        data.almacen_id = almacen?.value
+        data.detalles = rows
+        data.fecha = fecha        
         if (actualizacion) {
             actualizarCompra(data.id, data);
         } else {
@@ -390,14 +405,17 @@ const Compras = () => {
                 handleAlmacenChange={handleAlmacenChange}
                 dataProductos={dataProductos}
                 item={item}
-                setItem={setItem}                
+                setItem={setItem}
                 Controller={Controller}
                 control={control}
                 rows={rows}
                 handleAddRow={handleAddRow}
                 handleRowChange={handleRowChange}
                 productoOptions={productoOptions}
-                handleItemChange={handleItemChange}                
+                handleItemChange={handleItemChange}
+                importeTotal={importeTotal}
+                fecha={fecha}
+                handleFechaChange={handleFechaChange}
             />
         </>
     )
