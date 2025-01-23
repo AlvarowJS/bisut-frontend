@@ -35,6 +35,12 @@ const TiendaTabla = ({
         },
         {
             sortable: true,
+            name: 'RFC',
+            minWidth: '25px',
+            selector: row => row?.rfc
+        },
+        {
+            sortable: true,
             name: 'Tipo',
             minWidth: '25px',
             selector: row => row?.tipo == 1 ? 'Tienda' : 'Bodega'

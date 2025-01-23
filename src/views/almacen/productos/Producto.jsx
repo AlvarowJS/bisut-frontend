@@ -50,7 +50,9 @@ const Producto = () => {
     familia_id: "",
     grupo_id: "",
     marca_id: "",
-    foto: ""
+    foto: "",
+    minimo: "",
+    maximo: ""
   };
   const getAuthHeaders = () => ({
     headers: {
@@ -149,20 +151,22 @@ const Producto = () => {
   const crearProducto = (data) => {
 
     const newData = new FormData()
-    newData.append('item', data.item)
-    newData.append('descripcion', data.descripcion)
-    newData.append('precio1', data.precio1)
-    newData.append('precio2', data.precio2)
-    newData.append('precio3', data.precio3)
-    newData.append('precio4', data.precio4)
-    newData.append('precioUnitario', data.precioUnitario)
-    newData.append('precioLista', data.precioLista)
-    newData.append('precioSuelto', data.precioSuelto)
-    newData.append('precioEspecial', data.precioEspecial)
-    newData.append('piezasPaquete', data.piezasPaquete)
-    newData.append('familia_id', data.familia_id)
-    newData.append('grupo_id', data.familia_id)
-    newData.append('marca_id', data.familia_id)
+    newData.append('item', data.item ?? "")
+    newData.append('descripcion', data.descripcion ?? "")
+    newData.append('precio1', data.precio1 ?? "")
+    newData.append('precio2', data.precio2 ?? "")
+    newData.append('precio3', data.precio3 ?? "")
+    newData.append('precio4', data.precio4 ?? "")
+    newData.append('precioUnitario', data.precioUnitario ?? "")
+    newData.append('precioLista', data.precioLista ?? "")
+    newData.append('precioSuelto', data.precioSuelto ?? "")
+    newData.append('precioEspecial', data.precioEspecial ?? "")
+    newData.append('piezasPaquete', data.piezasPaquete ?? "")
+    newData.append('familia_id', data.familia_id ?? "")
+    newData.append('grupo_id', data.familia_id ?? "")
+    newData.append('marca_id', data.familia_id ?? "")
+    newData.append('minimo', data.minimo ?? "")
+    newData.append('maximo', data.maximo ?? "")
     newData.append('foto', foto)
 
     bdAdmin
@@ -193,22 +197,24 @@ const Producto = () => {
 
   const actualizarProducto = (id, data) => {
     const newData = new FormData()
-    newData.append('id', id)
-    newData.append('item', data.item)
-    newData.append('descripcion', data.descripcion)
-    newData.append('precio1', data.precio1)
-    newData.append('precio2', data.precio2)
-    newData.append('precio3', data.precio3)
-    newData.append('precio4', data.precio4)
-    newData.append('precioUnitario', data.precioUnitario)
-    newData.append('precioLista', data.precioLista)
-    newData.append('precioSuelto', data.precioSuelto)
-    newData.append('precioEspecial', data.precioEspecial)
-    newData.append('piezasPaquete', data.piezasPaquete)
-    newData.append('familia_id', data.familia_id)
-    newData.append('grupo_id', data.familia_id)
-    newData.append('marca_id', data.familia_id)
-    newData.append('foto', foto)
+    newData.append('id', id ?? "")
+    newData.append('item', data.item ?? "")
+    newData.append('descripcion', data.descripcion ?? "")
+    newData.append('precio1', data.precio1 ?? "")
+    newData.append('precio2', data.precio2 ?? "")
+    newData.append('precio3', data.precio3 ?? "")
+    newData.append('precio4', data.precio4 ?? "")
+    newData.append('precioUnitario', data.precioUnitario ?? "")
+    newData.append('precioLista', data.precioLista ?? "")
+    newData.append('precioSuelto', data.precioSuelto ?? "")
+    newData.append('precioEspecial', data.precioEspecial ?? "")
+    newData.append('piezasPaquete', data.piezasPaquete ?? "")
+    newData.append('familia_id', data.familia_id ?? "")
+    newData.append('grupo_id', data.familia_id ?? "")
+    newData.append('marca_id', data.familia_id ?? "")
+    newData.append('minimo', data.minimo ?? "")
+    newData.append('maximo', data.maximo ?? "")
+    newData.append('foto', foto ?? "")
     bdAdmin
       .post(`${URLFOTO}`, newData, getAuthHeaders())
       .then((res) => {
@@ -295,7 +301,7 @@ const Producto = () => {
 
       <Row>
         <Col sm="6">
-          <Label className="me-1" for="search-input">
+          <Label className="me-1" for="siniearch-input">
             Buscar
           </Label>
           <Input

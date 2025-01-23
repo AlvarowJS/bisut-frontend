@@ -11,6 +11,8 @@ import { useForm, useFieldArray, Controller } from "react-hook-form";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { DateUtils } from '../../../utility/DateUtils';
+import VentaFactura from '../../../components/ventas/generarFactura/VentaFactura';
+import VentaPago from '../../../components/ventas/generarFactura/VentaPago';
 const MySwal = withReactContent(Swal);
 
 const URLCLIENTES = '/v1/clientes';
@@ -31,6 +33,7 @@ const GenerarFactura = () => {
   const [dataUsers, setDataUsers] = useState();
   const [rows, setRows] = useState([]);
   const [importeTotal, setImporteTotal] = useState(0);
+  const [tipoDocumento, setTipoDocumento] = useState("1")
   const [metodoPago, setMetodoPago] = useState({
     efectivo: "",
     tarjeta: "",
@@ -54,6 +57,7 @@ const GenerarFactura = () => {
     remision: '',
     venta_credito: '',
     fecha: '',
+    tipo_factura: "1",
     almacen_id: '',
     cliente_id: '',
     user_id: '',
@@ -119,6 +123,11 @@ const GenerarFactura = () => {
   const handleUserChange = (selected) => {
     setUser(selected);
   };
+
+  const handleTipoDocumento = (selected) => {
+    setTipoDocumento(selected.target.value)
+    console.log(selected.target.value)
+  }
   const mostrarPrecioVenta = (selectItem, selectCliente) => {
     switch (selectCliente) {
       case 1:
@@ -199,6 +208,7 @@ const GenerarFactura = () => {
     const fleteVal = Number(flete)
     data.medio_pago = medioPago.medio_pago
     data.medio_pago_monto = medioPago.medio_pago_monto
+    data.tipo_factura = tipoDocumento
     data.cliente_id = cliente.value
     data.almacen_id = almacen.value
     data.detalles = rows
@@ -350,10 +360,30 @@ const GenerarFactura = () => {
               register={register}
               user={user}
               errors={errors}
+              handleTipoDocumento={handleTipoDocumento}
+              tipoDocumento={tipoDocumento}
             />
-            <Venta3
+            <Row className="border border-top-0 rounded p-1">
+              <Col>
+                {
+                  tipoDocumento == 2 ?
+                    <VentaFactura register={register} /> :
+                    null
+                }
+
+              </Col>
+              <Col>
+                {
+                  tipoDocumento == 1 || tipoDocumento == 2 ?
+                    <VentaPago register={register} /> :
+                    null
+                }
+
+              </Col>
+            </Row>
+            {/* <Venta3
               register={register}
-            />
+            /> */}
 
           </Col>
           <Col sm="5">

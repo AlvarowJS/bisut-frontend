@@ -4,23 +4,36 @@ import bdAdmin from '../../../api/bdAdmin';
 import { getAuthHeaders } from '../../../utility/auth/auth';
 import { Card, Col, Row } from 'reactstrap';
 import Detallesventa from '../../../components/ventas/listarVentas/Detallesventa';
+import { pdf } from "@react-pdf/renderer";
+import Remision from '../../../components/ventas/generarDocumentos/Remision';
 const URL = "v1/ventas";
+
 const DetallesVenta = () => {
     const id = useParams();
     const [data, setData] = useState()
+
     useEffect(() => {
         bdAdmin.get(`${URL}/${id.id}`, getAuthHeaders())
             .then(res => setData(res.data))
             .catch(err => console.log(err))
     }, [])
 
-    console.log(data, "as")
+    // Exportar PDFs
+    const handleViewPDF = async () => {
+        try {
+            const blob = await pdf(<Remision data={data} />).toBlob();
+            const url = window.URL.createObjectURL(blob);
+            window.open(url, "_blank");
+        } catch (error) {
+            console.error("Error al generar el PDF:", error);
+        }
+    };
     return (
         <>
             <Card className="p-1">
                 <div className='d-flex justify-content-between align-items-center gap-2 '>
                     <div>
-                        <h4 className='text-center'>Tipo factura:
+                        <h4 className='text-center'>Tipo de Documento:
                             {
                                 data?.tipo_factura == 1 ?
                                     " Remisión"
@@ -33,7 +46,9 @@ const DetallesVenta = () => {
                         </h4>
                     </div>
                     <div>
-                        <button className='btn' style={{ backgroundColor: "red", color: "white" }}>
+                        <button className='btn' style={{ backgroundColor: "red", color: "white" }}
+                            onClick={handleViewPDF}
+                        >
                             {
                                 data?.tipo_factura == 1 ?
                                     "exportar Remisión"

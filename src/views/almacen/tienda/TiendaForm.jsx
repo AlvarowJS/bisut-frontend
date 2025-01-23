@@ -41,6 +41,16 @@ const TiendaForm = ({
                         />
                     </div>
                     <div className='form-group my-2'>
+                        <label htmlFor="telefono">Ingrese el RFC</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            placeholder='Ingrese el RFC'
+                            {...register('rfc')}
+                            required
+                        />
+                    </div>
+                    <div className='form-group my-2'>
                         <label htmlFor="tipo">Ingrese el tipo</label>
                         <select className="form-select" id="tipo" {...register("tipo")}>
                             <option value="1">Tienda</option>

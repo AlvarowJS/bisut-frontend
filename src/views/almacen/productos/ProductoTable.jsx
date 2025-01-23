@@ -206,48 +206,6 @@ const ProductoTable = ({
           textOrientation: 'downright',
           transform: 'rotate(180deg)',
         }}>
-          Familia
-        </div>
-      ),
-      minWidth: '25px',
-      selector: row => row?.familia?.nombre,
-      cell: row => {
-        return (
-          <>
-            {row?.familia?.nombre}
-          </>
-        )
-      }
-    },
-    {
-      sortable: true,
-      name: (
-        <div style={{
-          writingMode: 'vertical-rl',
-          textOrientation: 'downright',
-          transform: 'rotate(180deg)',
-        }}>
-          Grupo
-        </div>
-      ),
-      minWidth: '25px',
-      selector: row => row?.grupo?.nombre,
-      cell: row => {
-        return (
-          <>
-            {row?.grupo?.nombre}
-          </>
-        )
-      }
-    },
-    {
-      sortable: true,
-      name: (
-        <div style={{
-          writingMode: 'vertical-rl',
-          textOrientation: 'downright',
-          transform: 'rotate(180deg)',
-        }}>
           Marca
         </div>
       ),

@@ -101,7 +101,7 @@ const TablaVentas = ({
                         <button className='btn btn-warning'
                             onClick={() => actualizaClienteId(row?.id)}
                         >
-                            Enviar Factura
+                            Facturar
                         </button>
                         <button className='btn my-1' style={{ backgroundColor: 'skyblue', color: 'white' }}
                             onClick={() => eliminarCliente(row?.id)}

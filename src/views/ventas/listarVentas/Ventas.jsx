@@ -5,6 +5,7 @@ import { getAuthHeaders } from '../../../utility/auth/auth';
 import TablaVentas from '../../../components/ventas/listarVentas/TablaVentas';
 import { useNavigate } from 'react-router-dom'
 import Select from 'react-select';
+
 const URL = "v1/ventas";
 const Ventas = () => {
   const [data, setData] = useState()
@@ -12,12 +13,22 @@ const Ventas = () => {
   const [filter, setFilter] = useState();
   const [tipo, setTipo] = useState()
   const navigate = useNavigate()
+  const [fechaInicio, setFechaInicio] = useState()
+  const [fechaFin, setFechaFin] = useState()
+
+  const handleChangeFechaInicio = (event) => {
+    setFechaInicio(event.target.value)
+  }
+
+  const handleChangeFechaFin = (event) => {
+    setFechaFin(event.target.value)
+  }
 
   useEffect(() => {
-    bdAdmin.get(`${URL}?tipo=${tipo?.value}`, getAuthHeaders())
+    bdAdmin.get(`${URL}?tipo=${tipo?.value}&fecha-inicio=${fechaInicio}&fecha-fin=${fechaFin}`, getAuthHeaders())
       .then(res => setData(res.data))
       .catch(err => console.log(err))
-  }, [tipo])
+  }, [tipo, fechaInicio, fechaFin])
 
   const handleFilter = (e) => {
     setSearch(e.target.value);
@@ -59,6 +70,9 @@ const Ventas = () => {
     setTipo(selected);
   };
 
+
+
+
   return (
     <>
       <Row>
@@ -75,8 +89,26 @@ const Ventas = () => {
             onChange={handleFilter}
           />
         </Col>
-        <Col>
-          <label htmlFor="">Tipo factura</label>
+        <Col sm="2">
+          <Label>
+            Fecha Inicio
+          </Label>
+          <Input
+            type='date'
+            onChange={handleChangeFechaInicio}
+          />
+        </Col>
+        <Col sm="2">
+          <Label>
+            Fecha Inicio
+          </Label>
+          <Input
+            type='date'
+            onChange={handleChangeFechaFin}
+          />
+        </Col>
+        <Col sm="2">
+          <label htmlFor="">Tipo Documento</label>
           <Select
             id="tipo"
             value={tipo}

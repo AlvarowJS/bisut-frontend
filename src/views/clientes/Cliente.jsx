@@ -169,11 +169,11 @@ const Cliente = () => {
               timer: 1500,
             });
           })
-          .catch((err) => {
+          .catch((err) => {            
             Swal.fire({
               position: "center",
               icon: "error",
-              title: "Contacte con soporte",
+              title: err.response.data.message,
               showConfirmButton: false,
             });
           });

@@ -42,7 +42,8 @@ const ProductoForm = ({
                 <label htmlFor="precio1">Ingrese Precio 1</label>
                 <input
                   className="form-control"
-                  type="text"
+                  type="number"
+                  step="0.01"
                   placeholder='Ingrese precio 1'
                   {...register('precio1')}
                   
@@ -52,7 +53,8 @@ const ProductoForm = ({
                 <label htmlFor="precio2">Ingrese Precio 2</label>
                 <input
                   className="form-control"
-                  type="text"
+                  type="number"
+                  step="0.01"
                   placeholder='Ingrese precio 2'
                   {...register('precio2')}
                   
@@ -62,7 +64,8 @@ const ProductoForm = ({
                 <label htmlFor="precio3">Ingrese Precio 3</label>
                 <input
                   className="form-control"
-                  type="text"
+                  type="number"
+                  step="0.01"
                   placeholder='Ingrese precio 3'
                   {...register('precio3')}
                   
@@ -72,7 +75,8 @@ const ProductoForm = ({
                 <label htmlFor="precio4">Ingrese Precio 4</label>
                 <input
                   className="form-control"
-                  type="text"
+                  type="number"
+                  step="0.01"
                   placeholder='Ingrese precio 4'
                   {...register('precio4')}
                   
@@ -120,6 +124,24 @@ const ProductoForm = ({
                   placeholder='Ingrese cuantas piezas x paquete'
                   {...register('piezasPaquete')}
                   required
+                />
+              </Col>
+              <Col md={3} className='form-group'>
+                <label htmlFor="minimo">Mínimo</label>
+                <input
+                  className="form-control"
+                  type="number"
+                  placeholder='Ingrese mínimo stock'
+                  {...register('minimo')}                  
+                />
+              </Col>
+              <Col md={3} className='form-group'>
+                <label htmlFor="maximo">Máximo</label>
+                <input
+                  className="form-control"
+                  type="number"
+                  placeholder='Ingrese máximo stock'
+                  {...register('maximo')}                  
                 />
               </Col>
             </Row>

@@ -21,7 +21,10 @@ const Tienda = () => {
     const [refresh, setRefresh] = useState(false);
     const defaulValuesForm = {
         nombre: "",
-        descripcion: "",
+        direccion: "",
+        telefono: "",
+        tipo: "",
+        rfc: ""        
     };
 
     const getAuthHeaders = () => ({

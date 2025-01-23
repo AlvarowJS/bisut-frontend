@@ -3,7 +3,7 @@ import { Col, Row } from 'reactstrap'
 import Select from 'react-select';
 
 const Venta2 = ({
-    userOptions, handleUserChange, user, register, errors
+    userOptions, handleUserChange, user, register, errors, handleTipoDocumento,tipoDocumento
 }) => {
     return (
         <Row className="border rounded p-1">
@@ -22,11 +22,11 @@ const Venta2 = ({
                         className="form-check-input"
                         type="radio"
                         name="tipofactura"
-                        id="remision"
-                        value="1"
-                        {...register('tipo_factura', {
-                            required: 'Debes elegir una opción',
-                        })}
+                        id="remision"                        
+                        value="1"                        
+                        checked={tipoDocumento === "1"}
+                        onChange={handleTipoDocumento}
+                        defaultChecked
                     />
                     <label className="form-check-label" htmlFor="remision">
                         Remisión
@@ -39,7 +39,8 @@ const Venta2 = ({
                         name="tipofactura"
                         id="factura"
                         value="2"
-                        {...register('tipo_factura')}
+                        onChange={handleTipoDocumento}
+                        checked={tipoDocumento === "2"}
                     />
                     <label className="form-check-label" htmlFor="factura">
                         Factura
@@ -50,9 +51,10 @@ const Venta2 = ({
                         className="form-check-input"
                         type="radio"
                         name="cotizacion"
-                        id="factura"
+                        id="cotizacion"
                         value="3"
-                        {...register('tipo_factura')}
+                        onChange={handleTipoDocumento}
+                        checked={tipoDocumento === "3"}
                     />
                     <label className="form-check-label" htmlFor="cotizacion">
                         Cotización
