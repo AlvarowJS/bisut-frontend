@@ -25,7 +25,7 @@ const Ventas = () => {
   }
 
   useEffect(() => {
-    bdAdmin.get(`${URL}?tipo=${tipo?.value}&fecha-inicio=${fechaInicio}&fecha-fin=${fechaFin}`, getAuthHeaders())
+    bdAdmin.get(`${URL}?tipo=${tipo?.value}&fecha-inicio=${fechaInicio ?? ""}&fecha-fin=${fechaFin ?? ""}`, getAuthHeaders())
       .then(res => setData(res.data))
       .catch(err => console.log(err))
   }, [tipo, fechaInicio, fechaFin])

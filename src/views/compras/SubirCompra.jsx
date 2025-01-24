@@ -9,6 +9,7 @@ const URLALMACEN = "v1/almacen";
 const URL = "v1/compras";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { DateUtils } from '../../utility/DateUtils';
 const MySwal = withReactContent(Swal);
 
 const SubirCompra = () => {
@@ -19,7 +20,7 @@ const SubirCompra = () => {
     const [almacen, setAlmacen] = useState()
     const [proveedor, setProveedor] = useState()
     const [factura, setFactura] = useState('')
-    const [fecha, setFecha] = useState('')
+    const [fecha, setFecha] = useState(DateUtils())
     const [errorMessage, setErrorMessage] = useState('');
 
     const token = localStorage.getItem("accessToken");
@@ -65,8 +66,8 @@ const SubirCompra = () => {
 
     const expectedColumns = [
         'item', 'descripcion', 'cajas', 'cantidadxCaja', 'cantidad',
-        'precio_unitario', 'familia_id', 'grupo_id', 'marca_id', 'unidad',
-        'precioLista', 'precio1', 'precio2', 'precio3', 'precioSuelto',
+        'familia_id', 'grupo_id', 'marca_id', 'unidad',
+        'precio1', 'precio2', 'precio3', 'precio4', 'precioSuelto',
         'piezasPaquete', 'tono', 'fiscal'
     ];
 
@@ -130,15 +131,14 @@ const SubirCompra = () => {
                     cajas: obj.cajas,
                     cantidadxCaja: obj.cantidadxCaja,
                     cantidad: obj.cantidad,
-                    precio_unitario: obj.precio_unitario,
                     familia_id: obj.familia_id,
                     grupo_id: obj.grupo_id,
                     marca_id: obj.marca_id,
                     unidad: obj.unidad,
-                    precioLista: obj.precioLista,
                     precio1: obj.precio1,
                     precio2: obj.precio2,
                     precio3: obj.precio3,
+                    precio4: obj.precio4,
                     precioSuelto: obj.precioSuelto,
                     piezasPaquete: obj.piezasPaquete,
                     tono: obj.tono,
@@ -200,9 +200,10 @@ const SubirCompra = () => {
             <Row>
                 <Col>
                     <div className='form-group'>
-                        <label>Ingrese Factura</label>
+                        <label htmlFor='factura'>Ingrese Factura</label>
                         <input
                             type="text"
+                            id='factura'
                             className='form-control'
                             value={factura}
                             onChange={handleFacturaChange}

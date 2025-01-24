@@ -9,24 +9,46 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     title: {
-        fontSize: 20,
+        fontSize: 10,
         fontWeight: "bold",
         marginBottom: 10,
     },
     text: {
-        fontSize: 12,
+        fontSize: 7,
     },
     logo: {
         width: 100, // Ancho de la imagen
         height: 50, // Alto de la imagen
         marginBottom: 10,
-    }
-
+    },
+    table: {
+        display: "flex",
+        flexDirection: "column",
+        marginTop: 10,
+    },
+    row: {
+        flexDirection: "row",
+        borderBottomWidth: 1,
+        borderBottomColor: "#000",
+        paddingVertical: 4,
+    },
+    column: {
+        flex: 1,
+        fontSize: 6,
+        paddingHorizontal: 1
+    },
+    header: {
+        fontWeight: "bold",
+    },
+    columnCnt: { width: 25, fontSize: 6, textAlign: "center" }, // Ancho fijo para cantidad
+    columnProducto: { width: 80, fontSize: 6, paddingHorizontal: 2 }, // Ancho fijo para producto
+    columnPrecio: { width: 40, fontSize: 6, textAlign: "right" }, // Ancho fijo para precio
+    columnTotal: { width: 40, fontSize: 6, textAlign: "right" },
 });
 const Remision = ({ data }) => {
     return (
         <Document>
-            <Page size="A4" style={styles.page}>
+            <Page size={[198.45, 841.89]} style={styles.page}>
                 <Image style={styles.logo} src={"/logo.png"} />
                 <View style={styles.section}>
                     <Text style={styles.title}>{data?.almacen?.nombre}</Text>
@@ -35,12 +57,38 @@ const Remision = ({ data }) => {
                     <Text style={styles.text}>{data?.almacen?.telefono}</Text>
                     <Text style={styles.text}>Nota: {data?.identificador}</Text>
                     <Text style={styles.text}>Fecha: {data?.fecha} - {data?.hora}</Text>
-                    <Text style={styles.text}>Cliente: {data?.cliente?.nombre}</Text>
+                    <Text style={styles.text}>Cliente: {data?.cliente?.nombre_completo}</Text>
+                    <View style={styles.table}>
+                        {/* Encabezado de la tabla */}
+                        <View style={[styles.row, styles.header]}>
+                            <Text style={styles.columnCnt}>Cnt</Text>
+                            <Text style={styles.columnProducto}>Producto</Text>
+                            <Text style={styles.columnPrecio}>Precio</Text>
+                            <Text style={styles.columnTotal}>Total</Text>
+                        </View>
 
-                    <Text>Vendedor: {data?.user?.name}</Text>
-                    <Text>Forma Pago: {data?.medio_pago}</Text>
-                    <Text style={styles.title}>NO SE ACEPTAN CAMBIOS NI DEVOLUCONES</Text>
-                    <Text style={styles.title}>ESTE DOCUMENTO ES SIMPLIFICADO PARA EFECTOS FISCALES ESTE TICKET SE REPORTA EN EL CFDI GLOBAL DEL DIA</Text>
+                        {/* Filas con los detalles */}
+                        {data?.detalles_venta?.map((detalle, index) => (
+                            <View key={index} style={styles.row}>
+                                <Text style={styles.columnCnt}>{detalle.cantidad_venta}</Text>
+                                <Text style={styles.columnProducto}>{detalle.item} - {detalle.descripcion}</Text>
+                                <Text style={styles.columnPrecio}>{detalle.precio_venta}</Text>
+                                <Text style={styles.columnTotal}>{detalle.importe}</Text>
+                            </View>
+                        ))}
+                    </View>
+                    <Text style={styles.text}>Vendedor: {data?.user?.name}</Text>
+                    <Text style={styles.text}>Forma Pago: {data?.medio_pago}</Text>
+                    <Text style={styles.text}>NO SE ACEPTAN CAMBIOS NI DEVOLUCONES</Text>
+                    <Text style={styles.text}>ESTE DOCUMENTO ES SIMPLIFICADO PARA EFECTOS FISCALES </Text>
+                    <Text style={styles.text}>ESTE TICKET SE REPORTA EN EL CFDI GLOBAL DEL DIA</Text>
+
+
+                    <Text style={styles.text}> {data?.almacen?.nombre}</Text>
+                    <Text style={styles.text}>Echo Beauty Store</Text>
+                    <Text style={styles.text}>@echobeautystore</Text>
+                    <Text style={styles.text}>@echobeautystore</Text>
+                    <Text style={styles.text}>echobeautystore@gmail.com</Text>
                 </View>
             </Page>
         </Document>
