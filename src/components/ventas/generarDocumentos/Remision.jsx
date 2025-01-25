@@ -12,14 +12,23 @@ const styles = StyleSheet.create({
         fontSize: 10,
         fontWeight: "bold",
         marginBottom: 10,
+        textAlign: 'center'
     },
     text: {
         fontSize: 7,
+    },
+    textTitle: {
+        fontSize: 7,
+        textAlign: 'center'
     },
     logo: {
         width: 100, // Ancho de la imagen
         height: 50, // Alto de la imagen
         marginBottom: 10,
+    },
+    logoChico: {
+        width: 20, // Ancho de la imagen
+        height: 20, // Alto de la imagen        
     },
     table: {
         display: "flex",
@@ -52,9 +61,9 @@ const Remision = ({ data }) => {
                 <Image style={styles.logo} src={"/logo.png"} />
                 <View style={styles.section}>
                     <Text style={styles.title}>{data?.almacen?.nombre}</Text>
-                    <Text style={styles.title}>R.F.C. CUHC7005259A7</Text>
-                    <Text style={styles.title}>{data?.almacen?.direccion}</Text>
-                    <Text style={styles.text}>{data?.almacen?.telefono}</Text>
+                    <Text style={styles.textTitle}>R.F.C. CUHC7005259A7</Text>
+                    <Text style={styles.textTitle}>{data?.almacen?.direccion}</Text>
+                    <Text style={styles.text}>TEL: {data?.almacen?.telefono}</Text>
                     <Text style={styles.text}>Nota: {data?.identificador}</Text>
                     <Text style={styles.text}>Fecha: {data?.fecha} - {data?.hora}</Text>
                     <Text style={styles.text}>Cliente: {data?.cliente?.nombre_completo}</Text>
@@ -72,11 +81,21 @@ const Remision = ({ data }) => {
                             <View key={index} style={styles.row}>
                                 <Text style={styles.columnCnt}>{detalle.cantidad_venta}</Text>
                                 <Text style={styles.columnProducto}>{detalle.item} - {detalle.descripcion}</Text>
-                                <Text style={styles.columnPrecio}>{detalle.precio_venta}</Text>
+                                <Text style={styles.columnPrecio}>${detalle.precio_venta}</Text>
                                 <Text style={styles.columnTotal}>{detalle.importe}</Text>
                             </View>
                         ))}
+                        <Text style={styles.text}>Total: ${data?.total}</Text>
                     </View>
+                    <View style={styles.row}>
+                        <Text style={styles.text}>Vendedor:</Text>
+                        <Text style={styles.text}>{data?.user?.name}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.text}>Forma Pago:</Text>
+                        <Text style={styles.text}>{data?.medio_pago}</Text>
+                    </View>
+
                     <Text style={styles.text}>Vendedor: {data?.user?.name}</Text>
                     <Text style={styles.text}>Forma Pago: {data?.medio_pago}</Text>
                     <Text style={styles.text}>NO SE ACEPTAN CAMBIOS NI DEVOLUCONES</Text>
@@ -84,11 +103,26 @@ const Remision = ({ data }) => {
                     <Text style={styles.text}>ESTE TICKET SE REPORTA EN EL CFDI GLOBAL DEL DIA</Text>
 
 
-                    <Text style={styles.text}> {data?.almacen?.nombre}</Text>
-                    <Text style={styles.text}>Echo Beauty Store</Text>
-                    <Text style={styles.text}>@echobeautystore</Text>
-                    <Text style={styles.text}>@echobeautystore</Text>
-                    <Text style={styles.text}>echobeautystore@gmail.com</Text>
+                    <View>
+                        <Image style={styles.logoChico} src={"/whatsapp.png"} />
+                        <Text style={styles.text}> {data?.almacen?.telefono}</Text>
+                    </View>
+                    <View>
+                        <Image style={styles.logoChico} src={"/facebook.png"} />
+                        <Text style={styles.text}>Echo Beauty Store</Text>
+                    </View>
+                    <View>
+                        <Image style={styles.logoChico} src={"/instagram.png"} />
+                        <Text style={styles.text}>@echobeautystore</Text>
+                    </View>
+                    <View>
+                        <Image style={styles.logoChico} src={"/tiktok.png"} />
+                        <Text style={styles.text}>@echobeautystore</Text>
+                    </View>
+                    <View>
+                        <Image style={styles.logoChico} src={"/correo.png"} />
+                        <Text style={styles.text}>echobeautystore@gmail.com</Text>
+                    </View>
                 </View>
             </Page>
         </Document>
