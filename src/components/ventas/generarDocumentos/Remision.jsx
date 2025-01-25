@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     logoChico: {
-        width: 20, // Ancho de la imagen
-        height: 20, // Alto de la imagen        
+        width: 10, // Ancho de la imagen
+        height: 10, // Alto de la imagen        
     },
     table: {
         display: "flex",
@@ -40,6 +40,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#000",
         paddingVertical: 4,
+    },
+    box: {
+        borderWidth: 1,
+    },
+    rowIcon: {
+        flexDirection: "row",
+        paddingVertical: 2,
     },
     column: {
         flex: 1,
@@ -57,7 +64,7 @@ const styles = StyleSheet.create({
 const Remision = ({ data }) => {
     return (
         <Document>
-            <Page size={[198.45, 841.89]} style={styles.page}>
+            <Page size={[198.45, 'auto']} style={styles.page}>
                 <Image style={styles.logo} src={"/logo.png"} />
                 <View style={styles.section}>
                     <Text style={styles.title}>{data?.almacen?.nombre}</Text>
@@ -91,35 +98,36 @@ const Remision = ({ data }) => {
                         <Text style={styles.text}>Vendedor:</Text>
                         <Text style={styles.text}>{data?.user?.name}</Text>
                     </View>
-                    <View style={styles.row}>
+                    <View style={styles.rowIcon}>
                         <Text style={styles.text}>Forma Pago:</Text>
                         <Text style={styles.text}>{data?.medio_pago}</Text>
                     </View>
 
                     <Text style={styles.text}>Vendedor: {data?.user?.name}</Text>
                     <Text style={styles.text}>Forma Pago: {data?.medio_pago}</Text>
-                    <Text style={styles.text}>NO SE ACEPTAN CAMBIOS NI DEVOLUCONES</Text>
-                    <Text style={styles.text}>ESTE DOCUMENTO ES SIMPLIFICADO PARA EFECTOS FISCALES </Text>
-                    <Text style={styles.text}>ESTE TICKET SE REPORTA EN EL CFDI GLOBAL DEL DIA</Text>
+                    <View style={styles.box}>
+                        <Text style={styles.textTitle}>NO SE ACEPTAN CAMBIOS NI DEVOLUCONES</Text>
+                        <Text style={styles.textTitle}>ESTE DOCUMENTO ES SIMPLIFICADO PARA EFECTOS FISCALES </Text>
+                        <Text style={styles.textTitle}>ESTE TICKET SE REPORTA EN EL CFDI GLOBAL DEL DIA</Text>
+                    </View>
 
-
-                    <View>
+                    <View style={styles.rowIcon}>
                         <Image style={styles.logoChico} src={"/whatsapp.png"} />
                         <Text style={styles.text}> {data?.almacen?.telefono}</Text>
                     </View>
-                    <View>
+                    <View style={styles.rowIcon}>
                         <Image style={styles.logoChico} src={"/facebook.png"} />
                         <Text style={styles.text}>Echo Beauty Store</Text>
                     </View>
-                    <View>
+                    <View style={styles.rowIcon}>
                         <Image style={styles.logoChico} src={"/instagram.png"} />
                         <Text style={styles.text}>@echobeautystore</Text>
                     </View>
-                    <View>
+                    <View style={styles.rowIcon}>
                         <Image style={styles.logoChico} src={"/tiktok.png"} />
                         <Text style={styles.text}>@echobeautystore</Text>
                     </View>
-                    <View>
+                    <View style={styles.rowIcon}>
                         <Image style={styles.logoChico} src={"/correo.png"} />
                         <Text style={styles.text}>echobeautystore@gmail.com</Text>
                     </View>
