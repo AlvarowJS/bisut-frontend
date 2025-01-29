@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Row } from 'reactstrap'
 
 const VentaCalculo = ({
-    importeTotal, flete, setFlete, setIva, iva, descuento, setDescuento
+    importeTotal, flete, setFlete, setIva, iva, descuento, setDescuento, medioPago
 }) => {
 
     // ejemplo:
@@ -85,6 +85,26 @@ const VentaCalculo = ({
                                 (Number(importeTotal - descuento)) +
                                 (Number(flete))
                             ).toFixed(2)
+                        }
+                    </Col>
+                </Row>
+                <Row className="d-flex flex-nowrap">
+                    <Col sm="4"><label htmlFor="">Cambio: </label></Col>
+                    <Col sm="2" className="my-2"></Col>
+                    <Col sm="1">$</Col>
+                    <Col sm="5">
+                        {
+                            (() => {
+                                const resultado = (
+                                    Number(medioPago?.medio_pago_monto)
+                                ).toFixed(2) - (
+                                    (iva / 100 * Number(importeTotal - descuento)) +
+                                    (Number(importeTotal - descuento)) +
+                                    (Number(flete))
+                                ).toFixed(2);
+
+                                return resultado >= 0 ? resultado : null;
+                            })()
                         }
                     </Col>
                 </Row>

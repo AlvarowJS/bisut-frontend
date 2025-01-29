@@ -156,8 +156,8 @@ const GenerarFactura = () => {
         if (row.item === item.value) {
           return {
             ...row,
-            cantidad_venta: row.cantidad_venta + 1,
-            importe: (row.cantidad_venta + 1) * row.precio_venta,
+            cantidad_venta: Number(row.cantidad_venta) + 1,
+            importe: (Number(row.cantidad_venta) + 1) * row.precio_venta,
           };
         }
         return row;
@@ -178,15 +178,15 @@ const GenerarFactura = () => {
       setRows([...rows, newItem]);
     }
   };
-
-  useEffect(() => {
-    setImporteTotal(rows?.reduce((sum, valImp) => sum + valImp.importe, 0))
+  
+  useEffect(() => {    
+    setImporteTotal(rows?.reduce((sum, valImp) => sum + (valImp.cantidad_venta * Number(valImp.precio_venta)), 0))
     setDescuento(rows?.reduce((sum, valDesc) => Number(sum) + Number(valDesc.descuento), 0))
   }, [rows])
 
   const handleRowChange = (index, field, value) => {
-    const updatedRows = [...rows];
-    updatedRows[index][field] = value;
+    const updatedRows = [...rows];  
+    updatedRows[index][field] = value; 
     setRows(updatedRows);
   };
   const crearVenta = (data) => {
@@ -220,9 +220,7 @@ const GenerarFactura = () => {
     data.total = Number(((iva / 100 * subtotalVal) + subtotalVal + (fleteVal)).toFixed(2))
     data.fecha = fecha
     data.hora = new Date().toLocaleTimeString();
-    console.log(data.hora, " ?")
     crearVenta(data);
-    console.log(data, "As")
   }
 
   return (
@@ -317,7 +315,11 @@ const GenerarFactura = () => {
                       onChange={(e) => handleRowChange(index, 'cantidad_venta', e.target.value)}
                     />
                   </td>
-                  <td>{row.importe}</td>
+                  <td>           
+                    {
+                      row.precio_venta * row.cantidad_venta
+                    }
+                  </td>
                   <td>{row.precio_suelto}</td>
                   <td>
                     <input
@@ -395,6 +397,7 @@ const GenerarFactura = () => {
               setIva={setIva}
               iva={iva}
               descuento={descuento}
+              medioPago={medioPago}
             />
             <button className='btn btn-success m-2' type='submit'>Generar</button>
           </Col>
