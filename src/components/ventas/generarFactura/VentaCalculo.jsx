@@ -5,21 +5,6 @@ const VentaCalculo = ({
     importeTotal, flete, setFlete, setIva, iva, descuento, setDescuento, medioPago
 }) => {
 
-    // ejemplo:
-    // de la suma del importe son :
-    // 100 pesos
-    // el iva es 16%
-    // flete lo puede ingresar a mano y serían por ejemplo 25 pesos
-    // descuento se metería a mano 5 pesos
-    // quedaría
-    // 100
-    // -5
-    // 🟰95 pesos
-    // *0.16
-    // 🟰15.20
-    // total sería 95+15.20🟰110.20 (fiscal)
-    // Flete $25 grant total 🟰$135.20
-
     return (
         <Row className="border rounded mt-2 mx-1 p-1">
             <Col>
