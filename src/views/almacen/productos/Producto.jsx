@@ -9,7 +9,7 @@ import bdAdmin from "../../../api/bdAdmin";
 import ProductoTable from "./ProductoTable";
 import ProductoForm from "./ProductoForm";
 const URL = "v1/productos";
-const URLALL = "v1/all-productos";
+const URLALL = "v1/listar-productos";
 const URLFOTO = "v1/producto-foto";
 const URLFAMILIA = "v1/familias";
 const URLGRUPO = "v1/grupos";

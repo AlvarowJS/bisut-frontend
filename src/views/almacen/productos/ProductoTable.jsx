@@ -6,6 +6,9 @@ const ProductoTable = ({
   data, filter, search,
   actualizarProductoId, eliminarProducto
 }) => {
+  const almacenesNombres = Array.from(
+    new Set(data?.flatMap(producto => Object.keys(producto.almacens || {})))
+  );
 
   const columns = [
     {
@@ -48,27 +51,14 @@ const ProductoTable = ({
         )
       }
     },
-    {
+    // Agregar dinámicamente columnas de almacenes
+    ...almacenesNombres.map(nombreAlmacen => ({
       sortable: true,
-      name: (
-        <div style={{
-          writingMode: 'vertical-rl',
-          textOrientation: 'downright',
-          transform: 'rotate(180deg)',
-        }}>
-          Stock
-        </div>
-      ),
-      minWidth: '25px',
-      selector: row => row?.stock,
-      cell: row => {
-        return (
-          <>
-            {row?.stock}
-          </>
-        )
-      }
-    },
+      name: nombreAlmacen,
+      minWidth: '100px',
+      selector: row => row?.almacens?.[nombreAlmacen]?.stock || 0, // Si no hay stock, mostrar 0
+      cell: row => <>{row?.almacens?.[nombreAlmacen]?.stock || 0}</>
+    })),
     {
       sortable: true,
       name: (
@@ -247,6 +237,8 @@ const ProductoTable = ({
       }
     }
   ]
+  console.log(data, "ss")
+  console.log(columns, "as?")
   return (
     <Card className='mt-2'>
       <DataTable
