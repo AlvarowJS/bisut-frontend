@@ -57,7 +57,7 @@ const Compras = () => {
                     return {
                         ...row,
                         cantidad: Number(row?.cantidad) + 1,
-                        importe: (row?.cantidad + 1) * row?.precio_unitario,
+                        importe: (row?.cantidad + 1) * row?.precio_suelto,
                     };
                 }
                 return row;
@@ -69,7 +69,7 @@ const Compras = () => {
                 descripcion: selectedItem.descripcion,
                 cantidad: 1,
                 importe: 0,
-                precio_unitario: 0
+                precio_suelto: 0
             };
             setRows([...rows, newItem]);
         }
@@ -91,7 +91,7 @@ const Compras = () => {
         fecha: '',
         almacen_id: '',
         proveedor_id: '',
-        detalles: [{ item: '', cantidad: 0, precio_unitario: 0 }]
+        detalles: [{ item: '', cantidad: 0, precio_suelto: 0 }]
     };
 
     const getAuthHeaders = () => ({

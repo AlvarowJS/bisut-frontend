@@ -3,7 +3,6 @@ import { Col, Modal, ModalBody, ModalHeader, Row } from 'reactstrap'
 const FormCliente = ({
   modal, toggle, handleSubmit, register, submit, toggleActualizacion, errors, dataTipos
 }) => {
-  console.log(dataTipos)
   return (
 
     <Modal isOpen={modal} toggle={toggle || toggleActualizacion} size='lg'>
@@ -132,10 +131,10 @@ const FormCliente = ({
             <Col>
               <div className='form-group my-2'>
                 <label htmlFor="tipo_venta">Tipo de Venta</label>
-                <select className='form-select' id='tipo_venta' {...register("tipo_venta")}>                  
-                      <option value="1">Precio 1</option>
-                      <option value="2">Precio 2</option>
-                      <option value="3">Precio 3</option>
+                <select className='form-select' id='tipo_venta' {...register("tipo_venta")}>
+                  <option value="1">Precio 1</option>
+                  <option value="2">Precio 2</option>
+                  <option value="3">Precio 3</option>
                 </select>
               </div>
             </Col>

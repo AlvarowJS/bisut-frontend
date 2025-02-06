@@ -122,14 +122,14 @@ const ComprasForm = ({
                     <td>
                       <input
                         type="number"
-                        value={row.precio_unitario}
+                        value={row.precio_suelto}
                         className='form-control'
-                        onChange={(e) => handleRowChange(index, 'precio_unitario', e.target.value)}
+                        onChange={(e) => handleRowChange(index, 'precio_suelto', e.target.value)}
                       />
                     </td>
                     <td>
                       {
-                        row?.precio_unitario * row?.cantidad
+                        row?.precio_suelto * row?.cantidad
                       }
                     </td>
                     <td>

@@ -8,6 +8,7 @@ const MySwal = withReactContent(Swal);
 import bdAdmin from "../../../api/bdAdmin";
 import ProductoTable from "./ProductoTable";
 import ProductoForm from "./ProductoForm";
+import ProductoTransferencia from "../../../components/productos/ProductoTransferencia";
 const URL = "v1/productos";
 const URLALL = "v1/listar-productos";
 const URLFOTO = "v1/producto-foto";
@@ -22,6 +23,7 @@ const Producto = () => {
   const [search, setSearch] = useState();
   const [filter, setFilter] = useState();
   const [modal, setModal] = useState(false);
+  const [modalTransferencia, setModalTransferencia] = useState(false);
   const [actualizacion, setActualizacion] = useState(false);
   const { handleSubmit, register, reset, formState: { errors } } = useForm();
   const [refresh, setRefresh] = useState(false);
@@ -34,6 +36,7 @@ const Producto = () => {
   // Fotos
   const [foto, setFoto] = useState()
   const [allProduct, setAllProduct] = useState(false)
+
 
   const defaulValuesForm = {
     item: "",
@@ -70,6 +73,10 @@ const Producto = () => {
   };
   const allProducts = () => {
     setAllProduct(true)
+  }
+  
+  const transferirProducto = () => {
+    setModalTransferencia(!modalTransferencia)
   }
   useEffect(() => {
     bdAdmin.get(URLALMACEN, getAuthHeaders())
@@ -314,7 +321,7 @@ const Producto = () => {
           />
         </Col>
         <Col>
-          <label htmlFor="">Seleccionar Tienda</label>
+          {/* <label htmlFor="">Seleccionar Tienda</label>
           <Select
             id="almacen"
             value={almacen}
@@ -322,11 +329,11 @@ const Producto = () => {
             options={almacenOptions}
             isSearchable={true}
             placeholder="No especifica"
-          />
+          /> */}
         </Col>
         <Col sm="2" className="mt-2">
-          <Button onClick={allProducts} color="primary">
-            Todos los productos
+          <Button onClick={transferirProducto} color="primary">
+            Transferir Producto
           </Button>
         </Col>
 
@@ -356,6 +363,11 @@ const Producto = () => {
         dataFamilia={dataFamilia}
         dataGrupo={dataGrupo}
         dataMarca={dataMarca}
+      />
+
+      <ProductoTransferencia
+        modalTransferencia={modalTransferencia}
+        transferirProducto={transferirProducto}
       />
     </>
   )
