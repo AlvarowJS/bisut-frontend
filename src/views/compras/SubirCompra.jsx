@@ -62,12 +62,10 @@ const SubirCompra = () => {
         label: option?.nombre
     }));
 
-
-
     const expectedColumns = [
         'item', 'descripcion', 'cajas', 'cantidadxCaja', 'cantidad',
         'familia_id', 'grupo_id', 'marca_id', 'unidad',
-        'precio1', 'precio2', 'precio3', 'precio4', 'precioSuelto',
+        'precio1', 'precio2', 'precio3', 'precio4', 'precio_suelto',
         'piezasPaquete', 'tono', 'fiscal'
     ];
 
@@ -139,7 +137,7 @@ const SubirCompra = () => {
                     precio2: obj.precio2,
                     precio3: obj.precio3,
                     precio4: obj.precio4,
-                    precioSuelto: obj.precioSuelto,
+                    precio_suelto: obj.precio_suelto,
                     piezasPaquete: obj.piezasPaquete,
                     tono: obj.tono,
                     fiscal: obj.fiscal
