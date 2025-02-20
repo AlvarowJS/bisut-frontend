@@ -9,8 +9,11 @@ import bdAdmin from "../../../api/bdAdmin";
 import ProductoTable from "./ProductoTable";
 import ProductoForm from "./ProductoForm";
 import ProductoTransferencia from "../../../components/productos/ProductoTransferencia";
+import useHandleRows from "../../../utility/hooks/useHandleRows";
+import { getAuthHeaders } from "../../../utility/auth/auth";
+import productosDefault from "../../../utility/constants/productosDefault";
+import { DateUtils } from "../../../utility/DateUtils";
 const URL = "v1/productos";
-const URLALL = "v1/listar-productos";
 const URLFOTO = "v1/producto-foto";
 const URLFAMILIA = "v1/familias";
 const URLGRUPO = "v1/grupos";
@@ -18,10 +21,13 @@ const URLMARCA = "v1/marcas";
 const URLALMACEN = 'v1/almacen';
 
 const Producto = () => {
-  const token = localStorage.getItem("accessToken");
-  const [data, setData] = useState();
-  const [search, setSearch] = useState();
-  const [filter, setFilter] = useState();
+  // const { productos, filter, search, handleFilter } = useHandleRows()
+  const [almacenEmisor, setAlmacenEmisor] = useState()
+  const [almacenReceptor, setAlmacenReceptor] = useState()
+  const [fecha, setFecha] = useState(DateUtils())
+  const { rows, setRows, handleAddRow, handleRowChange,
+    productoOptions, item, handleItemChange,
+    productos, filter, search, handleFilter, submitTransferencia } = useHandleRows(almacenEmisor, almacenReceptor, fecha)
   const [modal, setModal] = useState(false);
   const [modalTransferencia, setModalTransferencia] = useState(false);
   const [actualizacion, setActualizacion] = useState(false);
@@ -31,50 +37,20 @@ const Producto = () => {
   const [dataFamilia, setDataFamilia] = useState()
   const [dataGrupo, setDataGrupo] = useState()
   const [dataMarca, setDataMarca] = useState()
-  const [dataAlmacen, setDataAlmacen] = useState()
-  const [almacen, setAlmacen] = useState('');
   // Fotos
   const [foto, setFoto] = useState()
-  const [allProduct, setAllProduct] = useState(false)
-
-
-  const defaulValuesForm = {
-    item: "",
-    descripcion: "",
-    precio1: "",
-    precio2: "",
-    precio3: "",
-    precioUnitario: "",
-    precioLista: "",
-    precioSuelto: "",
-    precioEspecial: "",
-    piezasPaquete: "",
-    foto: "",
-    familia_id: "",
-    grupo_id: "",
-    marca_id: "",
-    foto: "",
-    minimo: "",
-    maximo: ""
-  };
-  const getAuthHeaders = () => ({
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
+  
   const toggle = () => {
     setActualizacion(false);
-    reset(defaulValuesForm);
+    reset(productosDefault);
     setModal(!modal);
   };
 
   const toggleActualizacion = () => {
     setModal(!modal);
   };
-  const allProducts = () => {
-    setAllProduct(true)
-  }
-  
+
+
   const transferirProducto = () => {
     setModalTransferencia(!modalTransferencia)
   }
@@ -101,60 +77,6 @@ const Producto = () => {
       .catch(err => { })
   }, [])
 
-
-  useEffect(() => {
-
-    console.log(allProduct)
-    let busqueda
-    busqueda = allProduct ? "" : almacen?.value
-
-    if (busqueda) {
-      bdAdmin
-        .get(`${URL}?tiendaId=${busqueda}`, getAuthHeaders())
-        .then((res) => {
-          setData(res?.data)
-
-        })
-        .catch((err) => {
-          setData([])
-        });
-    } else {
-      bdAdmin
-        .get(URLALL, getAuthHeaders())
-        .then((res) => {
-          setData(res?.data)
-
-        })
-        .catch((err) => {
-          setData([])
-        });
-    }
-
-  }, [almacen, refresh, allProduct]);
-
-  useEffect(() => {
-    setFilter(
-      data?.filter(
-        (e) =>
-          e?.item?.toLowerCase()
-            .indexOf(search?.toLowerCase()) !== -1
-      )
-    );
-  }, [search]);
-
-  const handleFilter = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const almacenOptions = dataAlmacen?.map(option => ({
-    value: option?.id,
-    label: option?.nombre
-  }));
-  const handleAlmacenChange = (selected) => {
-    setAlmacen(selected);
-    setAllProduct(false)
-  };
-
   const crearProducto = (data) => {
 
     const newData = new FormData()
@@ -179,7 +101,7 @@ const Producto = () => {
     bdAdmin
       .post(URL, newData, getAuthHeaders())
       .then((res) => {
-        reset(defaulValuesForm);
+        reset(productosDefault);
         toggle.call();
         setRefresh(!refresh);
         Swal.fire({
@@ -225,7 +147,7 @@ const Producto = () => {
     bdAdmin
       .post(`${URLFOTO}`, newData, getAuthHeaders())
       .then((res) => {
-        reset(defaulValuesForm);
+        reset(productosDefault);
         toggle.call();
         setRefresh(!refresh);
         Swal.fire({
@@ -321,15 +243,6 @@ const Producto = () => {
           />
         </Col>
         <Col>
-          {/* <label htmlFor="">Seleccionar Tienda</label>
-          <Select
-            id="almacen"
-            value={almacen}
-            onChange={handleAlmacenChange}
-            options={almacenOptions}
-            isSearchable={true}
-            placeholder="No especifica"
-          /> */}
         </Col>
         <Col sm="2" className="mt-2">
           <Button onClick={transferirProducto} color="primary">
@@ -344,7 +257,7 @@ const Producto = () => {
         </Col>
       </Row>
       <ProductoTable
-        data={data}
+        data={productos}
         filter={filter}
         search={search}
         actualizarProductoId={actualizarProductoId}
@@ -368,6 +281,20 @@ const Producto = () => {
       <ProductoTransferencia
         modalTransferencia={modalTransferencia}
         transferirProducto={transferirProducto}
+        rows={rows}
+        setRows={setRows}
+        handleAddRow={handleAddRow}
+        handleRowChange={handleRowChange}
+        productoOptions={productoOptions}
+        item={item}
+        handleItemChange={handleItemChange}
+        almacenEmisor={almacenEmisor}
+        almacenReceptor={almacenReceptor}
+        setAlmacenEmisor={setAlmacenEmisor}
+        setAlmacenReceptor={setAlmacenReceptor}
+        submitTransferencia={submitTransferencia}
+        setFecha={setFecha}
+        fecha={fecha}
       />
     </>
   )

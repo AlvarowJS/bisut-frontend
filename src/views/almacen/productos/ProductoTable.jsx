@@ -237,8 +237,7 @@ const ProductoTable = ({
       }
     }
   ]
-  console.log(data, "ss")
-  console.log(columns, "as?")
+
   return (
     <Card className='mt-2'>
       <DataTable

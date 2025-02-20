@@ -19,7 +19,6 @@ const Ventas = () => {
   const handleChangeFechaInicio = (event) => {
     setFechaInicio(event.target.value)
   }
-
   const handleChangeFechaFin = (event) => {
     setFechaFin(event.target.value)
   }
