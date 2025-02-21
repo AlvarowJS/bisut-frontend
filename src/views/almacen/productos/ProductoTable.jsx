@@ -54,7 +54,11 @@ const ProductoTable = ({
     // Agregar dinámicamente columnas de almacenes
     ...almacenesNombres.map(nombreAlmacen => ({
       sortable: true,
-      name: nombreAlmacen,
+      name: (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', textAlign: 'center' }}>
+          {nombreAlmacen}
+        </div>
+      ),
       minWidth: '100px',
       selector: row => row?.almacens?.[nombreAlmacen]?.stock || 0, // Si no hay stock, mostrar 0
       cell: row => <>{row?.almacens?.[nombreAlmacen]?.stock || 0}</>
@@ -180,6 +184,7 @@ const ProductoTable = ({
                 }
                   width={100} height={100}
                   className='my-1'
+                  loading='lazy'
                   alt="" />
               ) : ""
             }
