@@ -25,14 +25,14 @@ const Producto = () => {
   const [almacenEmisor, setAlmacenEmisor] = useState()
   const [almacenReceptor, setAlmacenReceptor] = useState()
   const [fecha, setFecha] = useState(DateUtils())
+  const [refresh, setRefresh] = useState(false);
   const { rows, setRows, handleAddRow, handleRowChange,
     productoOptions, item, handleItemChange,
-    productos, filter, search, handleFilter, submitTransferencia } = useHandleRows(almacenEmisor, almacenReceptor, fecha)
+    productos, filter, search, handleFilter, submitTransferencia } = useHandleRows(almacenEmisor, almacenReceptor, fecha, refresh)
   const [modal, setModal] = useState(false);
   const [modalTransferencia, setModalTransferencia] = useState(false);
   const [actualizacion, setActualizacion] = useState(false);
   const { handleSubmit, register, reset, formState: { errors } } = useForm();
-  const [refresh, setRefresh] = useState(false);
   // get for selects 
   const [dataFamilia, setDataFamilia] = useState()
   const [dataGrupo, setDataGrupo] = useState()
@@ -63,15 +63,18 @@ const Producto = () => {
     bdAdmin.get(URLFAMILIA, getAuthHeaders())
       .then(res => {
         setDataFamilia(res.data)
+        console.log(res.data)
       })
       .catch(err => { })
     bdAdmin.get(URLGRUPO, getAuthHeaders())
       .then(res => {
         setDataGrupo(res.data)
+        console.log(res.data)
       })
       .catch(err => { })
     bdAdmin.get(URLMARCA, getAuthHeaders())
       .then(res => {
+        console.log(res.data)
         setDataMarca(res.data)
       })
       .catch(err => { })
@@ -92,8 +95,8 @@ const Producto = () => {
     newData.append('precioEspecial', data.precioEspecial ?? "")
     newData.append('piezasPaquete', data.piezasPaquete ?? "")
     newData.append('familia_id', data.familia_id ?? "")
-    newData.append('grupo_id', data.familia_id ?? "")
-    newData.append('marca_id', data.familia_id ?? "")
+    newData.append('grupo_id', data.grupo_id ?? "")
+    newData.append('marca_id', data.marca_id ?? "")
     newData.append('minimo', data.minimo ?? "")
     newData.append('maximo', data.maximo ?? "")
     newData.append('foto', foto)
@@ -139,8 +142,8 @@ const Producto = () => {
     newData.append('precioEspecial', data.precioEspecial ?? "")
     newData.append('piezasPaquete', data.piezasPaquete ?? "")
     newData.append('familia_id', data.familia_id ?? "")
-    newData.append('grupo_id', data.familia_id ?? "")
-    newData.append('marca_id', data.familia_id ?? "")
+    newData.append('grupo_id', data.grupo_id ?? "")
+    newData.append('marca_id', data.marca_id ?? "")
     newData.append('minimo', data.minimo ?? "")
     newData.append('maximo', data.maximo ?? "")
     newData.append('foto', foto ?? "")

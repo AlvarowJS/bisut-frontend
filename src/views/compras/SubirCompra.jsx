@@ -64,7 +64,7 @@ const SubirCompra = () => {
 
     const expectedColumns = [
         'item', 'descripcion', 'cajas', 'cantidadxCaja', 'cantidad',
-        'familia_id', 'grupo_id', 'marca_id', 'unidad',
+        'familia', 'grupo', 'marca', 'unidad',
         'precio1', 'precio2', 'precio3', 'precio4', 'precio_suelto',
         'piezasPaquete', 'tono', 'fiscal'
     ];
@@ -129,9 +129,9 @@ const SubirCompra = () => {
                     cajas: obj.cajas,
                     cantidadxCaja: obj.cantidadxCaja,
                     cantidad: obj.cantidad,
-                    familia_id: obj.familia_id,
-                    grupo_id: obj.grupo_id,
-                    marca_id: obj.marca_id,
+                    familia: obj.familia,
+                    grupo: obj.grupo,
+                    marca: obj.marca,
                     unidad: obj.unidad,
                     precio1: obj.precio1,
                     precio2: obj.precio2,

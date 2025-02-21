@@ -8,7 +8,7 @@ const URLTRANS = "v1/transferir-productos";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 const MySwal = withReactContent(Swal);
-const useHandleRows = (almacenEmisor, almacenReceptor, fecha) => {
+const useHandleRows = (almacenEmisor, almacenReceptor, fecha, refresh) => {
     const [rows, setRows] = useState([]);
     const [item, setItem] = useState();
     const [filter, setFilter] = useState();
@@ -20,7 +20,7 @@ const useHandleRows = (almacenEmisor, almacenReceptor, fecha) => {
         bdAdmin.get(URLALL, getAuthHeaders())
             .then(res => setProductos(res?.data))
             .catch(err => console.log(err))
-    }, [newRefresh])
+    }, [newRefresh, refresh])
 
     useEffect(() => {
         setFilter(
