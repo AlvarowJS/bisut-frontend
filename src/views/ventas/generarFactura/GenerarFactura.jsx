@@ -13,6 +13,7 @@ import withReactContent from "sweetalert2-react-content";
 import { DateUtils } from '../../../utility/DateUtils';
 import VentaFactura from '../../../components/ventas/generarFactura/VentaFactura';
 import VentaPago from '../../../components/ventas/generarFactura/VentaPago';
+import { useExportPdf } from '../../../utility/hooks/useExportPdf';
 const MySwal = withReactContent(Swal);
 
 const URLCLIENTES = '/v1/clientes';
@@ -34,6 +35,7 @@ const GenerarFactura = () => {
   const [rows, setRows] = useState([]);
   const [importeTotal, setImporteTotal] = useState(0);
   const [tipoDocumento, setTipoDocumento] = useState("1")
+  const { handleViewPDF } = useExportPdf()
   const [metodoPago, setMetodoPago] = useState({
     efectivo: "",
     tarjeta: "",
@@ -178,31 +180,55 @@ const GenerarFactura = () => {
       setRows([...rows, newItem]);
     }
   };
-  
-  useEffect(() => {    
+
+  useEffect(() => {
     setImporteTotal(rows?.reduce((sum, valImp) => sum + (valImp.cantidad_venta * Number(valImp.precio_venta)), 0))
     setDescuento(rows?.reduce((sum, valDesc) => Number(sum) + Number(valDesc.descuento), 0))
   }, [rows])
 
   const handleRowChange = (index, field, value) => {
-    const updatedRows = [...rows];  
-    updatedRows[index][field] = value; 
+    const updatedRows = [...rows];
+    updatedRows[index][field] = value;
     setRows(updatedRows);
   };
-  const crearVenta = (data) => {
-    bdAdmin.post(URLVENTA, data, getAuthHeaders())
-      .then(res => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Venta creado",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((err) => { });
+  const crearVenta = async (data) => {
+    try {
+      const dataVenta = await bdAdmin.post(URLVENTA, data, getAuthHeaders());
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Venta creado",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return dataVenta
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Error al crear la venta",
+        text: error.response?.data?.error || "Ocurrió un error inesperado",
+        showConfirmButton: true,
+      });
+
+      throw error;
+    }
+    // return dataVenta.data;
+    //  bdAdmin.post(URLVENTA, data, getAuthHeaders())
+    //   .then(res => {
+    //     Swal.fire({
+    //       position: "center",
+    //       icon: "success",
+    //       title: "Venta creado",
+    //       showConfirmButton: false,
+    //       timer: 1500,
+    //     });
+    //     return res.data
+    //   })
+    //   .catch((err) => { });
   }
-  const submit = (data) => {
+
+  const submit = async (data) => {
     const descuentoVal = Number(descuento)
     const subtotalVal = Number(importeTotal?.toFixed(2) - descuentoVal)
     const fleteVal = Number(flete)
@@ -220,7 +246,10 @@ const GenerarFactura = () => {
     data.total = Number(((iva / 100 * subtotalVal) + subtotalVal + (fleteVal)).toFixed(2))
     data.fecha = fecha
     data.hora = new Date().toLocaleTimeString();
-    crearVenta(data);
+    const dataResponse = await crearVenta(data);
+    handleViewPDF(dataResponse.data.data)
+    console.log(dataResponse.data.data, "asas")
+
   }
 
   return (
@@ -315,7 +344,7 @@ const GenerarFactura = () => {
                       onChange={(e) => handleRowChange(index, 'cantidad_venta', e.target.value)}
                     />
                   </td>
-                  <td>           
+                  <td>
                     {
                       row.precio_venta * row.cantidad_venta
                     }
@@ -369,7 +398,10 @@ const GenerarFactura = () => {
               <Col>
                 {
                   tipoDocumento == 2 ?
-                    <VentaFactura register={register} /> :
+                    <VentaFactura
+                      register={register}
+                      errors={errors}
+                    /> :
                     null
                 }
 
@@ -377,7 +409,10 @@ const GenerarFactura = () => {
               <Col>
                 {
                   tipoDocumento == 1 || tipoDocumento == 2 ?
-                    <VentaPago register={register} /> :
+                    <VentaPago
+                      register={register}
+                      errors={errors}
+                    /> :
                     null
                 }
 

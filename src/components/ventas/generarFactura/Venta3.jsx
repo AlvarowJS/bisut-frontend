@@ -47,7 +47,7 @@ const Venta3 = ({
                     </select>
                 </div>
                 <div>
-                    <input type="checkbox" className="form-check-input" name="email" id="email" {...register('email')}/> Enviar Mail
+                    <input type="checkbox" className="form-check-input" name="email" id="email" {...register('email')} /> Enviar Mail
                 </div>
             </Col>
             <Col>
@@ -60,7 +60,8 @@ const Venta3 = ({
                                 name="tipopago"
                                 id="efectivo"
                                 value="efectivo"
-                                {...register('tipo_pago')}
+                                {...register("tipo_pago", { required: "Seleccione un método de pago" })}
+
                             />
                             <label className="form-check-label" htmlFor="efectivo">
                                 Efectivo
@@ -73,7 +74,8 @@ const Venta3 = ({
                                 name="tipopago"
                                 id="debito"
                                 value="debito"
-                                {...register('tipo_pago')}
+                                {...register("tipo_pago", { required: "Seleccione un método de pago" })}
+
                             />
                             <label className="form-check-label" htmlFor="debito">
                                 Tarjeta debito
@@ -86,7 +88,8 @@ const Venta3 = ({
                                 name="tipopago"
                                 id="credito"
                                 value="credito"
-                                {...register('tipo_pago')}
+                                {...register("tipo_pago", { required: "Seleccione un método de pago" })}
+
                             />
                             <label className="form-check-label" htmlFor="credito">
                                 Tarjeta credito
@@ -101,7 +104,8 @@ const Venta3 = ({
                                 name="tipopago"
                                 id="transferencia"
                                 value="transferencia"
-                                {...register('tipo_pago')}
+                                {...register("tipo_pago", { required: "Seleccione un método de pago" })}
+
                             />
                             <label className="form-check-label" htmlFor="transferencia">
                                 Transferencia
@@ -114,7 +118,8 @@ const Venta3 = ({
                                 name="tipopago"
                                 id="cheque"
                                 value="cheque"
-                                {...register('tipo_pago')}
+                                {...register("tipo_pago", { required: "Seleccione un método de pago" })}
+
                             />
                             <label className="form-check-label" htmlFor="cheque">
                                 Cheque Nominativo
@@ -127,7 +132,8 @@ const Venta3 = ({
                                 name="tipopago"
                                 id="xdefinir"
                                 value="xdefinir"
-                                {...register('tipo_pago')}
+                                {...register("tipo_pago", { required: "Seleccione un método de pago" })}
+
                             />
                             <label className="form-check-label" htmlFor="xdefinir">
                                 Por Definir

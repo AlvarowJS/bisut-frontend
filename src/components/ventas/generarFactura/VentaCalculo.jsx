@@ -80,13 +80,13 @@ const VentaCalculo = ({
                     <Col sm="5">
                         {
                             (() => {
-                                const resultado = (
+                                const resultado = ((
                                     Number(medioPago?.medio_pago_monto)
                                 ).toFixed(2) - (
                                     (iva / 100 * Number(importeTotal - descuento)) +
                                     (Number(importeTotal - descuento)) +
                                     (Number(flete))
-                                ).toFixed(2);
+                                ).toFixed(2)).toFixed(2);
 
                                 return resultado >= 0 ? resultado : null;
                             })()
