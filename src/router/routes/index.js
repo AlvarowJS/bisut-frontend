@@ -30,6 +30,7 @@ import SubirCompra from "../../views/compras/SubirCompra";
 import GenerarFactura from "../../views/ventas/generarFactura/GenerarFactura";
 import Ventas from "../../views/ventas/listarVentas/Ventas";
 import DetallesVenta from "../../views/ventas/listarVentas/DetallesVenta";
+import DocenaPieza from "../../views/ventas/docenaPieza/DocenaPieza";
 
 
 
@@ -176,6 +177,10 @@ const Routes = [
   {
     path: "/ventas/venta-lista",
     element: <AuthGuard><Ventas /></AuthGuard>,
+  },
+  {
+    path: "/ventas/docena-pieza",
+    element: <AuthGuard><DocenaPieza /></AuthGuard>,
   },
   {
     path: "/ventas/venta-lista/:id",

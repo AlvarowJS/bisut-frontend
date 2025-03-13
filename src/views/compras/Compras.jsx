@@ -11,6 +11,7 @@ import ComprasForm from "./ComprasForm";
 import ComprasExcel from "./ComprasExcel";
 import { DateUtils } from "../../utility/DateUtils";
 const URL = "v1/compras";
+const URLCOMPRA = "v1/compra-manual";
 const URLPROVEEDOR = "v1/proveedor";
 const URLALMACEN = "v1/almacen";
 const URLPRODUCTO = "v1/productos";
@@ -178,7 +179,7 @@ const Compras = () => {
     };
     const crearCompra = (data) => {
         bdAdmin
-            .post(URL, data, getAuthHeaders())
+            .post(URLCOMPRA, data, getAuthHeaders())
             .then((res) => {
                 reset(defaulValuesForm);
                 toggle.call();

@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import bdAdmin from '../../api/bdAdmin'
-import { getAuthHeaders } from '../auth/auth'
-const URL = "/v1/almacen"
+import { almacenService } from '../services/almacen/almacenService'
 const useAlmacen = () => {
-    const [almacens, setAlmacens] = useState([])    
+    const [almacens, setAlmacens] = useState([])
     useEffect(() => {
-        bdAdmin.get(URL, getAuthHeaders())
-            .then(res => setAlmacens(res.data))
-            .catch(err => console.log(err))
+
+        const loadAlmacen = async () => {
+            try {
+                const data = await almacenService();
+                setAlmacens(data)
+            } catch (err) {
+
+            }
+        }
+        loadAlmacen();
+  
 
     }, [])
 
@@ -18,7 +24,7 @@ const useAlmacen = () => {
 
     return {
         almacens,
-        almacenOptions,        
+        almacenOptions,
     }
 }
 

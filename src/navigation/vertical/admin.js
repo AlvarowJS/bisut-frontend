@@ -15,7 +15,7 @@ export default [
   },
   {
     id: "Ventas",
-    title: "Ventas",
+    title: "Salidas",
     icon: <ShoppingCart size={20} />,
     children: [
       {
@@ -29,6 +29,12 @@ export default [
         title: "Ventas",
         icon: <Tag size={20} />,
         navLink: "/ventas/venta-lista",
+      },
+      {
+        id: "DzPieza",
+        title: "Dz/Pieza",
+        icon: <Tag size={20} />,
+        navLink: "/ventas/docena-pieza",
       },
     ]
   },
