@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, Modal, ModalBody, ModalHeader, Row } from 'reactstrap'
 import Select from 'react-select';
 const DocenaPiezaForm = ({
   modal, toggle, handleSubmit, submit, register,
   setProductoEmisor, setProductoReceptor, productoOptions, setAlmacen,
-  productoEmisor, productoReceptor, almacen, almacenOptions
+  productoEmisor, productoReceptor, almacen, almacenOptions,
+  stock, productoSelect
 
 }) => {
+  const [cajas, setCajas] = useState(0);
+
   return (
     <Modal isOpen={modal} toggle={toggle} size='xl'>
       <ModalHeader>
@@ -31,16 +34,16 @@ const DocenaPiezaForm = ({
             <Col>
               <div>
                 <label htmlFor="docena">Producto en Cajas</label>
-                  <Select
-                    id="almacen"
-                    value={productoEmisor}
-                    onChange={setProductoEmisor}
-                    options={productoOptions}
-                    isSearchable={true}
-                    placeholder="Seleccione producto en caja"
-                  />
-                  
-de              </div>
+                <Select
+                  id="almacen"
+                  value={productoEmisor}
+                  onChange={setProductoEmisor}
+                  options={productoOptions}
+                  isSearchable={true}
+                  placeholder="Seleccione producto en caja"
+                />
+
+              </div>
             </Col>
 
             <Col>
@@ -60,11 +63,23 @@ de              </div>
           <Row>
             <Col>
               <div>
+                Stock: {stock}
+              </div>
+              <div>
+                Cantidad x Caja: {productoSelect?.piezasPaquete}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <div>
                 <label htmlFor="precio">Cajas</label>
                 <input
                   className="form-control"
                   type="number"
                   placeholder='Ingrese precio'
+                  {...register('cajas')}
+                  onChange={(e) => setCajas(Number(e.target.value))}
                 />
               </div>
             </Col>
@@ -75,7 +90,9 @@ de              </div>
                   className="form-control"
                   type="number"
                   placeholder='Ingrese precio'
-                  value=''
+                  // value={productoSelect.piezasPaquete * cajas}
+                  value={(productoSelect?.piezasPaquete || 0) * cajas}
+
                 />
               </div>
             </Col>
